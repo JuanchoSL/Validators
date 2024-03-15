@@ -2,7 +2,8 @@
 
 namespace JuanchoSL\Validators\Tests\Unit;
 
-use JuanchoSL\Validators\StringValidation;
+
+use JuanchoSL\Validators\Types\Strings\StringValidation;
 use PHPUnit\Framework\TestCase;
 
 class StringTest extends TestCase
@@ -16,14 +17,19 @@ class StringTest extends TestCase
     public function testIsStringFalse()
     {
         $this->assertFalse(StringValidation::is(123456), "Is not a string");
+        $this->assertFalse(StringValidation::is(false), "Is not a string");
+        $this->assertFalse(StringValidation::is(true), "Is not a string");
+        $this->assertFalse(StringValidation::is(null), "Is not a string");
     }
     public function testIsEmptyTrue()
     {
-        $this->assertTrue(StringValidation::is(""), "Is an empty string");
+        $this->assertTrue(StringValidation::isEmpty(""), "Is an empty string");
+        $this->assertTrue(StringValidation::isEmpty(null), "Is an empty string");
+        $this->assertTrue(StringValidation::isEmpty(false), "Is an empty string");
     }
     public function isEmptyFalse()
     {
-        $this->assertFalse(StringValidation::is('string'), "Is not an empty string");
+        $this->assertFalse(StringValidation::isEmpty('string'), "Is not an empty string");
     }
 
     public function testIsEmailTrue()
@@ -43,37 +49,45 @@ class StringTest extends TestCase
         $this->assertTrue(StringValidation::isUrl("https://www.url.com"), "Is an url");
         $this->assertTrue(StringValidation::isUrl("ftp://ftp.url.com"), "Is an url");
         $this->assertTrue(StringValidation::isUrl("ftps://ftp.url.com"), "Is an url");
+        $this->assertTrue(StringValidation::isUrl("https://www.url.com/index.php"), "Is an url");
     }
-
+    
     public function testIsUrlFalse()
     {
         $this->assertFalse(StringValidation::isUrl("isnotanurl"), "Is not an url");
+        $this->assertFalse(StringValidation::isUrl("www.url.com"), "Is not an url");
     }
 
     public function testIsDomainTrue()
     {
-        $this->assertTrue(StringValidation::isUrl("http://url.com"), "Is a domain");
-        $this->assertTrue(StringValidation::isUrl("https://url.com"), "Is a domain");
-        $this->assertTrue(StringValidation::isUrl("https://www.url.com"), "Is a domain");
-        $this->assertTrue(StringValidation::isUrl("ftp://ftp.url.com"), "Is a domain");
-        $this->assertTrue(StringValidation::isUrl("ftps://ftp.url.com"), "Is a domain");
+        $this->assertTrue(StringValidation::isDomain("com"), "Is a domain");
+        $this->assertTrue(StringValidation::isDomain("url.com"), "Is a domain");
+        $this->assertTrue(StringValidation::isDomain("www.url.com"), "Is a domain");
+        $this->assertTrue(StringValidation::isDomain("ftp.url.com"), "Is a domain");
+        $this->assertTrue(StringValidation::isDomain("ftp.url.com"), "Is a domain");
     }
-
+    
     public function testIsDomainFalse()
     {
-        $this->assertFalse(StringValidation::isUrl("www.url.com"), "Is not a domain");
-        $this->assertFalse(StringValidation::isUrl("ftp.url.com"), "Is not a domain");
-        $this->assertFalse(StringValidation::isUrl("isnotanurl"), "Is not a domain");
+        $this->assertFalse(StringValidation::isDomain("http://isnotanurl"), "Is not a domain");
+        $this->assertFalse(StringValidation::isDomain("ftp://ftp.url.com"), "Is not a domain");
+        $this->assertFalse(StringValidation::isDomain("ftps://ftp.url.com"), "Is not a domain");
+        $this->assertFalse(StringValidation::isDomain("www.url.com/index.html"), "Is not a domain");
     }
 
     public function testIsMacTrue()
     {
         $this->assertTrue(StringValidation::isMac("00:00:00:00:00:00"), "Is a MAC");
+        $this->assertTrue(StringValidation::isMac("00-00-00-00-00-00"), "Is a MAC");
+        $this->assertTrue(StringValidation::isMac("f0:00:00:00:00:00"), "Is a MAC");
+        $this->assertTrue(StringValidation::isMac("F0-00-00-00-00-00"), "Is a MAC");
     }
 
     public function testIsMacFalse()
     {
         $this->assertFalse(StringValidation::isMac("aaa:aaa:aaa:aaa"), "Is not a MAC");
+        $this->assertFalse(StringValidation::isMac("G0:00:00:00:00:00"), "Is not a MAC");
+        $this->assertFalse(StringValidation::isMac("G0-00-00-00-00-00"), "Is not a MAC");
     }
 
     public function testIsIpV4True()
@@ -86,6 +100,18 @@ class StringTest extends TestCase
         $this->assertFalse(StringValidation::isIpV4(123456), "Is not an IP v4");
         $this->assertFalse(StringValidation::isIpV4("123456"), "Is not an IP v4");
         $this->assertFalse(StringValidation::isIpV4("192.168.0.256"), "Is not an IP v4");
+    }
+
+    public function testIsIpV6True()
+    {
+        $this->assertTrue(StringValidation::isIpV6("0000::0000:0000:0000:0000"), "Is an IP v6");
+        $this->assertTrue(StringValidation::isIpV6("f000::0000:0000:0000:0000"), "Is an IP v6");
+    }
+
+    public function testIsIpV6False()
+    {
+        $this->assertFalse(StringValidation::isIpV6("0000:0000:0000:0000:0000"), "Is not an IP v6");
+        $this->assertFalse(StringValidation::isIpV6("g000::0000:0000:0000:0000"), "Is not an IP v6");
     }
 
     public function testIsLengthGreatherThanTrue()

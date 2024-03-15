@@ -2,7 +2,7 @@
 
 namespace JuanchoSL\Validators\Tests\Functional;
 
-use JuanchoSL\Validators\StringValidations;
+use JuanchoSL\Validators\Types\Strings\StringValidations;
 use PHPUnit\Framework\TestCase;
 
 class StringMultipleTest extends TestCase

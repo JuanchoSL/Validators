@@ -2,7 +2,7 @@
 
 namespace JuanchoSL\Validators\Tests\Functional;
 
-use JuanchoSL\Validators\NumberValidations;
+use JuanchoSL\Validators\Types\Numbers\NumberValidations;
 use PHPUnit\Framework\TestCase;
 
 class NumberMultipleTest extends TestCase
