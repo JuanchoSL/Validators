@@ -13,16 +13,16 @@ StringValidation::isEmail("juanchosl@hotmail.com"); //true
 or
 
 ```
-$validator = new StringValidations('juanchosl@hotmail.com');
+$validator = new StringValidations();
 $validator
     ->is()
     ->isNotEmpty()
     ->isLengthGreatherThan(15)
     ->isEmail();
     
-$validator->success(); //true
+$validator->getResult('juanchosl@hotmail.com'); //true
 
-print_r($validator->getResults());
+print_r($validator->getResults('juanchosl@hotmail.com'));
 Array
 (
     [is] => 1

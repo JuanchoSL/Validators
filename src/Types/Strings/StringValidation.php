@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace JuanchoSL\Validators\Types\Strings;
 
+use JuanchoSL\Validators\Contracts\Single\BasicValidatorsInterface;
 use JuanchoSL\Validators\Contracts\Single\LengthValidatorsInterface;
-use JuanchoSL\Validators\Contracts\Single\TypeValidatorsInterface;
+use JuanchoSL\Validators\Contracts\Single\RegexValidatorsInterface;
+use JuanchoSL\Validators\Contracts\Single\StringContentsTypeValidatorsInterface;
 
-class StringValidation implements TypeValidatorsInterface, LengthValidatorsInterface
+class StringValidation implements BasicValidatorsInterface, LengthValidatorsInterface, RegexValidatorsInterface, StringContentsTypeValidatorsInterface
 {
 
     public static function is(string|int|float|bool|null $var): bool
@@ -19,6 +21,10 @@ class StringValidation implements TypeValidatorsInterface, LengthValidatorsInter
         return empty ($var);
     }
 
+    public static function isNotEmpty(string|int|float|bool|null $var): bool
+    {
+        return !empty ($var);
+    }
     public static function isLengthGreatherThan(string|int|float|bool|null $var, int $limit): bool
     {
         return strlen((string) $var) > $limit;

@@ -4,25 +4,22 @@ declare(strict_types=1);
 
 namespace JuanchoSL\Validators\Types;
 
-use JuanchoSL\Validators\Contracts\Multi\LengthValidatorsInterface;
-use JuanchoSL\Validators\Contracts\Multi\TypeValidatorsInterface;
+use JuanchoSL\Validators\Contracts\Multi\BasicValidatorsInterface;
 
-abstract class AbstractValidations implements TypeValidatorsInterface, LengthValidatorsInterface
+abstract class AbstractValidations implements BasicValidatorsInterface
 {
+    /**
+     * @var array<int, array<string,string|array<int,mixed>>> $tests
+     */
+    protected array $tests = [];
     /**
      * @var array<string, bool> $results
      */
     protected array $results = [];
-    protected string|int|float|bool|null $var;
 
-    public function __construct(string|int|float|bool|null $var)
+    public function getResult(string|int|float|bool|null $var): bool
     {
-        $this->var = $var;
-        //$this->var = filter_var($var, FILTER_SANITIZE_STRING);
-    }
-
-    public function success(): bool
-    {
+        $this->process($var);
         foreach ($this->results as $result) {
             if (!$result) {
                 return false;
@@ -34,22 +31,33 @@ abstract class AbstractValidations implements TypeValidatorsInterface, LengthVal
     /**
      * @return array<string, bool>
      */
-    public function getResults(): array
+    public function getResults(string|int|float|bool|null $var): array
     {
+        $this->process($var);
         return $this->results;
     }
 
-    protected function createKey(): ?string
+    /**
+     * @param array<int,mixed> $params
+     */
+    protected function createKey(string $method, array $params = []): string
     {
-        $args = func_get_args();
-        $key = array_shift($args);
-        if (empty ($key) || !is_string($key)) {
-            return null;
+        if (!empty ($params)) {
+            $method .= ": " . implode(',', $params);
         }
-        $key = strval($key);
-        if (!empty ($args)) {
-            $key .= ": " . implode(',', $args);
+        return $method;
+    }
+
+    protected function process(string|int|float|bool|null $var): void
+    {
+        $this->results = [];
+        foreach ($this->tests as $tests) {
+            $callable = (isset ($tests['class'], $tests['method'])) ? [$tests['class'], $tests['method']] : $tests['method'];
+            //$key = call_user_func_array([$this, 'createKey'], array_merge([$tests['method']], $tests['params']));
+            //$key = !is_string($key) ? $tests['method'] : $key;
+            $tests['params'] = $tests['params'] ?? [];
+            $key = $this->createKey($tests['method'], $tests['params']);
+            $this->results[$key] = call_user_func_array($callable, array_merge([$var], $tests['params'])) !== false;
         }
-        return $key;
     }
 }

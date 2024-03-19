@@ -4,111 +4,142 @@ declare(strict_types=1);
 
 namespace JuanchoSL\Validators\Types\Strings;
 
+use JuanchoSL\Validators\Contracts\Multi\RegexValidatorsInterface;
+use JuanchoSL\Validators\Contracts\Multi\StringContentsTypeValidatorsInterface;
 use JuanchoSL\Validators\Types\AbstractValidations;
+use JuanchoSL\Validators\Contracts\Multi\LengthValidatorsInterface;
 
-class StringValidations extends AbstractValidations
+class StringValidations extends AbstractValidations implements RegexValidatorsInterface, LengthValidatorsInterface, StringContentsTypeValidatorsInterface
 {
 
-    public function is(): self
+    public function is(): static
     {
-        $key = call_user_func_array([$this, 'createKey'], array_merge([__FUNCTION__], func_get_args()));
-        $key = !is_string($key) ? __FUNCTION__ : $key;
-        $this->results[$key] = StringValidation::is($this->var);
+        $this->tests[] = [
+            "class" => StringValidation::class,
+            "method" => 'is',
+            "params" => func_get_args()
+        ];
         return $this;
     }
 
-    public function isEmpty(): self
+    public function isEmpty(): static
     {
-        $key = call_user_func_array([$this, 'createKey'], array_merge([__FUNCTION__], func_get_args()));
-        $key = !is_string($key) ? __FUNCTION__ : $key;
-        $this->results[$key] = StringValidation::isEmpty($this->var);
+        $this->tests[] = [
+            "class" => StringValidation::class,
+            "method" => 'isEmpty',
+            "params" => func_get_args()
+        ];
         return $this;
     }
 
-    public function isNotEmpty(): self
+    public function isNotEmpty(): static
     {
-        $key = call_user_func_array([$this, 'createKey'], array_merge([__FUNCTION__], func_get_args()));
-        $key = !is_string($key) ? __FUNCTION__ : $key;
-        $this->results[$key] = !StringValidation::isEmpty($this->var);
+        $this->tests[] = [
+            "class" => StringValidation::class,
+            "method" => 'isNotEmpty',
+            "params" => func_get_args()
+        ];
         return $this;
     }
 
-    public function isLengthGreatherThan(int $limit): self
+    public function isLengthGreatherThan(int $limit): static
     {
-        $key = call_user_func_array([$this, 'createKey'], array_merge([__FUNCTION__], func_get_args()));
-        $key = !is_string($key) ? __FUNCTION__ : $key;
-        $this->results[$key] = StringValidation::isLengthGreatherThan($this->var, $limit);
+        $this->tests[] = [
+            "class" => StringValidation::class,
+            "method" => 'isLengthGreatherThan',
+            "params" => func_get_args()
+        ];
         return $this;
     }
-    public function isLengthGreatherOrEqualsThan(int $limit): self
+    public function isLengthGreatherOrEqualsThan(int $limit): static
     {
-        $key = call_user_func_array([$this, 'createKey'], array_merge([__FUNCTION__], func_get_args()));
-        $key = !is_string($key) ? __FUNCTION__ : $key;
-        $this->results[$key] = StringValidation::isLengthGreatherOrEqualsThan($this->var, $limit);
+        $this->tests[] = [
+            "class" => StringValidation::class,
+            "method" => 'isLengthGreatherOrEqualsThan',
+            "params" => func_get_args()
+        ];
         return $this;
     }
-    public function isLengthLessThan(int $limit): self
+    public function isLengthLessThan(int $limit): static
     {
-        $key = call_user_func_array([$this, 'createKey'], array_merge([__FUNCTION__], func_get_args()));
-        $key = !is_string($key) ? __FUNCTION__ : $key;
-        $this->results[$key] = StringValidation::isLengthLessThan($this->var, $limit);
+        $this->tests[] = [
+            "class" => StringValidation::class,
+            "method" => 'isLengthLessThan',
+            "params" => func_get_args()
+        ];
         return $this;
     }
-    public function isLengthLessOrEqualsThan(int $limit): self
+    public function isLengthLessOrEqualsThan(int $limit): static
     {
-        $key = call_user_func_array([$this, 'createKey'], array_merge([__FUNCTION__], func_get_args()));
-        $key = !is_string($key) ? __FUNCTION__ : $key;
-        $this->results[$key] = StringValidation::isLengthLessOrEqualsThan($this->var, $limit);
+        $this->tests[] = [
+            "class" => StringValidation::class,
+            "method" => 'isLengthLessOrEqualsThan',
+            "params" => func_get_args()
+        ];
         return $this;
     }
 
-    public function isEmail(): self
+    public function isEmail(): static
     {
-        $key = call_user_func_array([$this, 'createKey'], array_merge([__FUNCTION__], func_get_args()));
-        $key = !is_string($key) ? __FUNCTION__ : $key;
-        $this->results[$key] = StringValidation::isEmail($this->var);
+        $this->tests[] = [
+            "class" => StringValidation::class,
+            "method" => 'isEmail',
+            "params" => func_get_args()
+        ];
         return $this;
     }
-    public function isUrl(): self
+    public function isUrl(): static
     {
-        $key = call_user_func_array([$this, 'createKey'], array_merge([__FUNCTION__], func_get_args()));
-        $key = !is_string($key) ? __FUNCTION__ : $key;
-        $this->results[$key] = StringValidation::isUrl($this->var);
+        $this->tests[] = [
+            "class" => StringValidation::class,
+            "method" => 'isUrl',
+            "params" => func_get_args()
+        ];
         return $this;
     }
-    public function isIpV4(): self
+    public function isIpV4(): static
     {
-        $key = call_user_func_array([$this, 'createKey'], array_merge([__FUNCTION__], func_get_args()));
-        $key = !is_string($key) ? __FUNCTION__ : $key;
-        $this->results[$key] = StringValidation::isIpV4($this->var);
+        $this->tests[] = [
+            "class" => StringValidation::class,
+            "method" => 'isIpV4',
+            "params" => func_get_args()
+        ];
         return $this;
     }
-    public function isIpV6(): self
+    public function isIpV6(): static
     {
-        $key = call_user_func_array([$this, 'createKey'], array_merge([__FUNCTION__], func_get_args()));
-        $key = !is_string($key) ? __FUNCTION__ : $key;
-        $this->results[$key] = StringValidation::isIpV6($this->var);
+        $this->tests[] = [
+            "class" => StringValidation::class,
+            "method" => 'isIpV6',
+            "params" => func_get_args()
+        ];
         return $this;
     }
-    public function isMac(): self
+    public function isMac(): static
     {
-        $key = call_user_func_array([$this, 'createKey'], array_merge([__FUNCTION__], func_get_args()));
-        $key = !is_string($key) ? __FUNCTION__ : $key;
-        $this->results[$key] = StringValidation::isMac($this->var);
+        $this->tests[] = [
+            "class" => StringValidation::class,
+            "method" => 'isMac',
+            "params" => func_get_args()
+        ];
         return $this;
     }
-    public function isDomain(): self
+    public function isDomain(): static
     {
-        $key = call_user_func_array([$this, 'createKey'], array_merge([__FUNCTION__], func_get_args()));
-        $key = !is_string($key) ? __FUNCTION__ : $key;
-        $this->results[$key] = StringValidation::isDomain($this->var);
+        $this->tests[] = [
+            "class" => StringValidation::class,
+            "method" => 'isDomain',
+            "params" => func_get_args()
+        ];
         return $this;
     }
-    public function isRegex(string $expresion): self
+    public function isRegex(string $expresion): static
     {
-        $key = call_user_func_array([$this, 'createKey'], array_merge([__FUNCTION__], func_get_args()));
-        $key = !is_string($key) ? __FUNCTION__ : $key;
-        $this->results[$key] = StringValidation::isRegex($this->var, $expresion);
+        $this->tests[] = [
+            "class" => StringValidation::class,
+            "method" => 'isRegex',
+            "params" => func_get_args()
+        ];
         return $this;
     }
 

@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace JuanchoSL\Validators\Types\Numbers;
 
+use JuanchoSL\Validators\Contracts\Single\BasicValidatorsInterface;
 use JuanchoSL\Validators\Contracts\Single\LengthValidatorsInterface;
-use JuanchoSL\Validators\Contracts\Single\TypeValidatorsInterface;
+use JuanchoSL\Validators\Contracts\Single\RegexValidatorsInterface;
 
-class NumberValidation implements TypeValidatorsInterface, LengthValidatorsInterface
+class NumberValidation implements BasicValidatorsInterface, LengthValidatorsInterface, RegexValidatorsInterface
 {
 
     public static function is(string|int|float|bool|null $var): bool
@@ -17,6 +18,11 @@ class NumberValidation implements TypeValidatorsInterface, LengthValidatorsInter
     public static function isEmpty(string|int|float|bool|null $var): bool
     {
         return empty ($var);
+    }
+
+    public static function isNotEmpty(string|int|float|bool|null $var): bool
+    {
+        return !empty ($var);
     }
 
     public static function isLengthGreatherThan(string|int|float|bool|null $var, int $limit): bool

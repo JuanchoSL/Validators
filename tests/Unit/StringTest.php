@@ -27,9 +27,19 @@ class StringTest extends TestCase
         $this->assertTrue(StringValidation::isEmpty(null), "Is an empty string");
         $this->assertTrue(StringValidation::isEmpty(false), "Is an empty string");
     }
-    public function isEmptyFalse()
+    public function testIsEmptyFalse()
     {
         $this->assertFalse(StringValidation::isEmpty('string'), "Is not an empty string");
+    }
+    public function testIsNotEmptyTrue()
+    {
+        $this->assertTrue(StringValidation::isNotEmpty('string'), "Is not an empty string");
+    }
+    public function testIsNotEmptyFalse()
+    {
+        $this->assertFalse(StringValidation::isNotEmpty(""), "Is an empty string");
+        $this->assertFalse(StringValidation::isNotEmpty(null), "Is an empty string");
+        $this->assertFalse(StringValidation::isNotEmpty(false), "Is an empty string");
     }
 
     public function testIsEmailTrue()
@@ -51,7 +61,7 @@ class StringTest extends TestCase
         $this->assertTrue(StringValidation::isUrl("ftps://ftp.url.com"), "Is an url");
         $this->assertTrue(StringValidation::isUrl("https://www.url.com/index.php"), "Is an url");
     }
-    
+
     public function testIsUrlFalse()
     {
         $this->assertFalse(StringValidation::isUrl("isnotanurl"), "Is not an url");
@@ -66,7 +76,7 @@ class StringTest extends TestCase
         $this->assertTrue(StringValidation::isDomain("ftp.url.com"), "Is a domain");
         $this->assertTrue(StringValidation::isDomain("ftp.url.com"), "Is a domain");
     }
-    
+
     public function testIsDomainFalse()
     {
         $this->assertFalse(StringValidation::isDomain("http://isnotanurl"), "Is not a domain");

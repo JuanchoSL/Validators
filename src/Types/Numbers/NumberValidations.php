@@ -4,73 +4,90 @@ declare(strict_types=1);
 
 namespace JuanchoSL\Validators\Types\Numbers;
 
+use JuanchoSL\Validators\Contracts\Multi\RegexValidatorsInterface;
 use JuanchoSL\Validators\Types\AbstractValidations;
+use JuanchoSL\Validators\Contracts\Multi\LengthValidatorsInterface;
 
-class NumberValidations extends AbstractValidations
+class NumberValidations extends AbstractValidations implements RegexValidatorsInterface, LengthValidatorsInterface
 {
 
-    public function is(): self
+    public function is(): static
     {
-        $key = call_user_func_array([$this, 'createKey'], array_merge([__FUNCTION__], func_get_args()));
-        $key = !is_string($key) ? __FUNCTION__ : $key;
-        $this->results[$key] = NumberValidation::is($this->var);
+        $this->tests[] = [
+            "class" => NumberValidation::class,
+            "method" => 'is',
+            "params" => func_get_args()
+        ];
         return $this;
     }
 
-    public function isEmpty(): self
+    public function isEmpty(): static
     {
-        $key = call_user_func_array([$this, 'createKey'], array_merge([__FUNCTION__], func_get_args()));
-        $key = !is_string($key) ? __FUNCTION__ : $key;
-        $this->results[$key] = NumberValidation::isEmpty($this->var);
+        $this->tests[] = [
+            "class" => NumberValidation::class,
+            "method" => 'isEmpty',
+            "params" => func_get_args()
+        ];
         return $this;
     }
 
-    public function isNotEmpty(): self
+    public function isNotEmpty(): static
     {
-        $key = call_user_func_array([$this, 'createKey'], array_merge([__FUNCTION__], func_get_args()));
-        $key = !is_string($key) ? __FUNCTION__ : $key;
-        $this->results[$key] = !NumberValidation::isEmpty($this->var);
+        $this->tests[] = [
+            "class" => NumberValidation::class,
+            "method" => 'isNotEmpty',
+            "params" => func_get_args()
+        ];
         return $this;
     }
 
-
-    public function isLengthGreatherThan(int $limit): self
+    public function isLengthGreatherThan(int $limit): static
     {
-        $key = call_user_func_array([$this, 'createKey'], array_merge([__FUNCTION__], func_get_args()));
-        $key = !is_string($key) ? __FUNCTION__ : $key;
-        $this->results[$key] = NumberValidation::isLengthGreatherThan($this->var, $limit);
+        $this->tests[] = [
+            "class" => NumberValidation::class,
+            "method" => 'isLengthGreatherThan',
+            "params" => func_get_args()
+        ];
         return $this;
     }
 
-    public function isLengthGreatherOrEqualsThan(int $limit): self
+    public function isLengthGreatherOrEqualsThan(int $limit): static
     {
-        $key = call_user_func_array([$this, 'createKey'], array_merge([__FUNCTION__], func_get_args()));
-        $key = !is_string($key) ? __FUNCTION__ : $key;
-        $this->results[$key] = NumberValidation::isLengthGreatherOrEqualsThan($this->var, $limit);
+        $this->tests[] = [
+            "class" => NumberValidation::class,
+            "method" => 'isLengthGreatherOrEqualsThan',
+            "params" => func_get_args()
+        ];
         return $this;
     }
 
-    public function isLengthLessThan(int $limit): self
+    public function isLengthLessThan(int $limit): static
     {
-        $key = call_user_func_array([$this, 'createKey'], array_merge([__FUNCTION__], func_get_args()));
-        $key = !is_string($key) ? __FUNCTION__ : $key;
-        $this->results[$key] = NumberValidation::isLengthLessThan($this->var, $limit);
+        $this->tests[] = [
+            "class" => NumberValidation::class,
+            "method" => 'isLengthLessThan',
+            "params" => func_get_args()
+        ];
         return $this;
     }
 
-    public function isLengthLessOrEqualsThan(int $limit): self
+    public function isLengthLessOrEqualsThan(int $limit): static
     {
-        $key = call_user_func_array([$this, 'createKey'], array_merge([__FUNCTION__], func_get_args()));
-        $key = !is_string($key) ? __FUNCTION__ : $key;
-        $this->results[$key] = NumberValidation::isLengthLessOrEqualsThan($this->var, $limit);
+        $this->tests[] = [
+            "class" => NumberValidation::class,
+            "method" => 'isLengthLessOrEqualsThan',
+            "params" => func_get_args()
+        ];
         return $this;
     }
 
-    public function isRegex(string $expresion): self
+    public function isRegex(string $expresion): static
     {
-        $key = call_user_func_array([$this, 'createKey'], array_merge([__FUNCTION__], func_get_args()));
-        $key = !is_string($key) ? __FUNCTION__ : $key;
-        $this->results[$key] = NumberValidation::isRegex($this->var, $expresion);
+        $this->tests[] = [
+            "class" => NumberValidation::class,
+            "method" => 'isRegex',
+            "params" => func_get_args()
+        ];
         return $this;
     }
 

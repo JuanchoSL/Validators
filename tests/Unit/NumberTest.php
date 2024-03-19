@@ -28,9 +28,19 @@ class NumberTest extends TestCase
         $this->assertTrue(NumberValidation::isEmpty(false), "Is an empty number");
         $this->assertTrue(NumberValidation::isEmpty(null), "Is an empty number");
     }
-    public function isEmptyFalse()
+    public function testIsEmptyFalse()
     {
-        $this->assertFalse(NumberValidation::is(1), "Is not an empty number");
+        $this->assertFalse(NumberValidation::isEmpty(1), "Is not an empty number");
+    }
+    public function testIsNotEmptyTrue()
+    {
+        $this->assertTrue(NumberValidation::isNotEmpty(1), "Is not an empty number");
+    }
+    public function testIsNotEmptyFalse()
+    {
+        $this->assertFalse(NumberValidation::isNotEmpty(0), "Is an empty number");
+        $this->assertFalse(NumberValidation::isNotEmpty(false), "Is an empty number");
+        $this->assertFalse(NumberValidation::isNotEmpty(null), "Is an empty number");
     }
 
     public function testIsLengthGreatherThanTrue()
