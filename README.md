@@ -6,19 +6,60 @@ Little methods collection in order to validate variables contents
 
 ## How to use
 
-```
+### Single validation
+
+You can perform an only check over a single value
+
+```php
 StringValidation::isEmail("juanchosl@hotmail.com"); //true
 ```
 
-or
+### Multiple validation over 1 value
 
-```
-$validator = new StringValidations('juanchosl@hotmail.com"');
+You can perform a few checks over a single value
+
+```php
+$validator = new StringValidations();
 $validator
     ->is()
     ->isNotEmpty()
     ->isLengthGreatherThan(15)
     ->isEmail();
-    
-$validator->success(); //true
+
+$validator->getResult('juanchosl@hotmail.com'); //true
+
+print_r($validator->getResults('juanchosl@hotmail.com'));
+Array
+(
+    [is] => 1
+    [isNotEmpty] => 1
+    [isLengthGreatherThan: 15] => 1
+    [isEmail] => 1
+)
+```
+
+### Multiple validations over multiple values
+
+You can perform a few checks over multiple values
+
+```php
+$validator = new StringValidations();
+$validator
+    ->is()
+    ->isNotEmpty()
+    ->isLengthGreatherThan(15)
+    ->isEmail();
+
+    foreach(['juanchosl@hotmail.com', 'email@corporation.com'] as $text){
+        $validator->getResult($text); //true
+
+        print_r($validator->getResults($text));
+        Array
+        (
+            [is] => 1
+            [isNotEmpty] => 1
+            [isLengthGreatherThan: 15] => 1
+            [isEmail] => 1
+        )
+    }
 ```
