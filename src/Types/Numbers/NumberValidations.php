@@ -11,10 +11,12 @@ use JuanchoSL\Validators\Contracts\Multi\LengthValidatorsInterface;
 class NumberValidations extends AbstractValidations implements RegexValidatorsInterface, LengthValidatorsInterface
 {
 
+    protected $validator = NumberValidation::class;
+
     public function is(): static
     {
         $this->tests[] = [
-            "class" => NumberValidation::class,
+            "class" => $this->validator,
             "method" => 'is',
             "params" => func_get_args()
         ];
@@ -24,7 +26,7 @@ class NumberValidations extends AbstractValidations implements RegexValidatorsIn
     public function isEmpty(): static
     {
         $this->tests[] = [
-            "class" => NumberValidation::class,
+            "class" => $this->validator,
             "method" => 'isEmpty',
             "params" => func_get_args()
         ];
@@ -34,7 +36,7 @@ class NumberValidations extends AbstractValidations implements RegexValidatorsIn
     public function isNotEmpty(): static
     {
         $this->tests[] = [
-            "class" => NumberValidation::class,
+            "class" => $this->validator,
             "method" => 'isNotEmpty',
             "params" => func_get_args()
         ];
@@ -44,7 +46,7 @@ class NumberValidations extends AbstractValidations implements RegexValidatorsIn
     public function isLengthGreatherThan(int $limit): static
     {
         $this->tests[] = [
-            "class" => NumberValidation::class,
+            "class" => $this->validator,
             "method" => 'isLengthGreatherThan',
             "params" => func_get_args()
         ];
@@ -54,7 +56,7 @@ class NumberValidations extends AbstractValidations implements RegexValidatorsIn
     public function isLengthGreatherOrEqualsThan(int $limit): static
     {
         $this->tests[] = [
-            "class" => NumberValidation::class,
+            "class" => $this->validator,
             "method" => 'isLengthGreatherOrEqualsThan',
             "params" => func_get_args()
         ];
@@ -64,7 +66,7 @@ class NumberValidations extends AbstractValidations implements RegexValidatorsIn
     public function isLengthLessThan(int $limit): static
     {
         $this->tests[] = [
-            "class" => NumberValidation::class,
+            "class" => $this->validator,
             "method" => 'isLengthLessThan',
             "params" => func_get_args()
         ];
@@ -74,7 +76,7 @@ class NumberValidations extends AbstractValidations implements RegexValidatorsIn
     public function isLengthLessOrEqualsThan(int $limit): static
     {
         $this->tests[] = [
-            "class" => NumberValidation::class,
+            "class" => $this->validator,
             "method" => 'isLengthLessOrEqualsThan',
             "params" => func_get_args()
         ];
@@ -84,7 +86,7 @@ class NumberValidations extends AbstractValidations implements RegexValidatorsIn
     public function isRegex(string $expresion): static
     {
         $this->tests[] = [
-            "class" => NumberValidation::class,
+            "class" => $this->validator,
             "method" => 'isRegex',
             "params" => func_get_args()
         ];

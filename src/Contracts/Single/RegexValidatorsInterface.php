@@ -9,7 +9,9 @@ interface RegexValidatorsInterface
 
     /**
      * Check if the passed value validate a regex expression
+     * @param string|int|float $var The value to check
+     * @param string $expression The regular expression to check
      * @return bool The result of the check
      */
-    public static function isRegex(string|int|float|bool|null $var, string $expresion): bool;
+    public static function isRegex(string|int|float $var, string $expression): bool;
 }
