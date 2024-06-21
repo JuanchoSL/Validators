@@ -2,25 +2,25 @@
 
 namespace JuanchoSL\Validators\Tests\Functional;
 
-use JuanchoSL\Validators\Types\Numbers\NumberValidations;
+use JuanchoSL\Validators\Types\Floats\FloatValidations;
 use PHPUnit\Framework\TestCase;
 
-class NumberMultipleTest extends TestCase
+class FloatMultipleTest extends TestCase
 {
     protected $validator;
 
     public function setUp(): void
     {
-        $this->validator = new NumberValidations();
+        $this->validator = new FloatValidations();
     }
     public function testLongNumber()
     {
         $this->validator
             ->is()
             ->isNotEmpty()
-            ->isLengthGreatherThan(15);
+            ->isLengthGreatherThan(12);
 
-        $this->assertTrue($this->validator->getResult(1234567890123456));
+            $this->assertTrue($this->validator->getResult(1234567890.123456789));
     }
 
     public function testLongNumberFail()
@@ -30,7 +30,7 @@ class NumberMultipleTest extends TestCase
             ->isNotEmpty()
             ->isLengthGreatherThan(15);
 
-        $this->assertFalse($this->validator->getResult(123456789));
+        $this->assertFalse($this->validator->getResult(1234.56789));
     }
 
     public function testLessNumber()
@@ -40,7 +40,7 @@ class NumberMultipleTest extends TestCase
             ->isNotEmpty()
             ->isLengthLessThan(25);
 
-        $this->assertTrue($this->validator->getResult(1234567890123456));
+        $this->assertTrue($this->validator->getResult(1234567890.123456));
     }
 
     public function testLessNumberFail()
@@ -50,6 +50,6 @@ class NumberMultipleTest extends TestCase
             ->isNotEmpty()
             ->isLengthLessThan(5);
 
-        $this->assertFalse($this->validator->getResult(123456789));
+        $this->assertFalse($this->validator->getResult(123456.789));
     }
 }

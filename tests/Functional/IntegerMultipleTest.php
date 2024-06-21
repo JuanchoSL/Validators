@@ -2,16 +2,16 @@
 
 namespace JuanchoSL\Validators\Tests\Functional;
 
-use JuanchoSL\Validators\Types\Numbers\NumberValidations;
+use JuanchoSL\Validators\Types\Integers\IntegerValidations;
 use PHPUnit\Framework\TestCase;
 
-class NumberMultipleTest extends TestCase
+class IntegerMultipleTest extends TestCase
 {
     protected $validator;
 
     public function setUp(): void
     {
-        $this->validator = new NumberValidations();
+        $this->validator = new IntegerValidations();
     }
     public function testLongNumber()
     {

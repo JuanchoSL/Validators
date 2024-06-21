@@ -4,7 +4,19 @@
 
 Little methods collection in order to validate variables contents
 
+## Install
+```bash
+composer require juanchosl/validators
+composer update
+```
+
 ## How to use
+
+### Validation availability
+* Strings
+* General numbers
+* Specific integers
+* Specific floats
 
 ### Single validation
 
