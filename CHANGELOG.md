@@ -1,5 +1,17 @@
 # Change Log Validators
 
+## [1.0.2] - 2024-06-28
+
+### Added
+- More tests
+- More documentation
+
+### Changed
+- Validators for number length use multi byte functions 
+
+### Fixed
+
+
 ## [1.0.1] - 2024-06-12
 
 ### Added
