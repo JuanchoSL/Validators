@@ -19,19 +19,19 @@ class NumberValidation extends AbstractValidation implements BasicValidatorsInte
 
     public static function isLengthGreatherThan(string|int|float $var, int $limit): bool
     {
-        return self::is($var) && strlen((string) $var) > $limit;
+        return self::is($var) && mb_strlen((string) $var) > $limit;
     }
     public static function isLengthGreatherOrEqualsThan(string|int|float $var, int $limit): bool
     {
-        return self::is($var) && strlen((string) $var) >= $limit;
+        return self::is($var) && mb_strlen((string) $var) >= $limit;
     }
     public static function isLengthLessThan(string|int|float $var, int $limit): bool
     {
-        return self::is($var) && strlen((string) $var) < $limit;
+        return self::is($var) && mb_strlen((string) $var) < $limit;
     }
     public static function isLengthLessOrEqualsThan(string|int|float $var, int $limit): bool
     {
-        return self::is($var) && strlen((string) $var) <= $limit;
+        return self::is($var) && mb_strlen((string) $var) <= $limit;
     }
 
     public static function isRegex(string|int|float $var, string $expresion): bool

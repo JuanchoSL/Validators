@@ -20,19 +20,19 @@ class StringValidation extends AbstractValidation implements BasicValidatorsInte
 
     public static function isLengthGreatherThan(string|int|float $var, int $limit): bool
     {
-        return strlen((string) $var) > $limit;
+        return mb_strlen((string) $var) > $limit;
     }
     public static function isLengthGreatherOrEqualsThan(string|int|float $var, int $limit): bool
     {
-        return strlen((string) $var) >= $limit;
+        return mb_strlen((string) $var) >= $limit;
     }
     public static function isLengthLessThan(string|int|float $var, int $limit): bool
     {
-        return strlen((string) $var) < $limit;
+        return mb_strlen((string) $var) < $limit;
     }
     public static function isLengthLessOrEqualsThan(string|int|float $var, int $limit): bool
     {
-        return strlen((string) $var) <= $limit;
+        return mb_strlen((string) $var) <= $limit;
     }
 
     public static function isEmail(string|int|float $var): bool
