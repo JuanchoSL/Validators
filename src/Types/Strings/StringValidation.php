@@ -18,6 +18,11 @@ class StringValidation extends AbstractValidation implements BasicValidatorsInte
         return is_string($var);
     }
 
+    public static function isLengthEqualsThan(string|int|float $var, int $limit): bool
+    {
+        return mb_strlen((string) $var) == $limit;
+    }
+
     public static function isLengthGreatherThan(string|int|float $var, int $limit): bool
     {
         return mb_strlen((string) $var) > $limit;

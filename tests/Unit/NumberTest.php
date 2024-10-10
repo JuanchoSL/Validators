@@ -43,6 +43,15 @@ class NumberTest extends TestCase
         $this->assertFalse(NumberValidation::isNotEmpty(null), "Is an empty number");
     }
 
+    public function testIsLengthEqualsTrue()
+    {
+        $this->assertTrue(NumberValidation::isLengthEqualsThan(123456789, 9), "Is a number with a length equals to 9");
+    }
+    public function testIsLengthEqualsFalse()
+    {
+        $this->assertFalse(NumberValidation::isLengthEqualsThan(123456789, 8), "Is not a number with a length equals to 8");
+    }
+
     public function testIsLengthGreatherThanTrue()
     {
         $this->assertTrue(NumberValidation::isLengthGreatherThan(123456789, 8), "Is a number with a length greather than 8");
@@ -86,5 +95,54 @@ class NumberTest extends TestCase
     public function testIsLengthLessThanFalse()
     {
         $this->assertFalse(NumberValidation::isLengthLessThan(123456789, 8), "Is not a number with length less than 10");
+    }
+
+    public function testIsValueEqualsTrue()
+    {
+        $this->assertTrue(NumberValidation::isValueEqualsThan(123456789, 123456789), "Is a number with value equals to");
+    }
+    public function testIsValueEqualsFalse()
+    {
+        $this->assertFalse(NumberValidation::isValueEqualsThan(123456789, 123456788), "Is not a number with value equals to");
+    }
+
+    public function testIsValueGreatherOrEqualsTrue()
+    {
+        $this->assertTrue(NumberValidation::isValueGreatherThanOrEquals(123456789, 123456789), "Is a number with value greather than or equals to");
+        $this->assertTrue(NumberValidation::isValueGreatherThanOrEquals(123456790, 123456789), "Is a number with value greather than or equals to");
+    }
+    public function testIsValueGreatherOrEqualsFalse()
+    {
+        $this->assertFalse(NumberValidation::isValueGreatherThanOrEquals(123456787, 123456788), "Is not a number with value greather than or equals to");
+    }
+
+    public function testIsValueGreatherTrue()
+    {
+        $this->assertTrue(NumberValidation::isValueGreatherThan(123456790, 123456789), "Is a number with value greather than to");
+    }
+    public function testIsValueGreatherFalse()
+    {
+        $this->assertFalse(NumberValidation::isValueGreatherThan(123456789, 123456789), "Is not a number with value greather than to");
+        $this->assertFalse(NumberValidation::isValueGreatherThan(123456787, 123456788), "Is not a number with value greather than to");
+    }
+    
+    public function testIsValueLessOrEqualsTrue()
+    {
+        $this->assertTrue(NumberValidation::isValueLessThanOrEquals(123456789, 123456789), "Is a number with value Less than or equals to");
+        $this->assertTrue(NumberValidation::isValueLessThanOrEquals(123456788, 123456789), "Is a number with value Less than or equals to");
+    }
+    public function testIsValueLessOrEqualsFalse()
+    {
+        $this->assertFalse(NumberValidation::isValueLessThanOrEquals(123456789, 123456788), "Is not a number with value Less than or equals to");
+    }
+    
+    public function testIsValueLessTrue()
+    {
+        $this->assertTrue(NumberValidation::isValueLessThan(123456788, 123456789), "Is a number with value Less than or equals to");
+    }
+    public function testIsValueLessFalse()
+    {
+        $this->assertFalse(NumberValidation::isValueLessThan(123456789, 123456789), "Is not a number with value Less than to");
+        $this->assertFalse(NumberValidation::isValueLessThan(123456789, 123456788), "Is not a number with value Less than to");
     }
 }

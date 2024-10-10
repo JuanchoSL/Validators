@@ -124,6 +124,15 @@ class StringTest extends TestCase
         $this->assertFalse(StringValidation::isIpV6("g000::0000:0000:0000:0000"), "Is not an IP v6");
     }
 
+    public function testIsLengthEqualsTrue()
+    {
+        $this->assertTrue(StringValidation::isLengthEqualsThan("text string", 11), "Is a string with a length equals to 9");
+    }
+    public function testIsLengthEqualsFalse()
+    {
+        $this->assertFalse(StringValidation::isLengthEqualsThan("text string", 10), "Is not a string with a length equals to 10");
+    }
+
     public function testIsLengthGreatherThanTrue()
     {
         $this->assertTrue(StringValidation::isLengthGreatherThan("text string", 10), "Is a string with a length greather than 10");
