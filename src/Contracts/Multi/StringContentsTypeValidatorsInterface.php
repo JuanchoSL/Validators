@@ -41,4 +41,9 @@ interface StringContentsTypeValidatorsInterface
      * @return static The object to perform more checks
      */
     public function isDomain(): static;
+    /**
+     * Check if the passed value validate as a serialized value
+     * @return static The object to perform more checks
+     */
+    public function isSerialized(): static;
 }

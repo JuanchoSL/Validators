@@ -65,6 +65,14 @@ class StringValidation extends AbstractValidation implements BasicValidatorsInte
         return (filter_var($var, FILTER_VALIDATE_DOMAIN, FILTER_FLAG_HOSTNAME) !== false);
     }
 
+    public static function isSerialized(string $value): bool
+    {
+        if ($value != 'b:0;') {
+            $value = @unserialize($value);
+        }
+        return ($value !== false);
+        return !empty(preg_match('/^([C|O|a|i|s]+):\d+(:("\w+":\d+:)?([\\\s\w\d:"{};*.]+))?/', $value));
+    }
     public static function isRegex(string|int|float $var, string $expresion): bool
     {
         $results = [];

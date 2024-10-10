@@ -145,6 +145,15 @@ class StringValidations extends AbstractValidations implements RegexValidatorsIn
         ];
         return $this;
     }
+    public function isSerialized(): static
+    {
+        $this->tests[] = [
+            "class" => $this->validator,
+            "method" => 'isSerialized',
+            "params" => func_get_args()
+        ];
+        return $this;
+    }
     public function isRegex(string $expresion): static
     {
         $this->tests[] = [

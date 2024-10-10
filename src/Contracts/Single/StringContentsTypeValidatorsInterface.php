@@ -45,4 +45,11 @@ interface StringContentsTypeValidatorsInterface
      * @return bool The result of the check
      */
     public static function isDomain(string $var): bool;
+
+    /**
+     * Check if the passed value validate as a serialized value
+     * @param string $var The value to check
+     * @return bool The result of the check
+     */
+    public static function isSerialized(string $var): bool;
 }
