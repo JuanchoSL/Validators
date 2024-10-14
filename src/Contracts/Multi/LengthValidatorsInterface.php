@@ -8,6 +8,13 @@ interface LengthValidatorsInterface
 {
 
     /**
+     * Check if the assigned value has a length equals than indicated and save the result
+     * @param int $limit The limit to count
+     * @return static The object to perform more checks
+     */
+    public function isLengthEqualsThan(int $limit): static;
+
+    /**
      * Check if the assigned value has a length greather than indicated and save the result
      * @param int $limit The limit to count
      * @return static The object to perform more checks

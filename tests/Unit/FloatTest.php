@@ -43,6 +43,15 @@ class FloatTest extends TestCase
         $this->assertFalse(FloatValidation::isNotEmpty(null), "Is an empty number");
     }
 
+    public function testIsLengthEqualsTrue()
+    {
+        $this->assertTrue(FloatValidation::isLengthEqualsThan(123456789, 9), "Is a number with a length equals to 9");
+    }
+    public function testIsLengthEqualsFalse()
+    {
+        $this->assertFalse(FloatValidation::isLengthEqualsThan(123456789, 8), "Is not a number with a length equals to 8");
+    }
+
     public function testIsLengthGreatherThanTrue()
     {
         $this->assertTrue(FloatValidation::isLengthGreatherThan(123456789, 8), "Is a number with a length greather than 8");
@@ -86,5 +95,58 @@ class FloatTest extends TestCase
     public function testIsLengthLessThanFalse()
     {
         $this->assertFalse(FloatValidation::isLengthLessThan(123456789, 8), "Is not a number with length less than 10");
+    }
+    
+    public function testIsValueEqualsTrue()
+    {
+        $this->assertTrue(FloatValidation::isValueEqualsThan(123456789.2, 123456789.2), "Is a number with value equals to");
+        $this->assertTrue(FloatValidation::isValueEqualsThan(123456789.0, 123456789), "Is a number with value equals to");
+    }
+    public function testIsValueEqualsFalse()
+    {
+        $this->assertFalse(FloatValidation::isValueEqualsThan(123456789.0, 123456788), "Is not a number with value equals to");
+    }
+
+    public function testIsValueGreatherOrEqualsTrue()
+    {
+        $this->assertTrue(FloatValidation::isValueGreatherThanOrEquals(123456789.0, 123456789), "Is a number with value greather than or equals to");
+        $this->assertTrue(FloatValidation::isValueGreatherThanOrEquals(123456789, 123456789.0), "Is a number with value greather than or equals to");
+        $this->assertTrue(FloatValidation::isValueGreatherThanOrEquals(123456789.1, 123456789.1), "Is a number with value greather than or equals to");
+        $this->assertTrue(FloatValidation::isValueGreatherThanOrEquals(123456789.2, 123456789.0), "Is a number with value greather than or equals to");
+    }
+    public function testIsValueGreatherOrEqualsFalse()
+    {
+        $this->assertFalse(FloatValidation::isValueGreatherThanOrEquals(123456787.2, 123456788), "Is not a number with value greather than or equals to");
+        $this->assertFalse(FloatValidation::isValueGreatherThanOrEquals(123456787.0, 123456788), "Is not a number with value greather than or equals to");
+    }
+
+    public function testIsValueGreatherTrue()
+    {
+        $this->assertTrue(FloatValidation::isValueGreatherThan(123456790, 123456789), "Is a number with value greather than to");
+    }
+    public function testIsValueGreatherFalse()
+    {
+        $this->assertFalse(FloatValidation::isValueGreatherThan(123456789, 123456789), "Is not a number with value greather than to");
+        $this->assertFalse(FloatValidation::isValueGreatherThan(123456787, 123456788), "Is not a number with value greather than to");
+    }
+    
+    public function testIsValueLessOrEqualsTrue()
+    {
+        $this->assertTrue(FloatValidation::isValueLessThanOrEquals(123456789, 123456789), "Is a number with value Less than or equals to");
+        $this->assertTrue(FloatValidation::isValueLessThanOrEquals(123456788, 123456789), "Is a number with value Less than or equals to");
+    }
+    public function testIsValueLessOrEqualsFalse()
+    {
+        $this->assertFalse(FloatValidation::isValueLessThanOrEquals(123456789, 123456788), "Is not a number with value Less than or equals to");
+    }
+    
+    public function testIsValueLessTrue()
+    {
+        $this->assertTrue(FloatValidation::isValueLessThan(123456788, 123456789), "Is a number with value Less than or equals to");
+    }
+    public function testIsValueLessFalse()
+    {
+        $this->assertFalse(FloatValidation::isValueLessThan(123456789, 123456789), "Is not a number with value Less than to");
+        $this->assertFalse(FloatValidation::isValueLessThan(123456789, 123456788), "Is not a number with value Less than to");
     }
 }

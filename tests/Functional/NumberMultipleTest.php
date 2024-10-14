@@ -52,4 +52,48 @@ class NumberMultipleTest extends TestCase
 
         $this->assertFalse($this->validator->getResult(123456789));
     }
+    public function testLessValue()
+    {
+        $this->validator
+            ->is()
+            ->isNotEmpty()
+            ->isValueLessThan(25);
+
+        $this->assertTrue($this->validator->getResult(24));
+    }
+
+    public function testLessValueFail()
+    {
+        $this->validator
+            ->is()
+            ->isNotEmpty()
+            ->isValueLessThan(5);
+
+        foreach ([5, 6] as $comparator) {
+            $this->assertFalse($this->validator->getResult($comparator));
+        }
+    }
+    public function testLessOrEqualsValue()
+    {
+        $this->validator
+            ->is()
+            ->isNotEmpty()
+            ->isValueLessThanOrEquals(25);
+
+        foreach ([24,25] as $comparator) {
+            $this->assertTrue($this->validator->getResult($comparator));
+        }
+    }
+
+    public function testLessOrEqualsValueFail()
+    {
+        $this->validator
+            ->is()
+            ->isNotEmpty()
+            ->isValueLessThanOrEquals(5);
+
+        foreach ([6, 7] as $comparator) {
+            $this->assertFalse($this->validator->getResult($comparator));
+        }
+    }
 }
