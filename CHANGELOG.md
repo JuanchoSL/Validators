@@ -1,5 +1,18 @@
 # Change Log Validators
 
+## [1.0.3] - 2024-10-14
+
+### Added
+- length equals validator for strings
+- length equals validator for numbers + integers + floats
+- number values comparator, equals, greather or equals, greather, less or equals, less
+- string isSerialized validator
+
+### Changed
+
+### Fixed
+
+
 ## [1.0.2] - 2024-06-28
 
 ### Added
