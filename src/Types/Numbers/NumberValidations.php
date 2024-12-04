@@ -13,7 +13,7 @@ use JuanchoSL\Validators\Contracts\Multi\LengthValidatorsInterface;
 class NumberValidations extends AbstractValidations implements BasicValidatorsInterface, LengthValidatorsInterface, RegexValidatorsInterface, NumberValueValidatorsInterface
 {
 
-    protected $validator = NumberValidation::class;
+    protected string $validator = NumberValidation::class;
 
     public function is(): static
     {

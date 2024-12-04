@@ -9,7 +9,7 @@ use JuanchoSL\Validators\Types\Numbers\NumberValidations;
 class FloatValidations extends NumberValidations
 {
 
-    protected $validator = FloatValidation::class;
+    protected string $validator = FloatValidation::class;
 
     public function is(): static
     {

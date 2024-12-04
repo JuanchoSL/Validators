@@ -1,5 +1,19 @@
 # Change Log Validators
 
+## [1.0.4] - 2024-12-04
+
+### Added
+- Checked PHP 8.4 compatibility
+- typed properties
+- more documentation
+
+### Changed
+- intergers numbers validate false when use float validations
+
+### Fixed
+- NumberValidation use **static::** instead **self::** in order to check **is** from FloatValidator
+
+
 ## [1.0.3] - 2024-10-14
 
 ### Added
@@ -46,6 +60,7 @@
 
 - The results keys now is created only with the function name and concat the parameters if exists, in order to pass more than one time the same validation with distinct filters
 - parameters type definition
+
 
 ## [1.0.0] - 2024-03-05
 
