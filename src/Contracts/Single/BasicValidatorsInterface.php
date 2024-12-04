@@ -16,14 +16,14 @@ interface BasicValidatorsInterface
 
     /**
      * Check if the passed value is an empty value
-     * @param mixed The value to check
+     * @param mixed $var The value to check
      * @return bool The result of the check
      */
     public static function isEmpty(mixed $var): bool;
 
     /**
      * Check if the passed value is not an empty value
-     * @param mixed The value to check
+     * @param mixed $var The value to check
      * @return bool The result of the check
      */
     public static function isNotEmpty(mixed $var): bool;

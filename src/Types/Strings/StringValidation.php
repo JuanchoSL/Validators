@@ -71,7 +71,6 @@ class StringValidation extends AbstractValidation implements BasicValidatorsInte
             $value = @unserialize($value);
         }
         return ($value !== false);
-        return !empty(preg_match('/^([C|O|a|i|s]+):\d+(:("\w+":\d+:)?([\\\s\w\d:"{};*.]+))?/', $value));
     }
     public static function isRegex(string|int|float $var, string $expresion): bool
     {

@@ -9,10 +9,8 @@ class FloatTest extends TestCase
 {
     public function testIsNumberTrue()
     {
-        $this->assertFalse(FloatValidation::is(123456789), "Is a number");
         $this->assertTrue(FloatValidation::is(12345.6789), "Is a number");
         $this->assertTrue(FloatValidation::is(0.123456789), "Is a number");
-        $this->assertFalse(FloatValidation::is(0), "Is a number");
     }
     public function testIsNumberFalse()
     {
@@ -21,6 +19,9 @@ class FloatTest extends TestCase
         $this->assertFalse(FloatValidation::is(" "), "Is not a number");
         $this->assertFalse(FloatValidation::is(false), "Is not a number");
         $this->assertFalse(FloatValidation::is(null), "Is not a number");
+        $this->assertFalse(FloatValidation::is(0), "Is a number");
+        $this->assertFalse(FloatValidation::is(123), "Is not a number");
+        $this->assertFalse(FloatValidation::is("123"), "Is not a number");
     }
     public function testIsEmptyTrue()
     {
@@ -45,29 +46,29 @@ class FloatTest extends TestCase
 
     public function testIsLengthEqualsTrue()
     {
-        $this->assertTrue(FloatValidation::isLengthEqualsThan(123456789, 9), "Is a number with a length equals to 9");
+        $this->assertTrue(FloatValidation::isLengthEqualsThan(1234567.89, 10), "Is a number with a length equals to 10");
     }
     public function testIsLengthEqualsFalse()
     {
-        $this->assertFalse(FloatValidation::isLengthEqualsThan(123456789, 8), "Is not a number with a length equals to 8");
+        $this->assertFalse(FloatValidation::isLengthEqualsThan(1234567.89, 8), "Is not a number with a length equals to 8");
     }
 
     public function testIsLengthGreatherThanTrue()
     {
-        $this->assertTrue(FloatValidation::isLengthGreatherThan(123456789, 8), "Is a number with a length greather than 8");
+        $this->assertTrue(FloatValidation::isLengthGreatherThan(1234567.89, 8), "Is a number with a length greather than 8");
     }
 
     public function testIsLengthGreatherThanFalse()
     {
-        $this->assertFalse(FloatValidation::isLengthGreatherThan(123456789, 15), "Is not a number with a length greather than 15");
-        $this->assertFalse(FloatValidation::isLengthGreatherThan(123456789, 11), "Is not a number with a length greather than 11");
-        $this->assertFalse(FloatValidation::isLengthGreatherThan(123456789, 10), "Is not a number with a length greather than 10");
+        $this->assertFalse(FloatValidation::isLengthGreatherThan(1234567.89, 15), "Is not a number with a length greather than 15");
+        $this->assertFalse(FloatValidation::isLengthGreatherThan(1234567.89, 11), "Is not a number with a length greather than 11");
+        $this->assertFalse(FloatValidation::isLengthGreatherThan(1234567.89, 10), "Is not a number with a length greather than 10");
     }
 
     public function testIsLengthGreatherOrEqualsThanTrue()
     {
-        $this->assertTrue(FloatValidation::isLengthGreatherOrEqualsThan(123456789, 8), "Is a number with a length greather than 8");
-        $this->assertTrue(FloatValidation::isLengthGreatherOrEqualsThan(123456789, 9), "Is a number with a length equals than 9");
+        $this->assertTrue(FloatValidation::isLengthGreatherOrEqualsThan(1234567.89, 8), "Is a number with a length greather than 8");
+        $this->assertTrue(FloatValidation::isLengthGreatherOrEqualsThan(1234567.89, 10), "Is a number with a length equals than 10");
     }
 
     public function testIsLengthGreatherOrEqualsThanFalse()
@@ -77,19 +78,19 @@ class FloatTest extends TestCase
 
     public function testIsLengthLessOrEqualsThanTrue()
     {
-        $this->assertTrue(FloatValidation::isLengthLessOrEqualsThan(123456789, 15), "Is a number with a length less than 15");
-        $this->assertTrue(FloatValidation::isLengthLessOrEqualsThan(123456789, 9), "Is a number with a length equals than 9");
+        $this->assertTrue(FloatValidation::isLengthLessOrEqualsThan(1234567.89, 15), "Is a number with a length less than 15");
+        $this->assertTrue(FloatValidation::isLengthLessOrEqualsThan(1234567.89, 10), "Is a number with a length equals than 10");
     }
 
     public function testIsLengthLessOrEqualsThanFalse()
     {
-        $this->assertFalse(FloatValidation::isLengthLessOrEqualsThan(123456789, 8), "Is not a number with length less than 8");
+        $this->assertFalse(FloatValidation::isLengthLessOrEqualsThan(1234567.89, 8), "Is not a number with length less than 8");
     }
 
     public function testIsLengthLessThanTrue()
     {
-        $this->assertTrue(FloatValidation::isLengthLessThan(123456789, 15), "Is a number with a length less than 15");
-        $this->assertTrue(FloatValidation::isLengthLessThan(123456789, 12), "Is a number with a length less than 12");
+        $this->assertTrue(FloatValidation::isLengthLessThan(1234567.89, 15), "Is a number with a length less than 15");
+        $this->assertTrue(FloatValidation::isLengthLessThan(1234567.89, 12), "Is a number with a length less than 12");
     }
 
     public function testIsLengthLessThanFalse()
