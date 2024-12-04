@@ -12,7 +12,7 @@ use JuanchoSL\Validators\Contracts\Multi\LengthValidatorsInterface;
 class StringValidations extends AbstractValidations implements RegexValidatorsInterface, LengthValidatorsInterface, StringContentsTypeValidatorsInterface
 {
 
-    protected $validator = StringValidation::class;
+    protected string $validator = StringValidation::class;
 
     public function is(): static
     {
