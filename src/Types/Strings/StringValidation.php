@@ -67,10 +67,10 @@ class StringValidation extends AbstractValidation implements BasicValidatorsInte
 
     public static function isSerialized(string $value): bool
     {
-        if ($value != 'b:0;') {
-            $value = @unserialize($value);
+        if (in_array(mb_substr($value, -1), ['}', ';'])) {
+            return ($value == 'b:0;') ? true : @unserialize($value) !== false;
         }
-        return ($value !== false);
+        return false;
     }
     public static function isRegex(string|int|float $var, string $expresion): bool
     {
