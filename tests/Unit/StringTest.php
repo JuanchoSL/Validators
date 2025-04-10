@@ -177,4 +177,23 @@ class StringTest extends TestCase
     {
         $this->assertFalse(StringValidation::isLengthLessThan("text string", 10), "Is not a string with length less than 10");
     }
+    public function testIsSerializedTrue()
+    {
+        $this->assertTrue(StringValidation::isSerialized("b:1;"), "Is a serialized bool true");
+        $this->assertTrue(StringValidation::isSerialized("b:0;"), "Is a serialized bool false");
+        $this->assertTrue(StringValidation::isSerialized('a:2:{i:0;s:1:"a";i:1;s:1:"b";}'), "Is a serialized indexed array");
+        $this->assertTrue(StringValidation::isSerialized('a:2:{s:1:"a";s:1:"a";s:1:"b";s:1:"b";}'), "Is a serialized assoc array");
+        $this->assertTrue(StringValidation::isSerialized('s:16:"this is a string";'), "Is a serialized string");
+        $this->assertTrue(StringValidation::isSerialized('i:123;'), "Is a serialized integer");
+        $this->assertTrue(StringValidation::isSerialized('d:123.456;'), "Is a serialized float");
+        $this->assertTrue(StringValidation::isSerialized('O:8:"stdClass":1:{s:1:"a";s:1:"a";}'), "Is a serialized object");
+    }
+    public function testIsSerializedFalse()
+    {
+        $this->assertFalse(StringValidation::isSerialized(true), "Is a serialized bool true");
+        $this->assertFalse(StringValidation::isSerialized(false), "Is a serialized bool false");
+        $this->assertFalse(StringValidation::isSerialized('this is a string'), "Is a serialized string");
+        $this->assertFalse(StringValidation::isSerialized(123), "Is a serialized integer");
+        $this->assertFalse(StringValidation::isSerialized(123.456), "Is a serialized float");
+    }
 }
