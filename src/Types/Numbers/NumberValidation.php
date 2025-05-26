@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace JuanchoSL\Validators\Types\Numbers;
 
 use JuanchoSL\Validators\Contracts\Single\BasicValidatorsInterface;
+use JuanchoSL\Validators\Contracts\Single\ContentValidatorsInterface;
 use JuanchoSL\Validators\Contracts\Single\LengthValidatorsInterface;
 use JuanchoSL\Validators\Contracts\Single\NumberValueValidatorsInterface;
 use JuanchoSL\Validators\Contracts\Single\RegexValidatorsInterface;
 use JuanchoSL\Validators\Types\AbstractValidation;
+use JuanchoSL\Validators\Types\Strings\StringValidation;
 
-class NumberValidation extends AbstractValidation implements BasicValidatorsInterface, LengthValidatorsInterface, RegexValidatorsInterface, NumberValueValidatorsInterface
+class NumberValidation extends AbstractValidation implements BasicValidatorsInterface, LengthValidatorsInterface, RegexValidatorsInterface, NumberValueValidatorsInterface, ContentValidatorsInterface
 {
 
     public static function is(mixed $var): bool
@@ -61,6 +63,51 @@ class NumberValidation extends AbstractValidation implements BasicValidatorsInte
         return static::is($var) && mb_strlen((string) $var) <= $limit;
     }
 
+
+    public static function isValueStartingWith(string|int|float $var, string|int|float $needle): bool
+    {
+        return static::is($var) && StringValidation::isValueStartingWith((string) $var, (string) $needle);
+    }
+
+    public static function isValueEndingWith(string|int|float $var, string|int|float $needle): bool
+    {
+        return static::is($var) && StringValidation::isValueEndingWith((string) $var, (string) $needle);
+    }
+
+    public static function isValueContaining(string|int|float $var, string|int|float $needle): bool
+    {
+        return static::is($var) && StringValidation::isValueContaining((string) $var, (string) $needle);
+    }
+
+    public static function isValueStartingWithAny(string|int|float $var, string|int|float ...$needles): bool
+    {
+        foreach ($needles as $needle) {
+            if (static::isValueStartingWith($var, $needle)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static function isValueEndingWithAny(string|int|float $var, string|int|float ...$needles): bool
+    {
+        foreach ($needles as $needle) {
+            if (static::isValueEndingWith($var, $needle)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static function isValueContainingAny(string|int|float $var, string|int|float ...$needles): bool
+    {
+        foreach ($needles as $needle) {
+            if (static::isValueContaining($var, $needle)) {
+                return true;
+            }
+        }
+        return false;
+    }
     public static function isRegex(string|int|float $var, string $expresion): bool
     {
         $results = [];
