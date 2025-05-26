@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace JuanchoSL\Validators\Types\Strings;
 
+use JuanchoSL\Validators\Contracts\Multi\ContentValidatorsInterface;
 use JuanchoSL\Validators\Contracts\Multi\RegexValidatorsInterface;
 use JuanchoSL\Validators\Contracts\Multi\StringContentsTypeValidatorsInterface;
 use JuanchoSL\Validators\Types\AbstractValidations;
 use JuanchoSL\Validators\Contracts\Multi\LengthValidatorsInterface;
 
-class StringValidations extends AbstractValidations implements RegexValidatorsInterface, LengthValidatorsInterface, StringContentsTypeValidatorsInterface
+class StringValidations extends AbstractValidations implements RegexValidatorsInterface, LengthValidatorsInterface, StringContentsTypeValidatorsInterface, ContentValidatorsInterface
 {
 
     protected string $validator = StringValidation::class;
@@ -86,6 +87,35 @@ class StringValidations extends AbstractValidations implements RegexValidatorsIn
         $this->tests[] = [
             "class" => $this->validator,
             "method" => 'isLengthLessOrEqualsThan',
+            "params" => func_get_args()
+        ];
+        return $this;
+    }
+    public function isValueStartingWith(string|int|float $needle): static
+    {
+        $this->tests[] = [
+            "class" => $this->validator,
+            "method" => 'isValueStartingWith',
+            "params" => func_get_args()
+        ];
+        return $this;
+    }
+
+    public function isValueEndingWith(string|int|float $needle): static
+    {
+        $this->tests[] = [
+            "class" => $this->validator,
+            "method" => 'isValueEndingWith',
+            "params" => func_get_args()
+        ];
+        return $this;
+    }
+
+    public function isValueContaining(string|int|float $needle): static
+    {
+        $this->tests[] = [
+            "class" => $this->validator,
+            "method" => 'isValueContaining',
             "params" => func_get_args()
         ];
         return $this;

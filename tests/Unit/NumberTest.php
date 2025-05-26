@@ -125,7 +125,7 @@ class NumberTest extends TestCase
         $this->assertFalse(NumberValidation::isValueGreatherThan(123456789, 123456789), "Is not a number with value greather than to");
         $this->assertFalse(NumberValidation::isValueGreatherThan(123456787, 123456788), "Is not a number with value greather than to");
     }
-    
+
     public function testIsValueLessOrEqualsTrue()
     {
         $this->assertTrue(NumberValidation::isValueLessThanOrEquals(123456789, 123456789), "Is a number with value Less than or equals to");
@@ -135,7 +135,7 @@ class NumberTest extends TestCase
     {
         $this->assertFalse(NumberValidation::isValueLessThanOrEquals(123456789, 123456788), "Is not a number with value Less than or equals to");
     }
-    
+
     public function testIsValueLessTrue()
     {
         $this->assertTrue(NumberValidation::isValueLessThan(123456788, 123456789), "Is a number with value Less than or equals to");
@@ -144,5 +144,50 @@ class NumberTest extends TestCase
     {
         $this->assertFalse(NumberValidation::isValueLessThan(123456789, 123456789), "Is not a number with value Less than to");
         $this->assertFalse(NumberValidation::isValueLessThan(123456789, 123456788), "Is not a number with value Less than to");
+    }
+
+    public function testIsStartingTrue()
+    {
+        $this->assertTrue(NumberValidation::isValueStartingWith(123456789, 123), "Starts with true");
+        $this->assertTrue(NumberValidation::isValueStartingWith(123.456789, 123), "Starts with true");
+        $this->assertTrue(NumberValidation::isValueStartingWith(123456789, '123'), "Starts with true");
+    }
+    public function testIsStartingFalse()
+    {
+        $this->assertFalse(NumberValidation::isValueStartingWith(123456789, 124), "Starts with false");
+        $this->assertFalse(NumberValidation::isValueStartingWith(123456789, '124'), "Starts with false");
+        $this->assertFalse(NumberValidation::isValueStartingWith(123456789, ' 124'), "Starts with false");
+        $this->assertFalse(NumberValidation::isValueStartingWith(123456789, '124 '), "Starts with false");
+    }
+
+    public function testIsEndingTrue()
+    {
+        $this->assertTrue(NumberValidation::isValueEndingWith(123456789, 9), "End with true");
+        $this->assertTrue(NumberValidation::isValueEndingWith(123456789, '9'), "End with true");
+    }
+    public function testIsEndingFalse()
+    {
+        $this->assertFalse(NumberValidation::isValueEndingWith(123456789, 8), "End with false");
+        $this->assertFalse(NumberValidation::isValueEndingWith(123456789, '8'), "End with false");
+        $this->assertFalse(NumberValidation::isValueEndingWith(123456789, ' 9'), "End with false");
+        $this->assertFalse(NumberValidation::isValueEndingWith(123456789, '9 '), "End with false");
+    }
+    public function testIsContainingTrue()
+    {
+        $this->assertTrue(NumberValidation::isValueContaining(123456789, 123), "contains true");
+        $this->assertTrue(NumberValidation::isValueContaining(123456789, 456), "contains true");
+        $this->assertTrue(NumberValidation::isValueContaining(123456789, 789), "contains true");
+        $this->assertTrue(NumberValidation::isValueContaining(123456789, '123'), "contains true");
+        $this->assertTrue(NumberValidation::isValueContaining(123456789, '456'), "contains true");
+        $this->assertTrue(NumberValidation::isValueContaining(123456789, '789'), "contains true");
+    }
+    public function testIsContainingFalse()
+    {
+        $this->assertFalse(NumberValidation::isValueContaining(123456789, 124), "contains false");
+        $this->assertFalse(NumberValidation::isValueContaining(123456789, 457), "contains false");
+        $this->assertFalse(NumberValidation::isValueContaining(123456789, 780), "contains false");
+        $this->assertFalse(NumberValidation::isValueContaining(123456789, '123 '), "contains false");
+        $this->assertFalse(NumberValidation::isValueContaining(123456789, '456 '), "contains false");
+        $this->assertFalse(NumberValidation::isValueContaining(123456789, '789 '), "contains false");
     }
 }

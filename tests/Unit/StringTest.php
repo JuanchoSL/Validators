@@ -196,4 +196,46 @@ class StringTest extends TestCase
         $this->assertFalse(StringValidation::isSerialized(123), "Is a serialized integer");
         $this->assertFalse(StringValidation::isSerialized(123.456), "Is a serialized float");
     }
+
+    public function testIsStartingTrue()
+    {
+        $this->assertTrue(StringValidation::isValueStartingWith('Cadena original', 'Cadena'), "Starts with true");
+        $this->assertTrue(StringValidation::isValueStartingWith('Cadena original', 'Cadena '), "Starts with true");
+    }
+    public function testIsStartingFalse()
+    {
+        $this->assertFalse(StringValidation::isValueStartingWith('Cadena original', 'cadena'), "Starts with false");
+        $this->assertFalse(StringValidation::isValueStartingWith(' Cadena original', 'cadena'), "Starts with false");
+        $this->assertFalse(StringValidation::isValueStartingWith('caden', 'cadena'), "Starts with false");
+    }
+
+    public function testIsEndingTrue()
+    {
+        $this->assertTrue(StringValidation::isValueEndingWith('Cadena original', 'original'), "End with true");
+        $this->assertTrue(StringValidation::isValueEndingWith('Cadena original', ' original'), "End with true");
+    }
+    public function testIsEndingFalse()
+    {
+        $this->assertFalse(StringValidation::isValueEndingWith('Cadena original', 'original '), "End with false");
+        $this->assertFalse(StringValidation::isValueEndingWith(' Cadena original', 'Original'), "End with false");
+        $this->assertFalse(StringValidation::isValueEndingWith('origina', 'original'), "End with false");
+    }
+    public function testIsContainingTrue()
+    {
+        $this->assertTrue(StringValidation::isValueContaining('Cadena original', 'Cadena'), "contains true");
+        $this->assertTrue(StringValidation::isValueContaining('Cadena original', 'original'), "contains true");
+        $this->assertTrue(StringValidation::isValueContaining('Cadena original', 'origina'), "contains true");
+    }
+    public function testIsContainingFalse()
+    {
+        $this->assertFalse(StringValidation::isValueContaining('Cadena origina', 'original'), "contains false");
+        $this->assertFalse(StringValidation::isValueContaining(' Cadena original', 'Original'), "contains false");
+        $this->assertFalse(StringValidation::isValueContaining('origina', 'original'), "contains false");
+    }
+    public function testIsContainingAnyTrue()
+    {
+        $this->assertTrue(StringValidation::isValueContainingAny('Cadena original', 'Cadena'), "contains true");
+        $this->assertTrue(StringValidation::isValueContainingAny('Cadena original', 'original'), "contains true");
+        $this->assertTrue(StringValidation::isValueContainingAny('Cadena original', 'origina'), "contains true");
+    }
 }
