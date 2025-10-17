@@ -11,13 +11,4 @@ class IntegerValidations extends NumberValidations
 
     protected string $validator = IntegerValidation::class;
 
-    public function is(): static
-    {
-        $this->tests[] = [
-            "class" => $this->validator,
-            "method" => 'is',
-            "params" => func_get_args()
-        ];
-        return $this;
-    }
 }

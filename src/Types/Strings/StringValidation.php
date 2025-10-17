@@ -19,29 +19,29 @@ class StringValidation extends AbstractValidation implements BasicValidatorsInte
         return is_string($var);
     }
 
-    public static function isLengthEqualsThan(string|int|float $var, int $limit): bool
+    public static function isLengthEqualsThan(mixed $var, int $limit): bool
     {
         return mb_strlen((string) $var) == $limit;
     }
 
-    public static function isLengthGreatherThan(string|int|float $var, int $limit): bool
+    public static function isLengthGreatherThan(mixed $var, int $limit): bool
     {
         return mb_strlen((string) $var) > $limit;
     }
-    public static function isLengthGreatherOrEqualsThan(string|int|float $var, int $limit): bool
+    public static function isLengthGreatherOrEqualsThan(mixed $var, int $limit): bool
     {
         return mb_strlen((string) $var) >= $limit;
     }
-    public static function isLengthLessThan(string|int|float $var, int $limit): bool
+    public static function isLengthLessThan(mixed $var, int $limit): bool
     {
         return mb_strlen((string) $var) < $limit;
     }
-    public static function isLengthLessOrEqualsThan(string|int|float $var, int $limit): bool
+    public static function isLengthLessOrEqualsThan(mixed $var, int $limit): bool
     {
         return mb_strlen((string) $var) <= $limit;
     }
 
-    public static function isValueStartingWith(string|int|float $var, string|int|float $needle): bool
+    public static function isValueStartingWith(mixed $var, mixed $needle): bool
     {
         if (version_compare(PHP_VERSION, '8.0.0', '<') || !function_exists('str_starts_with')) {
             return substr_compare($var, $needle, 0, mb_strlen($needle)) === 0;
@@ -50,7 +50,7 @@ class StringValidation extends AbstractValidation implements BasicValidatorsInte
         }
     }
 
-    public static function isValueEndingWith(string|int|float $var, string|int|float $needle): bool
+    public static function isValueEndingWith(mixed $var, mixed $needle): bool
     {
         if (version_compare(PHP_VERSION, '8.0.0', '<') || !function_exists('str_ends_with')) {
             return substr_compare($var, $needle, mb_strlen($needle) * -1) === 0;
@@ -59,7 +59,7 @@ class StringValidation extends AbstractValidation implements BasicValidatorsInte
         }
     }
 
-    public static function isValueContaining(string|int|float $var, string|int|float $needle): bool
+    public static function isValueContaining(mixed $var, mixed $needle): bool
     {
         if (version_compare(PHP_VERSION, '8.0.0', '<') || !function_exists('str_contains')) {
             return strpos($var, $needle) !== false;
@@ -68,7 +68,7 @@ class StringValidation extends AbstractValidation implements BasicValidatorsInte
         }
     }
 
-    public static function isValueStartingWithAny(string|int|float $var, string|int|float ...$needles): bool
+    public static function isValueStartingWithAny(mixed $var, mixed ...$needles): bool
     {
         foreach ($needles as $needle) {
             if (static::isValueStartingWith($var, $needle)) {
@@ -78,7 +78,7 @@ class StringValidation extends AbstractValidation implements BasicValidatorsInte
         return false;
     }
 
-    public static function isValueEndingWithAny(string|int|float $var, string|int|float ...$needles): bool
+    public static function isValueEndingWithAny(mixed $var, mixed ...$needles): bool
     {
         foreach ($needles as $needle) {
             if (static::isValueEndingWith($var, $needle)) {
@@ -88,7 +88,7 @@ class StringValidation extends AbstractValidation implements BasicValidatorsInte
         return false;
     }
 
-    public static function isValueContainingAny(string|int|float $var, string|int|float ...$needles): bool
+    public static function isValueContainingAny(mixed $var, mixed ...$needles): bool
     {
         foreach ($needles as $needle) {
             if (static::isValueContaining($var, $needle)) {
@@ -98,27 +98,27 @@ class StringValidation extends AbstractValidation implements BasicValidatorsInte
         return false;
     }
 
-    public static function isEmail(string|int|float $var): bool
+    public static function isEmail(mixed $var): bool
     {
         return (filter_var($var, FILTER_VALIDATE_EMAIL) !== false);
     }
-    public static function isUrl(string|int|float $var): bool
+    public static function isUrl(mixed $var): bool
     {
         return (filter_var($var, FILTER_VALIDATE_URL) !== false);
     }
-    public static function isIpV4(string|int|float $var): bool
+    public static function isIpV4(mixed $var): bool
     {
         return (filter_var($var, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) !== false);
     }
-    public static function isIpV6(string|int|float $var): bool
+    public static function isIpV6(mixed $var): bool
     {
         return filter_var($var, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) !== false;
     }
-    public static function isMac(string|int|float $var): bool
+    public static function isMac(mixed $var): bool
     {
         return (filter_var($var, FILTER_VALIDATE_MAC) !== false);
     }
-    public static function isDomain(string|int|float $var): bool
+    public static function isDomain(mixed $var): bool
     {
         return (filter_var($var, FILTER_VALIDATE_DOMAIN, FILTER_FLAG_HOSTNAME) !== false);
     }
@@ -131,7 +131,7 @@ class StringValidation extends AbstractValidation implements BasicValidatorsInte
         }
         return false;
     }
-    public static function isRegex(string|int|float $var, string $expresion): bool
+    public static function isRegex(mixed $var, string $expresion): bool
     {
         $results = [];
         preg_match($expresion, (string) $var, $results);

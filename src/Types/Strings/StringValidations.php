@@ -9,189 +9,58 @@ use JuanchoSL\Validators\Contracts\Multi\RegexValidatorsInterface;
 use JuanchoSL\Validators\Contracts\Multi\StringContentsTypeValidatorsInterface;
 use JuanchoSL\Validators\Types\AbstractValidations;
 use JuanchoSL\Validators\Contracts\Multi\LengthValidatorsInterface;
+use JuanchoSL\Validators\Types\Traits\BasicValidationsTrait;
+use JuanchoSL\Validators\Types\Traits\ContainsValidationsTrait;
+use JuanchoSL\Validators\Types\Traits\LengthValidationsTrait;
 
 class StringValidations extends AbstractValidations implements RegexValidatorsInterface, LengthValidatorsInterface, StringContentsTypeValidatorsInterface, ContentValidatorsInterface
 {
 
+    use BasicValidationsTrait, LengthValidationsTrait, ContainsValidationsTrait;
+
     protected string $validator = StringValidation::class;
 
-    public function is(): static
-    {
-        $this->tests[] = [
-            "class" => $this->validator,
-            "method" => 'is',
-            "params" => func_get_args()
-        ];
-        return $this;
-    }
-
-    public function isEmpty(): static
-    {
-        $this->tests[] = [
-            "class" => $this->validator,
-            "method" => 'isEmpty',
-            "params" => func_get_args()
-        ];
-        return $this;
-    }
-
-    public function isNotEmpty(): static
-    {
-        $this->tests[] = [
-            "class" => $this->validator,
-            "method" => 'isNotEmpty',
-            "params" => func_get_args()
-        ];
-        return $this;
-    }
-
-    public function isLengthEqualsThan(int $limit): static
-    {
-        $this->tests[] = [
-            "class" => $this->validator,
-            "method" => 'isLengthEqualsThan',
-            "params" => func_get_args()
-        ];
-        return $this;
-    }
-
-    public function isLengthGreatherThan(int $limit): static
-    {
-        $this->tests[] = [
-            "class" => $this->validator,
-            "method" => 'isLengthGreatherThan',
-            "params" => func_get_args()
-        ];
-        return $this;
-    }
-    public function isLengthGreatherOrEqualsThan(int $limit): static
-    {
-        $this->tests[] = [
-            "class" => $this->validator,
-            "method" => 'isLengthGreatherOrEqualsThan',
-            "params" => func_get_args()
-        ];
-        return $this;
-    }
-    public function isLengthLessThan(int $limit): static
-    {
-        $this->tests[] = [
-            "class" => $this->validator,
-            "method" => 'isLengthLessThan',
-            "params" => func_get_args()
-        ];
-        return $this;
-    }
-    public function isLengthLessOrEqualsThan(int $limit): static
-    {
-        $this->tests[] = [
-            "class" => $this->validator,
-            "method" => 'isLengthLessOrEqualsThan',
-            "params" => func_get_args()
-        ];
-        return $this;
-    }
     public function isValueStartingWith(string|int|float $needle): static
     {
-        $this->tests[] = [
-            "class" => $this->validator,
-            "method" => 'isValueStartingWith',
-            "params" => func_get_args()
-        ];
-        return $this;
+        return $this->addTest($this->validator, 'isValueStartingWith', func_get_args());
     }
 
     public function isValueEndingWith(string|int|float $needle): static
     {
-        $this->tests[] = [
-            "class" => $this->validator,
-            "method" => 'isValueEndingWith',
-            "params" => func_get_args()
-        ];
-        return $this;
-    }
-
-    public function isValueContaining(string|int|float $needle): static
-    {
-        $this->tests[] = [
-            "class" => $this->validator,
-            "method" => 'isValueContaining',
-            "params" => func_get_args()
-        ];
-        return $this;
+        return $this->addTest($this->validator, 'isValueEndingWith', func_get_args());
     }
 
     public function isEmail(): static
     {
-        $this->tests[] = [
-            "class" => $this->validator,
-            "method" => 'isEmail',
-            "params" => func_get_args()
-        ];
-        return $this;
+        return $this->addTest($this->validator, 'isEmail', func_get_args());
     }
     public function isUrl(): static
     {
-        $this->tests[] = [
-            "class" => $this->validator,
-            "method" => 'isUrl',
-            "params" => func_get_args()
-        ];
-        return $this;
+        return $this->addTest($this->validator, 'isUrl', func_get_args());
     }
     public function isIpV4(): static
     {
-        $this->tests[] = [
-            "class" => $this->validator,
-            "method" => 'isIpV4',
-            "params" => func_get_args()
-        ];
-        return $this;
+        return $this->addTest($this->validator, 'isIpV4', func_get_args());
     }
     public function isIpV6(): static
     {
-        $this->tests[] = [
-            "class" => $this->validator,
-            "method" => 'isIpV6',
-            "params" => func_get_args()
-        ];
-        return $this;
+        return $this->addTest($this->validator, 'isIpV6', func_get_args());
     }
     public function isMac(): static
     {
-        $this->tests[] = [
-            "class" => $this->validator,
-            "method" => 'isMac',
-            "params" => func_get_args()
-        ];
-        return $this;
+        return $this->addTest($this->validator, 'isMac', func_get_args());
     }
     public function isDomain(): static
     {
-        $this->tests[] = [
-            "class" => $this->validator,
-            "method" => 'isDomain',
-            "params" => func_get_args()
-        ];
-        return $this;
+        return $this->addTest($this->validator, 'isDomain', func_get_args());
     }
     public function isSerialized(): static
     {
-        $this->tests[] = [
-            "class" => $this->validator,
-            "method" => 'isSerialized',
-            "params" => func_get_args()
-        ];
-        return $this;
+        return $this->addTest($this->validator, 'isSerialized', func_get_args());
     }
     public function isRegex(string $expresion): static
     {
-        $this->tests[] = [
-            "class" => $this->validator,
-            "method" => 'isRegex',
-            "params" => func_get_args()
-        ];
-        return $this;
+        return $this->addTest($this->validator, 'isRegex', func_get_args());
     }
 
 }

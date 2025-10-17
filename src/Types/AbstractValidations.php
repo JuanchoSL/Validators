@@ -17,7 +17,7 @@ abstract class AbstractValidations implements BasicValidatorsInterface
      */
     protected array $results = [];
 
-    public function getResult(string|int|float|bool|null $var): bool
+    public function getResult(mixed $var): bool
     {
         $this->process($var);
         foreach ($this->results as $result) {
@@ -31,7 +31,7 @@ abstract class AbstractValidations implements BasicValidatorsInterface
     /**
      * @return array<string, bool>
      */
-    public function getResults(string|int|float|bool|null $var): array
+    public function getResults(mixed $var): array
     {
         $this->process($var);
         return $this->results;
@@ -42,22 +42,32 @@ abstract class AbstractValidations implements BasicValidatorsInterface
      */
     protected function createKey(string $method, array $params = []): string
     {
-        if (!empty ($params)) {
+        if (!empty($params)) {
             $method .= ": " . implode(',', $params);
         }
         return $method;
     }
 
-    protected function process(string|int|float|bool|null $var): void
+    protected function process(mixed $var): void
     {
         $this->results = [];
         foreach ($this->tests as $tests) {
-            $callable = (isset ($tests['class'], $tests['method'])) ? [$tests['class'], $tests['method']] : $tests['method'];
+            $callable = (isset($tests['class'], $tests['method'])) ? [$tests['class'], $tests['method']] : $tests['method'];
             //$key = call_user_func_array([$this, 'createKey'], array_merge([$tests['method']], $tests['params']));
             //$key = !is_string($key) ? $tests['method'] : $key;
             $tests['params'] = $tests['params'] ?? [];
             $key = $this->createKey($tests['method'], $tests['params']);
             $this->results[$key] = call_user_func_array($callable, array_merge([$var], $tests['params'])) !== false;
         }
+    }
+
+    protected function addTest($validator, $function, $arguments): static
+    {
+        $this->tests[] = [
+            "class" => $validator,
+            "method" => $function,
+            "params" => $arguments
+        ];
+        return $this;
     }
 }

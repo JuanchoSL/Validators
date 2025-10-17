@@ -11,13 +11,4 @@ class FloatValidations extends NumberValidations
 
     protected string $validator = FloatValidation::class;
 
-    public function is(): static
-    {
-        $this->tests[] = [
-            "class" => $this->validator,
-            "method" => 'is',
-            "params" => func_get_args()
-        ];
-        return $this;
-    }
 }
