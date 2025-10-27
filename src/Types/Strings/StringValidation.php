@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace JuanchoSL\Validators\Types\Strings;
 
@@ -50,24 +48,6 @@ class StringValidation extends AbstractValidation implements BasicValidatorsInte
         }
     }
 
-    public static function isValueEndingWith(mixed $var, mixed $needle): bool
-    {
-        if (version_compare(PHP_VERSION, '8.0.0', '<') || !function_exists('str_ends_with')) {
-            return substr_compare($var, $needle, mb_strlen($needle) * -1) === 0;
-        } else {
-            return str_ends_with($var, $needle);
-        }
-    }
-
-    public static function isValueContaining(mixed $var, mixed $needle): bool
-    {
-        if (version_compare(PHP_VERSION, '8.0.0', '<') || !function_exists('str_contains')) {
-            return strpos($var, $needle) !== false;
-        } else {
-            return str_contains($var, $needle);
-        }
-    }
-
     public static function isValueStartingWithAny(mixed $var, mixed ...$needles): bool
     {
         foreach ($needles as $needle) {
@@ -78,6 +58,15 @@ class StringValidation extends AbstractValidation implements BasicValidatorsInte
         return false;
     }
 
+    public static function isValueEndingWith(mixed $var, mixed $needle): bool
+    {
+        if (version_compare(PHP_VERSION, '8.0.0', '<') || !function_exists('str_ends_with')) {
+            return substr_compare($var, $needle, mb_strlen($needle) * -1) === 0;
+        } else {
+            return str_ends_with($var, $needle);
+        }
+    }
+
     public static function isValueEndingWithAny(mixed $var, mixed ...$needles): bool
     {
         foreach ($needles as $needle) {
@@ -86,6 +75,15 @@ class StringValidation extends AbstractValidation implements BasicValidatorsInte
             }
         }
         return false;
+    }
+
+    public static function isValueContaining(mixed $var, mixed $needle): bool
+    {
+        if (version_compare(PHP_VERSION, '8.0.0', '<') || !function_exists('str_contains')) {
+            return strpos($var, $needle) !== false;
+        } else {
+            return str_contains($var, $needle);
+        }
     }
 
     public static function isValueContainingAny(mixed $var, mixed ...$needles): bool

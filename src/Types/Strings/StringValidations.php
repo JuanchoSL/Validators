@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace JuanchoSL\Validators\Types\Strings;
 
@@ -20,14 +18,33 @@ class StringValidations extends AbstractValidations implements RegexValidatorsIn
 
     protected string $validator = StringValidation::class;
 
-    public function isValueStartingWith(string|int|float $needle): static
+    public function isValueEquals(mixed $needle): static
+    {
+        return $this->addTest($this->validator, 'isValueEquals', func_get_args());
+    }
+    public function isValueEqualsAny(mixed ...$needle): static
+    {
+        return $this->addTest($this->validator, 'isValueEqualsAny', func_get_args());
+    }
+
+    public function isValueStartingWith(mixed $needle): static
     {
         return $this->addTest($this->validator, 'isValueStartingWith', func_get_args());
     }
 
-    public function isValueEndingWith(string|int|float $needle): static
+    public function isValueStartingWithAny(mixed ...$needles): static
+    {
+        return $this->addTest($this->validator, 'isValueStartingWithAny', func_get_args());
+    }
+
+    public function isValueEndingWith(mixed $needle): static
     {
         return $this->addTest($this->validator, 'isValueEndingWith', func_get_args());
+    }
+
+    public function isValueEndingWithAny(mixed ...$needles): static
+    {
+        return $this->addTest($this->validator, 'isValueEndingWithAny', func_get_args());
     }
 
     public function isEmail(): static

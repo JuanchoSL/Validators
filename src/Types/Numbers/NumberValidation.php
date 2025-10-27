@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace JuanchoSL\Validators\Types\Numbers;
 
@@ -24,18 +22,27 @@ class NumberValidation extends AbstractValidation implements BasicValidatorsInte
     {
         return $var == $comparator;
     }
+
     public static function isValueGreatherThanOrEquals(int|float $var, int|float $comparator): bool
     {
         return $var >= $comparator;
     }
+
+    public static function isValueIntoRange(int|float $var, int|float $min, int|float $max): bool
+    {
+        return static::isValueGreatherThanOrEquals($var, $min) && static::isValueLessThanOrEquals($var, $max);
+    }
+
     public static function isValueGreatherThan(int|float $var, int|float $comparator): bool
     {
         return $var > $comparator;
     }
+
     public static function isValueLessThanOrEquals(int|float $var, int|float $comparator): bool
     {
         return $var <= $comparator;
     }
+
     public static function isValueLessThan(int|float $var, int|float $comparator): bool
     {
         return $var < $comparator;
@@ -50,33 +57,25 @@ class NumberValidation extends AbstractValidation implements BasicValidatorsInte
     {
         return static::is($var) && mb_strlen((string) $var) > $limit;
     }
+
     public static function isLengthGreatherOrEqualsThan(mixed $var, int $limit): bool
     {
         return static::is($var) && mb_strlen((string) $var) >= $limit;
     }
+
     public static function isLengthLessThan(mixed $var, int $limit): bool
     {
         return static::is($var) && mb_strlen((string) $var) < $limit;
     }
+
     public static function isLengthLessOrEqualsThan(mixed $var, int $limit): bool
     {
         return static::is($var) && mb_strlen((string) $var) <= $limit;
     }
 
-
     public static function isValueStartingWith(mixed $var, mixed $needle): bool
     {
         return static::is($var) && StringValidation::isValueStartingWith((string) $var, (string) $needle);
-    }
-
-    public static function isValueEndingWith(mixed $var, mixed $needle): bool
-    {
-        return static::is($var) && StringValidation::isValueEndingWith((string) $var, (string) $needle);
-    }
-
-    public static function isValueContaining(mixed $var, mixed $needle): bool
-    {
-        return static::is($var) && StringValidation::isValueContaining((string) $var, (string) $needle);
     }
 
     public static function isValueStartingWithAny(mixed $var, mixed ...$needles): bool
@@ -89,6 +88,11 @@ class NumberValidation extends AbstractValidation implements BasicValidatorsInte
         return false;
     }
 
+    public static function isValueEndingWith(mixed $var, mixed $needle): bool
+    {
+        return static::is($var) && StringValidation::isValueEndingWith((string) $var, (string) $needle);
+    }
+
     public static function isValueEndingWithAny(mixed $var, mixed ...$needles): bool
     {
         foreach ($needles as $needle) {
@@ -97,6 +101,11 @@ class NumberValidation extends AbstractValidation implements BasicValidatorsInte
             }
         }
         return false;
+    }
+
+    public static function isValueContaining(mixed $var, mixed $needle): bool
+    {
+        return static::is($var) && StringValidation::isValueContaining((string) $var, (string) $needle);
     }
 
     public static function isValueContainingAny(mixed $var, mixed ...$needles): bool
@@ -108,6 +117,7 @@ class NumberValidation extends AbstractValidation implements BasicValidatorsInte
         }
         return false;
     }
+
     public static function isRegex(mixed $var, string $expresion): bool
     {
         $results = [];

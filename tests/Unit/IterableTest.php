@@ -4,6 +4,7 @@ namespace JuanchoSL\Validators\Tests\Unit;
 
 
 use JuanchoSL\Validators\Types\Iterables\IterableValidation;
+use JuanchoSL\Validators\Types\Strings\StringValidations;
 use PHPUnit\Framework\TestCase;
 
 class IterableTest extends TestCase
@@ -135,134 +136,34 @@ class IterableTest extends TestCase
         $this->assertFalse(IterableValidation::isKeyContainingAny(['nombre' => 'Cadena numeros', 'apellido' => 'Cadena letras'], ...['numeros', 'palabras']), "contains false");
     }
 
-
-
-    /*
-    public function testIsEmailTrue()
+    public function testIsValueEmailTrue()
     {
-        $this->assertTrue(IterableValidation::isEmail("juanchosl@hotmail.com"), "Is an email");
+        $this->assertTrue(IterableValidation::isValueValidating(["juanchosl@hotmail.com"], (new StringValidations())->isEmail()), "All values are emails");
     }
 
-    public function testIsEmailFalse()
+    public function testIsValueEmailFalse()
     {
-        $this->assertFalse(IterableValidation::isEmail("juanchosl@hotmail"), "Is not an email");
+        $this->assertFalse(IterableValidation::isValueValidating(["juanchosl@hotmail"], (new StringValidations())->isEmail()), "All values are not emails");
     }
 
-    public function testIsUrlTrue()
+    public function testIsValueUrlTrue()
     {
-        $this->assertTrue(IterableValidation::isUrl("http://url.com"), "Is an url");
-        $this->assertTrue(IterableValidation::isUrl("https://url.com"), "Is an url");
-        $this->assertTrue(IterableValidation::isUrl("https://www.url.com"), "Is an url");
-        $this->assertTrue(IterableValidation::isUrl("ftp://ftp.url.com"), "Is an url");
-        $this->assertTrue(IterableValidation::isUrl("ftps://ftp.url.com"), "Is an url");
-        $this->assertTrue(IterableValidation::isUrl("https://www.url.com/index.php"), "Is an url");
+        $this->assertTrue(IterableValidation::isValueValidating([
+            "http://url.com",
+            "https://url.com",
+            "https://www.url.com",
+            "ftp://ftp.url.com",
+            "ftps://ftp.url.com",
+            "https://www.url.com/index.php"
+        ], (new StringValidations())->isUrl()), "All values are urls");
     }
 
-    public function testIsUrlFalse()
+    public function testIsValueUrlFalse()
     {
-        $this->assertFalse(IterableValidation::isUrl("isnotanurl"), "Is not an url");
-        $this->assertFalse(IterableValidation::isUrl("www.url.com"), "Is not an url");
+        $this->assertFalse(IterableValidation::isValueValidating([
+            "isnotanurl",
+            "www.url.com"
+        ], (new StringValidations())->isUrl()), "Don't all values are urls");
     }
 
-    public function testIsDomainTrue()
-    {
-        $this->assertTrue(IterableValidation::isDomain("com"), "Is a domain");
-        $this->assertTrue(IterableValidation::isDomain("url.com"), "Is a domain");
-        $this->assertTrue(IterableValidation::isDomain("www.url.com"), "Is a domain");
-        $this->assertTrue(IterableValidation::isDomain("ftp.url.com"), "Is a domain");
-        $this->assertTrue(IterableValidation::isDomain("ftp.url.com"), "Is a domain");
-    }
-
-    public function testIsDomainFalse()
-    {
-        $this->assertFalse(IterableValidation::isDomain("http://isnotanurl"), "Is not a domain");
-        $this->assertFalse(IterableValidation::isDomain("ftp://ftp.url.com"), "Is not a domain");
-        $this->assertFalse(IterableValidation::isDomain("ftps://ftp.url.com"), "Is not a domain");
-        $this->assertFalse(IterableValidation::isDomain("www.url.com/index.html"), "Is not a domain");
-    }
-
-    public function testIsMacTrue()
-    {
-        $this->assertTrue(IterableValidation::isMac("00:00:00:00:00:00"), "Is a MAC");
-        $this->assertTrue(IterableValidation::isMac("00-00-00-00-00-00"), "Is a MAC");
-        $this->assertTrue(IterableValidation::isMac("f0:00:00:00:00:00"), "Is a MAC");
-        $this->assertTrue(IterableValidation::isMac("F0-00-00-00-00-00"), "Is a MAC");
-    }
-
-    public function testIsMacFalse()
-    {
-        $this->assertFalse(IterableValidation::isMac("aaa:aaa:aaa:aaa"), "Is not a MAC");
-        $this->assertFalse(IterableValidation::isMac("G0:00:00:00:00:00"), "Is not a MAC");
-        $this->assertFalse(IterableValidation::isMac("G0-00-00-00-00-00"), "Is not a MAC");
-    }
-
-    public function testIsIpV4True()
-    {
-        $this->assertTrue(IterableValidation::isIpV4("192.168.0.1"), "Is an IP v4 ");
-    }
-
-    public function testIsIpV4False()
-    {
-        $this->assertFalse(IterableValidation::isIpV4(123456), "Is not an IP v4");
-        $this->assertFalse(IterableValidation::isIpV4("123456"), "Is not an IP v4");
-        $this->assertFalse(IterableValidation::isIpV4("192.168.0.256"), "Is not an IP v4");
-    }
-
-    public function testIsIpV6True()
-    {
-        $this->assertTrue(IterableValidation::isIpV6("0000::0000:0000:0000:0000"), "Is an IP v6");
-        $this->assertTrue(IterableValidation::isIpV6("f000::0000:0000:0000:0000"), "Is an IP v6");
-    }
-
-    public function testIsIpV6False()
-    {
-        $this->assertFalse(IterableValidation::isIpV6("0000:0000:0000:0000:0000"), "Is not an IP v6");
-        $this->assertFalse(IterableValidation::isIpV6("g000::0000:0000:0000:0000"), "Is not an IP v6");
-    }
-
-    public function testIsSerializedTrue()
-    {
-        $this->assertTrue(IterableValidation::isSerialized("b:1;"), "Is a serialized bool true");
-        $this->assertTrue(IterableValidation::isSerialized("b:0;"), "Is a serialized bool false");
-        $this->assertTrue(IterableValidation::isSerialized('a:2:{i:0;s:1:"a";i:1;s:1:"b";}'), "Is a serialized indexed array");
-        $this->assertTrue(IterableValidation::isSerialized('a:2:{s:1:"a";s:1:"a";s:1:"b";s:1:"b";}'), "Is a serialized assoc array");
-        $this->assertTrue(IterableValidation::isSerialized('s:16:"this is a string";'), "Is a serialized string");
-        $this->assertTrue(IterableValidation::isSerialized('i:123;'), "Is a serialized integer");
-        $this->assertTrue(IterableValidation::isSerialized('d:123.456;'), "Is a serialized float");
-        $this->assertTrue(IterableValidation::isSerialized('O:8:"stdClass":1:{s:1:"a";s:1:"a";}'), "Is a serialized object");
-    }
-    public function testIsSerializedFalse()
-    {
-        $this->assertFalse(IterableValidation::isSerialized(true), "Is a serialized bool true");
-        $this->assertFalse(IterableValidation::isSerialized(false), "Is a serialized bool false");
-        $this->assertFalse(IterableValidation::isSerialized('this is a string'), "Is a serialized string");
-        $this->assertFalse(IterableValidation::isSerialized(123), "Is a serialized integer");
-        $this->assertFalse(IterableValidation::isSerialized(123.456), "Is a serialized float");
-    }
-
-    public function testIsStartingTrue()
-    {
-        $this->assertTrue(IterableValidation::isValueStartingWith('Cadena original', 'Cadena'), "Starts with true");
-        $this->assertTrue(IterableValidation::isValueStartingWith('Cadena original', 'Cadena '), "Starts with true");
-    }
-    public function testIsStartingFalse()
-    {
-        $this->assertFalse(IterableValidation::isValueStartingWith('Cadena original', 'cadena'), "Starts with false");
-        $this->assertFalse(IterableValidation::isValueStartingWith(' Cadena original', 'cadena'), "Starts with false");
-        $this->assertFalse(IterableValidation::isValueStartingWith('caden', 'cadena'), "Starts with false");
-    }
-
-    public function testIsEndingTrue()
-    {
-        $this->assertTrue(IterableValidation::isValueEndingWith('Cadena original', 'original'), "End with true");
-        $this->assertTrue(IterableValidation::isValueEndingWith('Cadena original', ' original'), "End with true");
-    }
-    public function testIsEndingFalse()
-    {
-        $this->assertFalse(IterableValidation::isValueEndingWith('Cadena original', 'original '), "End with false");
-        $this->assertFalse(IterableValidation::isValueEndingWith(' Cadena original', 'Original'), "End with false");
-        $this->assertFalse(IterableValidation::isValueEndingWith('origina', 'original'), "End with false");
-    }
-
-    */
 }

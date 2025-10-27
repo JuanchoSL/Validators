@@ -18,14 +18,14 @@ class IterableValidations extends AbstractValidations implements BasicValidators
     use BasicValidationsTrait, ContainsValidationsTrait, LengthValidationsTrait;
 
     protected string $validator = IterableValidation::class;
-/*
+
     public function isKeyContaining(mixed $needle): static
     {
         return $this->addTest($this->validator, 'isKeyContaining', func_get_args());
     }
 
-    public function isKeyContainingAny(mixed $needle): static
+    public function isKeyContainingAny(mixed ...$needle): static
     {
         return $this->addTest($this->validator, 'isKeyContainingAny', func_get_args());
-    }*/
+    }
 }

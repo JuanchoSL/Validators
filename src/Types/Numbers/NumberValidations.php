@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace JuanchoSL\Validators\Types\Numbers;
 
@@ -23,6 +21,10 @@ class NumberValidations extends AbstractValidations implements BasicValidatorsIn
     public function isValueEqualsThan(int|float $comparator): static
     {
         return $this->addTest($this->validator, 'isValueEqualsThan', func_get_args());
+    }
+    public function isValueIntoRange(int|float $min, int|float $max): static
+    {
+        return $this->addTest($this->validator, 'isValueIntoRange', func_get_args());
     }
     public function isValueGreatherThanOrEquals(int|float $comparator): static
     {

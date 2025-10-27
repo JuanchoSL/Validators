@@ -19,8 +19,7 @@ abstract class AbstractValidations implements BasicValidatorsInterface
 
     public function getResult(mixed $var): bool
     {
-        $this->process($var);
-        foreach ($this->results as $result) {
+        foreach ($this->getResults($var) as $result) {
             if (!$result) {
                 return false;
             }
@@ -53,10 +52,8 @@ abstract class AbstractValidations implements BasicValidatorsInterface
         $this->results = [];
         foreach ($this->tests as $tests) {
             $callable = (isset($tests['class'], $tests['method'])) ? [$tests['class'], $tests['method']] : $tests['method'];
-            //$key = call_user_func_array([$this, 'createKey'], array_merge([$tests['method']], $tests['params']));
-            //$key = !is_string($key) ? $tests['method'] : $key;
             $tests['params'] = $tests['params'] ?? [];
-            $key = $this->createKey($tests['method'], $tests['params']);
+            $key = $this->createKey($tests['method'], (array) $tests['params']);
             $this->results[$key] = call_user_func_array($callable, array_merge([$var], $tests['params'])) !== false;
         }
     }
@@ -70,4 +67,5 @@ abstract class AbstractValidations implements BasicValidatorsInterface
         ];
         return $this;
     }
+
 }
