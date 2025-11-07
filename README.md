@@ -78,3 +78,45 @@ $validator
         )
     }
 ```
+
+### Alternative validations (OR) over values
+
+You can perform a alternative checks over the values in order to accept it if pass ANY of some condicions
+
+```php
+$validator = new StringValidations();
+$validator
+    ->is()
+    ->isNotEmpty()
+    ->isValueEqualsAny('juan','pepe','antonio')
+    ->getResult('juan'); //true
+```
+
+### Validations over iterables
+
+You can perform checks over the keys or values of an iterable, can be simple validations or any other complex validation
+
+```php
+$validator = new IterableValidations();
+$validator
+    ->is()
+    ->isNotEmpty()
+    ->isKeyContainingAny(...['nombre', 'apellidos']);
+    ->getResult(['nombre' => 'Cadena numeros', 'apellidos' => 'Cadena letras']);//true
+
+***********
+
+$datas = [
+    ["nombre" => "pepe", "apellidos" => "salmuera", "email" => "aaaa@bbb.com", "telephone" => 123456789],
+    ["nombre" => "juan", "apellidos" => "benito", "email" => "bbb@ccc.es", "telephone" => 123456789],
+];
+    $validator->isEntityValidating('email', (new StringValidations())->isEmail());
+    $validator->isEntityValidating('telephone', (new IntegerValidations())->isLengthGreatherOrEqualsThan(9)->isLengthLessOrEqualsThan(12));
+
+************
+
+$datas = ["aaaa@bbb.com", "bbb@ccc.es"];
+$validator = new IterableValidations();
+$validator->isValueValidating((new StringValidations())->isEmail());
+$validator->getResult($datas);
+```

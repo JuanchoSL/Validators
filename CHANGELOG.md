@@ -1,5 +1,25 @@
 # Change Log Validators
 
+## [1.0.6] - 2025-11-07
+
+### Added
+
+- New Iterable validator, single and multi
+- More String *Any validators
+- New equals validation
+- More String tests
+- New intoRange Number validations
+
+### Changed
+
+- Change composer support from php v8.0
+- Use of traits for reuse multi validation functions
+- Change params type to mixed in order to apply to all future validators
+
+### Fixed
+
+- reusoe existing methods in order to avoid duplicity
+
 ## [1.0.5] - 2025-05-26
 
 ### Added
