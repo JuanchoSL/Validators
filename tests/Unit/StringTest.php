@@ -238,4 +238,25 @@ class StringTest extends TestCase
         $this->assertTrue(StringValidation::isValueContainingAny('Cadena original', 'original'), "contains true");
         $this->assertTrue(StringValidation::isValueContainingAny('Cadena original', 'origina'), "contains true");
     }
+    public function testIsEqualsTrue()
+    {
+        $this->assertTrue(StringValidation::isValueEquals('Cadena original', 'Cadena original'), "equals true");
+    }
+    public function testIsEqualsFalse()
+    {
+        $this->assertFalse(StringValidation::isValueEquals('Cadena origina', 'original'), "equals false");
+        $this->assertFalse(StringValidation::isValueEquals(' Cadena original', 'cadena original'), "equals false");
+    }
+    public function testIsEqualsAnyTrue()
+    {
+        $this->assertTrue(StringValidation::isValueEqualsAny('Cadena original', ...['Cadena original', 'cadena original', 'cadena Original']), "equals any true");
+        $this->assertTrue(StringValidation::isValueEqualsAny('Cadena original', 'Cadena original', 'cadena original', 'cadena Original'), "equals any true");
+    }
+    public function testIsEqualsAnyFalse()
+    {
+        $this->assertFalse(StringValidation::isValueEqualsAny('Cadena original', ...['cadena', 'original', 'cadena original']), "equals any false");
+        $this->assertFalse(StringValidation::isValueEqualsAny('Cadena original', 'Cadena', 'original', 'Cadena origina'), "equals any false");
+        $this->assertFalse(StringValidation::isValueEqualsAny('Cadena original', 'cadena', 'original', 'cadena original'), "equals any false");
+        $this->assertFalse(StringValidation::isValueEqualsAny('Cadena original', ...['Cadena', 'original', 'Cadena origina']), "equals any false");
+    }
 }

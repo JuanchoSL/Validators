@@ -27,16 +27,16 @@ interface BasicValidatorsInterface
 
     /**
      * Return the result for a provided value
-     * @param string|int|float $var
+     * @param mixed $var
      * @return bool
      */
-    public function getResult(string|int|float $var): bool;
+    public function getResult(mixed $var): bool;
 
     /**
      * Return the results for a provided value
-     * @param string|int|float $var
+     * @param mixed $var
      * @return array<string,bool>
      */
-    public function getResults(string|int|float $var): array;
+    public function getResults(mixed $var): array;
 
 }

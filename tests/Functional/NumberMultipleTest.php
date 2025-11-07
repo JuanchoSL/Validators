@@ -80,7 +80,7 @@ class NumberMultipleTest extends TestCase
             ->isNotEmpty()
             ->isValueLessThanOrEquals(25);
 
-        foreach ([24,25] as $comparator) {
+        foreach ([24, 25] as $comparator) {
             $this->assertTrue($this->validator->getResult($comparator));
         }
     }
@@ -95,5 +95,16 @@ class NumberMultipleTest extends TestCase
         foreach ([6, 7] as $comparator) {
             $this->assertFalse($this->validator->getResult($comparator));
         }
+    }
+
+    public function testIsRangeTrue()
+    {
+        $this->assertTrue($this->validator->isValueIntoRange(5, 10)->getResult(7), "range true");
+        $this->assertTrue($this->validator->isValueIntoRange(5, 10)->getResult(5), "range true");
+        $this->assertTrue($this->validator->isValueIntoRange(5, 10)->getResult(10), "range true");
+    }
+    public function testIsRangeFalse()
+    {
+        $this->assertFalse($this->validator->isValueIntoRange(5, 10)->getResult(14), "range false");
     }
 }

@@ -8,51 +8,66 @@ interface ContentValidatorsInterface
 {
 
     /**
-     * Check if the assigned value starts with a substring in a case sensitive mode and save the result
-     * @param string|int|float $var The value to check
-     * @param string|int|float $needle The substring to compare
+     * Check if the assigned value starts with a substring in a case sensitive mode and returns the result
+     * @param mixed $var The value to check
+     * @param mixed $needle The substring to compare
      * @return bool The result of the check
      */
-    public static function isValueStartingWith(string|int|float $var, string|int|float $needle): bool;
+    public static function isValueStartingWith(mixed $var, mixed $needle): bool;
 
     /**
-     * Check if the assigned value ends with a substring in a case sensitive mode and save the result
-     * @param string|int|float $var The value to check
-     * @param string|int|float $needle The substring to compare
+     * Check if the assigned value ends with a substring in a case sensitive mode and returns the result
+     * @param mixed $var The value to check
+     * @param mixed $needle The substring to compare
      * @return bool The result of the check
      */
-    public static function isValueEndingWith(string|int|float $var, string|int|float $needle): bool;
+    public static function isValueEndingWith(mixed $var, mixed $needle): bool;
 
     /**
-     * Check if the assigned value starts contains a substring in a case sensitive mode and save the result
-     * @param string|int|float $var The value to check
-     * @param string|int|float $needle The substring to compare
+     * Check if the assigned value starts contains a substring in a case sensitive mode and returns the result
+     * @param mixed $var The value to check
+     * @param mixed $needle The substring to compare
      * @return bool The result of the check
      */
-    public static function isValueContaining(string|int|float $var, string|int|float $needle): bool;
+    public static function isValueContaining(mixed $var, mixed $needle): bool;
 
     /**
-     * Check if the assigned value starts with a substring in a case sensitive mode and save the result
-     * @param string|int|float $var The value to check
-     * @param string|int|float $needle The substring to compare
+     * Check if the assigned value starts with a substring in a case sensitive mode and returns the result
+     * @param mixed $var The value to check
+     * @param mixed $needle The substring to compare
      * @return bool The result of the check
      */
-    public static function isValueStartingWithAny(string|int|float $var, string|int|float ...$needles): bool;
+    public static function isValueStartingWithAny(mixed $var, mixed ...$needles): bool;
 
     /**
-     * Check if the assigned value ends with a substring in a case sensitive mode and save the result
-     * @param string|int|float $var The value to check
-     * @param string|int|float $needle The substring to compare
+     * Check if the assigned value ends with a substring in a case sensitive mode and returns the result
+     * @param mixed $var The value to check
+     * @param mixed $needle The substring to compare
      * @return bool The result of the check
      */
-    public static function isValueEndingWithAny(string|int|float $var, string|int|float ...$needles): bool;
+    public static function isValueEndingWithAny(mixed $var, mixed ...$needles): bool;
 
     /**
-     * Check if the assigned value starts contains a substring in a case sensitive mode and save the result
-     * @param string|int|float $var The value to check
-     * @param string|int|float $needle The substring to compare
+     * Check if the assigned value starts contains a substring in a case sensitive mode and returns the result
+     * @param mixed $var The value to check
+     * @param mixed $needle The substring to compare
+     * @return bool The result of the check
+    */
+    public static function isValueContainingAny(mixed $var, mixed ...$needles): bool;
+    
+    /**
+     * Check if the assigned value is equal to other value in a case sensitive mode and returns the result
+     * @param mixed $var The value to check
+     * @param mixed $needle The value to compare
+     * @return bool The result of the check
+    */
+    public static function isValueEquals(mixed $var, mixed $needle): bool;
+    
+    /**
+     * Check if the assigned value is equals than any of some values in a case sensitive mode and returns the re
+     * @param mixed $var The value to check
+     * @param mixed ...$needles The values to compare
      * @return bool The result of the check
      */
-    public static function isValueContainingAny(string|int|float $var, string|int|float ...$needles): bool;
-
+    public static function isValueEqualsAny(mixed $var, mixed ...$needles): bool;
 }

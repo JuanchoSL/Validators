@@ -79,4 +79,58 @@ class StringMultipleTest extends TestCase
 
         $this->assertTrue($this->validator->getResult('https://mylongdomain.com'));
     }
+
+    public function testStartTrue()
+    {
+        $this->validator
+            ->is()
+            ->isNotEmpty()
+            ->isValueStartingWith('start');
+        $this->assertTrue($this->validator->getResult('starts string true'));
+    }
+
+    public function testStartAnyTrue()
+    {
+        $this->validator
+            ->is()
+            ->isNotEmpty()
+            ->isValueStartingWithAny('start', 'going');
+        $this->assertTrue($this->validator->getResult('starts string true'));
+    }
+
+    public function testStartFalse()
+    {
+        $this->validator
+            ->is()
+            ->isNotEmpty()
+            ->isValueStartingWith('starts');
+        $this->assertFalse($this->validator->getResult('starting string false'));
+    }
+
+    public function testEndTrue()
+    {
+        $this->validator
+            ->is()
+            ->isNotEmpty()
+            ->isValueEndingWith('end');
+        $this->assertTrue($this->validator->getResult('going to the end'));
+    }
+
+    public function testEndAnyTrue()
+    {
+        $this->validator
+            ->is()
+            ->isNotEmpty()
+            ->isValueEndingWithAny('end', 'ending');
+        $this->assertTrue($this->validator->getResult('going to the end'));
+    }
+
+    public function testEndFalse()
+    {
+        $this->validator
+            ->is()
+            ->isNotEmpty()
+            ->isValueEndingWith('end');
+        $this->assertFalse($this->validator->getResult('starting string false'));
+    }
 }

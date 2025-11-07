@@ -190,4 +190,14 @@ class NumberTest extends TestCase
         $this->assertFalse(NumberValidation::isValueContaining(123456789, '456 '), "contains false");
         $this->assertFalse(NumberValidation::isValueContaining(123456789, '789 '), "contains false");
     }
+    public function testIsRangeTrue()
+    {
+        $this->assertTrue(NumberValidation::isValueIntoRange(123, 100, 124), "range true");
+        $this->assertTrue(NumberValidation::isValueIntoRange(124, 100, 124), "range true");
+        $this->assertTrue(NumberValidation::isValueIntoRange(100, 100, 124), "range true");
+    }
+    public function testIsRangeFalse()
+    {
+        $this->assertFalse(NumberValidation::isValueIntoRange(125, 150, 200), "range false");
+    }
 }
