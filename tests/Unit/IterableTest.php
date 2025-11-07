@@ -136,34 +136,72 @@ class IterableTest extends TestCase
         $this->assertFalse(IterableValidation::isKeyContainingAny(['nombre' => 'Cadena numeros', 'apellido' => 'Cadena letras'], ...['numeros', 'palabras']), "contains false");
     }
 
-    public function testIsValueEmailTrue()
+    public function testIsValueValidatingTrue()
     {
-        $this->assertTrue(IterableValidation::isValueValidating(["juanchosl@hotmail.com"], (new StringValidations())->isEmail()), "All values are emails");
+        $this->assertTrue(IterableValidation::isValueValidating(["aaaa@bbb.com", "bbb@ccc.es"], (new StringValidations())->isEmail()), "All values are emails");
     }
 
-    public function testIsValueEmailFalse()
+    public function testIsValueValidatingFalse()
     {
-        $this->assertFalse(IterableValidation::isValueValidating(["juanchosl@hotmail"], (new StringValidations())->isEmail()), "All values are not emails");
+        $this->assertFalse(IterableValidation::isValueValidating(["aaaa@bbb.com", "bbb@ccc.es", ""], (new StringValidations())->isEmail()), "All values are not emails");
     }
 
-    public function testIsValueUrlTrue()
+    public function testIsValueValidatingAnyTrue()
     {
-        $this->assertTrue(IterableValidation::isValueValidating([
-            "http://url.com",
-            "https://url.com",
-            "https://www.url.com",
-            "ftp://ftp.url.com",
-            "ftps://ftp.url.com",
-            "https://www.url.com/index.php"
-        ], (new StringValidations())->isUrl()), "All values are urls");
+        $this->assertTrue(IterableValidation::isValueValidatingAny(["aaaa@bbb.com", "bbb@ccc.es", ''], (new StringValidations())->isEmpty(), (new StringValidations())->isEmail()), "All values are emails or empty");
     }
 
-    public function testIsValueUrlFalse()
+    public function testIsValueValidatingAnyFalse()
     {
-        $this->assertFalse(IterableValidation::isValueValidating([
-            "isnotanurl",
-            "www.url.com"
-        ], (new StringValidations())->isUrl()), "Don't all values are urls");
+        $this->assertFalse(IterableValidation::isValueValidatingAny(["aaaa@bbb.com", "bbb@ccc.es", "a"], (new StringValidations())->isEmpty(), (new StringValidations())->isEmail()), "All values are emails or empty failing");
     }
 
+    public function testIsEntiyValidatingTrue()
+    {
+        $this->assertTrue(IterableValidation::isEntityValidating([
+            ['url' => "http://url.com"],
+            ['url' => "https://url.com"],
+            ['url' => "https://www.url.com"],
+            ['url' => "ftp://ftp.url.com"],
+            ['url' => "ftps://ftp.url.com"],
+            ['url' => "https://www.url.com/index.php"]
+        ], 'url', (new StringValidations())->isUrl()), "All values at index url are urls");
+    }
+
+    public function testIsEntiyValidatingFalse()
+    {
+        $this->assertFalse(IterableValidation::isEntityValidating([
+            ['url' => "http://url.com"],
+            ['url' => "https://url.com"],
+            ['url' => "https://www.url.com"],
+            ['url' => "ftp://ftp.url.com"],
+            ['url' => "ftps://ftp.url.com"],
+            ['url' => ""]
+        ], 'url', (new StringValidations())->isUrl()), "Don't all values are urls");
+    }
+/*
+    public function testIsEntiyValidatingAnyTrue()
+    {
+        $this->assertTrue(IterableValidation::isEntityValidating([
+            ['url' => "http://url.com"],
+            ['url' => "https://url.com"],
+            ['url' => "https://www.url.com"],
+            ['url' => "ftp://ftp.url.com"],
+            ['url' => "ftps://ftp.url.com"],
+            ['url' => "https://www.url.com/index.php"]
+        ], 'url', (new StringValidations())->isUrl()), "All values at index url are urls");
+    }
+
+    public function testIsEntiyValidatingAnyFalse()
+    {
+        $this->assertFalse(IterableValidation::isEntityValidatingAny([
+            ['url' => "http://url.com"],
+            ['url' => "https://url.com"],
+            ['url' => "https://www.url.com"],
+            ['url' => "ftp://ftp.url.com"],
+            ['url' => "ftps://ftp.url.com"],
+            ['url' => ""]
+        ], 'url', (new StringValidations())->isUrl()), "Don't all values are urls");
+    }
+*/
 }

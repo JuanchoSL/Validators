@@ -67,5 +67,8 @@ abstract class AbstractValidations implements BasicValidatorsInterface
         ];
         return $this;
     }
-
+    public function __tostring(): string
+    {
+        return serialize($this->tests);
+    }
 }
