@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace JuanchoSL\Validators\Contracts\Single;
 
@@ -34,7 +32,7 @@ interface ContentValidatorsInterface
     /**
      * Check if the assigned value starts with a substring in a case sensitive mode and returns the result
      * @param mixed $var The value to check
-     * @param mixed $needle The substring to compare
+     * @param mixed $needles The substrings to compare
      * @return bool The result of the check
      */
     public static function isValueStartingWithAny(mixed $var, mixed ...$needles): bool;
@@ -42,7 +40,7 @@ interface ContentValidatorsInterface
     /**
      * Check if the assigned value ends with a substring in a case sensitive mode and returns the result
      * @param mixed $var The value to check
-     * @param mixed $needle The substring to compare
+     * @param mixed $needles The substrings to compare
      * @return bool The result of the check
      */
     public static function isValueEndingWithAny(mixed $var, mixed ...$needles): bool;
@@ -50,7 +48,7 @@ interface ContentValidatorsInterface
     /**
      * Check if the assigned value starts contains a substring in a case sensitive mode and returns the result
      * @param mixed $var The value to check
-     * @param mixed $needle The substring to compare
+     * @param mixed $needles The substrings to compare
      * @return bool The result of the check
     */
     public static function isValueContainingAny(mixed $var, mixed ...$needles): bool;

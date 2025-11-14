@@ -1,15 +1,11 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace JuanchoSL\Validators\Types;
 
-use JuanchoSL\Validators\Contracts\Multi\BasicValidatorsInterface;
-
-abstract class AbstractValidations implements BasicValidatorsInterface
+abstract class AbstractValidations
 {
     /**
-     * @var array<int, array<string,string|array<int,mixed>>> $tests
+     * @var array<int, array{"class": class-string , "method": string, "params":array<int, mixed>}> $tests
      */
     protected array $tests = [];
     /**
@@ -37,6 +33,7 @@ abstract class AbstractValidations implements BasicValidatorsInterface
     }
 
     /**
+     * @param string $method
      * @param array<int,mixed> $params
      */
     protected function createKey(string $method, array $params = []): string
@@ -51,14 +48,19 @@ abstract class AbstractValidations implements BasicValidatorsInterface
     {
         $this->results = [];
         foreach ($this->tests as $tests) {
-            $callable = (isset($tests['class'], $tests['method'])) ? [$tests['class'], $tests['method']] : $tests['method'];
-            $tests['params'] = $tests['params'] ?? [];
+            //$callable = (isset($tests['class'], $tests['method'])) ? [$tests['class'], $tests['method']] : $tests['method'];
+            //$tests['params'] = $tests['params'] ?? [];
             $key = $this->createKey($tests['method'], (array) $tests['params']);
-            $this->results[$key] = call_user_func_array($callable, array_merge([$var], $tests['params'])) !== false;
+            $this->results[$key] = call_user_func_array([$tests['class'], $tests['method']], array_merge([$var], $tests['params'])) !== false;
         }
     }
 
-    protected function addTest($validator, $function, $arguments): static
+    /**
+     * @param class-string $validator
+     * @param string $function
+     * @param array<int, mixed> $arguments
+     */
+    protected function addTest(string $validator, string $function, array $arguments): static
     {
         $this->tests[] = [
             "class" => $validator,
@@ -67,8 +69,22 @@ abstract class AbstractValidations implements BasicValidatorsInterface
         ];
         return $this;
     }
+
     public function __tostring(): string
     {
         return serialize($this->tests);
+    }
+
+    public function __serialize(): array
+    {
+        return $this->tests;
+    }
+
+    /**
+     * @param array<int, array{"class": class-string , "method": string, "params":array<int, mixed>}> $vars
+     */
+    public function __unserialize(array $vars): void
+    {
+        $this->tests = $vars;
     }
 }

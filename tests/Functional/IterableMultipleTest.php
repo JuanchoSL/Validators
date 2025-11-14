@@ -83,8 +83,8 @@ class IterableMultipleTest extends TestCase
             ["nombre" => "pepe", "apellidos" => "salmuera", "email" => "aaaa@bbb.com", "telephone" => 123456789],
             ["nombre" => "juan", "apellidos" => "benito", "email" => "bbb@ccc.es", "telephone" => 123456789],
         ];
-        $this->validator->isEntityValidating('email', (new StringValidations())->isEmail());
-        $this->validator->isEntityValidating('telephone', (new IntegerValidations())->isLengthGreatherOrEqualsThan(9)->isLengthLessOrEqualsThan(12));
+        $this->validator->isValueAttributeValidating('email', (new StringValidations())->isEmail());
+        $this->validator->isValueAttributeValidating('telephone', (new IntegerValidations())->isLengthGreatherOrEqualsThan(9)->isLengthLessOrEqualsThan(12));
 
         $this->assertTrue($this->validator->getResult($datas), "complex validations");
     }
@@ -94,8 +94,8 @@ class IterableMultipleTest extends TestCase
             ["nombre" => "pepe", "apellidos" => "salmuera", "email" => "aaaa@bbb.com", "telephone" => 123456789],
             ["nombre" => "juan", "apellidos" => "benito", "email" => "bbb@ccc", "telephone" => 123456789],
         ];
-        $this->validator->isEntityValidating('email', (new StringValidations())->isEmail());
-        $this->validator->isEntityValidating('telephone', (new IntegerValidations())->isLengthGreatherOrEqualsThan(9)->isLengthLessOrEqualsThan(12));
+        $this->validator->isValueAttributeValidating('email', (new StringValidations())->isEmail());
+        $this->validator->isValueAttributeValidating('telephone', (new IntegerValidations())->isLengthGreatherOrEqualsThan(9)->isLengthLessOrEqualsThan(12));
 
         $this->assertFalse($this->validator->getResult($datas), "complex validations");
     }
@@ -105,8 +105,8 @@ class IterableMultipleTest extends TestCase
             ["nombre" => "pepe", "apellidos" => "salmuera", "email" => "", "telephone" => 123456789],
             ["nombre" => "juan", "apellidos" => "benito", "email" => "bbb@ccc.es", "telephone" => 123456789],
         ];
-        $this->validator->isEntityValidatingAny('email', (new StringValidations())->isEmpty(), (new StringValidations())->isEmail());
-        //$this->validator->isEntityValidatingAny('telephone', (new IntegerValidations())->isLengthGreatherOrEqualsThan(9)->isLengthLessOrEqualsThan(12));
+        $this->validator->isValueAttributeValidatingAny('email', (new StringValidations())->isEmpty(), (new StringValidations())->isEmail());
+        //$this->validator->isValueAttributeValidatingAny('telephone', (new IntegerValidations())->isLengthGreatherOrEqualsThan(9)->isLengthLessOrEqualsThan(12));
 
         $this->assertTrue($this->validator->getResult($datas), "complex validations");
     }
@@ -116,8 +116,8 @@ class IterableMultipleTest extends TestCase
             ["nombre" => "pepe", "apellidos" => "salmuera", "email" => "aaaa@bbb", "telephone" => 123456789],
             ["nombre" => "juan", "apellidos" => "benito", "email" => "bbb@ccc", "telephone" => 123456789],
         ];
-        $this->validator->isEntityValidatingAny('email', (new StringValidations())->isEmpty(), (new StringValidations())->isEmail());
-        $this->validator->isEntityValidatingAny('telephone', (new IntegerValidations())->isLengthGreatherOrEqualsThan(9)->isLengthLessOrEqualsThan(12));
+        $this->validator->isValueAttributeValidatingAny('email', (new StringValidations())->isEmpty(), (new StringValidations())->isEmail());
+        $this->validator->isValueAttributeValidatingAny('telephone', (new IntegerValidations())->isLengthGreatherOrEqualsThan(9)->isLengthLessOrEqualsThan(12));
 
         $this->assertFalse($this->validator->getResult($datas), "complex validations");
     }

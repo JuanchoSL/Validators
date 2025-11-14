@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace JuanchoSL\Validators\Types\Iterables;
 
@@ -52,19 +50,25 @@ class IterableValidation extends AbstractValidation implements BasicValidatorsIn
 
     public static function isValueContaining(mixed $var, mixed $needle): bool
     {
+        if (!static::is($var))
+            return false;
+        $var = (array) $var;
         $results = true;
         foreach ($var as $entity) {
             $result = true;
-            if (!StringValidation::isValueContaining((string) $entity, (string) $needle)) {
-                $result = false;
+            if (!StringValidation::isValueContaining((string) strval($entity), (string) strval($needle))) {
+                return $result = false;
             }
             $results = ($results && $result);
         }
-        return $results ?? false;
+        return $results;
     }
 
     public static function isValueContainingAny(mixed $var, mixed ...$needles): bool
     {
+        if (!static::is($var))
+            return false;
+        $var = (array) $var;
         $results = true;
         foreach ($var as $entity) {
             $results = (StringValidation::isValueContainingAny((string) $entity, ...$needles)) ? $results : false;
@@ -74,6 +78,9 @@ class IterableValidation extends AbstractValidation implements BasicValidatorsIn
 
     public static function isKeyContainingAny(mixed $var, mixed ...$needles): bool
     {
+        if (!static::is($var))
+            return false;
+        $var = (array) $var;
         $results = true;
         foreach ($var as $key => $entity) {
             $results = (StringValidation::isValueContainingAny((string) $key, ...$needles)) ? $results : false;
@@ -83,32 +90,41 @@ class IterableValidation extends AbstractValidation implements BasicValidatorsIn
 
     public static function isKeyContaining(mixed $var, mixed $needle): bool
     {
+        if (!static::is($var))
+            return false;
+        $var = (array) $var;
         $results = true;
         foreach ($var as $key => $entity) {
             $result = true;
-            if (!StringValidation::isValueContaining((string) $key, (string) $needle)) {
-                $result = false;
+            if (!StringValidation::isValueContaining((string) $key, (string) strval($needle))) {
+                return $result = false;
             }
-            $results = ($results && $result);
+            //$results = ($results && $result);
         }
-        return $results ?? false;
+        return $results;
     }
 
     public static function isValueValidating(mixed $var, AbstractValidations $needle): bool
     {
+        if (!static::is($var))
+            return false;
+        $var = (array) $var;
         $results = true;
         foreach ($var as $entity) {
             $result = true;
             if (!$needle->getResult($entity)) {
-                $result = false;
+                return $result = false;
             }
-            $results = ($results && $result);
+            //$results = ($results && $result);
         }
-        return $results ?? false;
+        return $results;
     }
 
     public static function isValueValidatingAny(mixed $var, AbstractValidations ...$needles): bool
     {
+        if (!static::is($var))
+            return false;
+        $var = (array) $var;
         $results = true;
         foreach ($var as $entity) {
             $result = true;
@@ -120,48 +136,48 @@ class IterableValidation extends AbstractValidation implements BasicValidatorsIn
             }
             $results = ($results && $result && $sub_result);
         }
-        return $results ?? false;
+        return $results;
     }
 
-    public static function isEntityValidating(mixed $var, string $index, AbstractValidations $needle): bool
+    public static function isValueAttributeValidating(mixed $var, string $attribute, AbstractValidations $needle): bool
     {
+        if (!static::is($var))
+            return false;
+        $var = (array) $var;
         $results = true;
         foreach ($var as $entity) {
             $result = true;
             if (
                 is_iterable($entity)
             ) {
-                if (is_array($entity) && array_key_exists($index, $entity)) {
-                    $entity = $entity[$index];
-                } elseif (is_object($entity) && property_exists($entity, $index)) {
-                    $entity = $entity->$index;
-                } else {
-                    //$result = false;
+                if (is_array($entity) && array_key_exists($attribute, $entity)) {
+                    $entity = $entity[$attribute];
+                } elseif (is_object($entity) && property_exists($entity, $attribute)) {
+                    $entity = $entity->$attribute;
                 }
-                //continue;
             }
-            if (!$result || !$needle->getResult($entity)) {
-                $result = false;
+            if (!$result || $needle->getResult($entity) === false) {
+                return $result = false;
             }
-            $results = ($results && $result);
+            //$results = ($results && $result);
         }
-        return $results ?? false;
+        return $results;
     }
-    public static function isEntityValidatingAny(mixed $var, string $index, AbstractValidations ...$needles): bool
+    public static function isValueAttributeValidatingAny(mixed $var, string $attribute, AbstractValidations ...$needles): bool
     {
+        if (!static::is($var))
+            return false;
+        $var = (array) $var;
         $results = true;
         foreach ($var as $entity) {
             $result = true;
             $sub_result = false;
             if (is_iterable($entity)) {
-                if (is_array($entity) && array_key_exists($index, $entity)) {
-                    $entity = $entity[$index];
-                } elseif (is_object($entity) && property_exists($entity, $index)) {
-                    $entity = $entity->$index;
-                } else {
-                    //$result = false;
+                if (is_array($entity) && array_key_exists($attribute, $entity)) {
+                    $entity = $entity[$attribute];
+                } elseif (is_object($entity) && property_exists($entity, $attribute)) {
+                    $entity = $entity->$attribute;
                 }
-                //continue;
                 foreach ($needles as $needle) {
                     if ($needle->getResult($entity)) {
                         $sub_result = true;
@@ -170,7 +186,7 @@ class IterableValidation extends AbstractValidation implements BasicValidatorsIn
             }
             $results = ($results && $result && $sub_result);
         }
-        return $results ?? false;
+        return $results;
     }
 
 }

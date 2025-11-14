@@ -5,13 +5,14 @@ namespace JuanchoSL\Validators\Types\Strings;
 use JuanchoSL\Validators\Contracts\Multi\ContentValidatorsInterface;
 use JuanchoSL\Validators\Contracts\Multi\RegexValidatorsInterface;
 use JuanchoSL\Validators\Contracts\Multi\StringContentsTypeValidatorsInterface;
+use JuanchoSL\Validators\Contracts\Multi\BasicValidatorsInterface;
 use JuanchoSL\Validators\Types\AbstractValidations;
 use JuanchoSL\Validators\Contracts\Multi\LengthValidatorsInterface;
 use JuanchoSL\Validators\Types\Traits\BasicValidationsTrait;
 use JuanchoSL\Validators\Types\Traits\ContainsValidationsTrait;
 use JuanchoSL\Validators\Types\Traits\LengthValidationsTrait;
 
-class StringValidations extends AbstractValidations implements RegexValidatorsInterface, LengthValidatorsInterface, StringContentsTypeValidatorsInterface, ContentValidatorsInterface
+class StringValidations extends AbstractValidations implements BasicValidatorsInterface, RegexValidatorsInterface, LengthValidatorsInterface, StringContentsTypeValidatorsInterface, ContentValidatorsInterface
 {
 
     use BasicValidationsTrait, LengthValidationsTrait, ContainsValidationsTrait;
