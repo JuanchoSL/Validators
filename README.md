@@ -20,6 +20,7 @@ composer update
 - Specific integers
 - Specific floats
 - General Iterables
+- Primitive boolean, reals or equivalents and Null checking
 
 ### Single validation
 
