@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace JuanchoSL\Validators\Types\Iterables;
 
@@ -13,9 +11,8 @@ use JuanchoSL\Validators\Types\Iterables\IterableValidation;
 use JuanchoSL\Validators\Types\Traits\BasicValidationsTrait;
 use JuanchoSL\Validators\Types\Traits\ContainsValidationsTrait;
 use JuanchoSL\Validators\Types\Traits\LengthValidationsTrait;
-use Serializable;
 
-class IterableValidations extends AbstractValidations implements BasicValidatorsInterface, LengthValidatorsInterface, IterableKeyValidatorsInterface, ValueValidatorsInterface, Serializable
+class IterableValidations extends AbstractValidations implements BasicValidatorsInterface, LengthValidatorsInterface, IterableKeyValidatorsInterface, ValueValidatorsInterface
 {
 
     use BasicValidationsTrait, ContainsValidationsTrait, LengthValidationsTrait;
@@ -32,23 +29,13 @@ class IterableValidations extends AbstractValidations implements BasicValidators
         return $this->addTest($this->validator, 'isKeyContainingAny', func_get_args());
     }
 
-    public function isEntityValidating(string $index, AbstractValidations $validations): static
+    public function isValueAttributeValidating(string $index, AbstractValidations $validations): static
     {
-        return $this->addTest($this->validator, 'isEntityValidating', func_get_args());
+        return $this->addTest($this->validator, 'isValueAttributeValidating', func_get_args());
     }
 
-    public function isEntityValidatingAny(string $index, AbstractValidations ...$validations): static
+    public function isValueAttributeValidatingAny(string $index, AbstractValidations ...$validations): static
     {
-        return $this->addTest($this->validator, 'isEntityValidatingAny', func_get_args());
+        return $this->addTest($this->validator, 'isValueAttributeValidatingAny', func_get_args());
     }
-
-    public function serialize(): array
-    {
-        return $this->tests;
-    }
-    public function unserialize($vars)
-    {
-        $this->tests = $vars;
-    }
-
 }

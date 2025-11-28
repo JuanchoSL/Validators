@@ -20,6 +20,7 @@ composer update
 - Specific integers
 - Specific floats
 - General Iterables
+- Primitive boolean, reals or equivalents and Null checking
 
 ### Single validation
 
@@ -110,8 +111,8 @@ $datas = [
     ["nombre" => "pepe", "apellidos" => "salmuera", "email" => "aaaa@bbb.com", "telephone" => 123456789],
     ["nombre" => "juan", "apellidos" => "benito", "email" => "bbb@ccc.es", "telephone" => 123456789],
 ];
-    $validator->isEntityValidating('email', (new StringValidations())->isEmail());
-    $validator->isEntityValidating('telephone', (new IntegerValidations())->isLengthGreatherOrEqualsThan(9)->isLengthLessOrEqualsThan(12));
+    $validator->isValueAttributeValidating('email', (new StringValidations())->isEmail());
+    $validator->isValueAttributeValidating('telephone', (new IntegerValidations())->isLengthGreatherOrEqualsThan(9)->isLengthLessOrEqualsThan(12));
 
 ************
 

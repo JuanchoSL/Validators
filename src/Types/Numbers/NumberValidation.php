@@ -50,32 +50,32 @@ class NumberValidation extends AbstractValidation implements BasicValidatorsInte
 
     public static function isLengthEqualsThan(mixed $var, int $limit): bool
     {
-        return static::is($var) && mb_strlen((string) $var) == $limit;
+        return static::is($var) && mb_strlen((string) strval($var)) == $limit;
     }
 
     public static function isLengthGreatherThan(mixed $var, int $limit): bool
     {
-        return static::is($var) && mb_strlen((string) $var) > $limit;
+        return static::is($var) && mb_strlen((string) strval($var)) > $limit;
     }
 
     public static function isLengthGreatherOrEqualsThan(mixed $var, int $limit): bool
     {
-        return static::is($var) && mb_strlen((string) $var) >= $limit;
+        return static::is($var) && mb_strlen((string) strval($var)) >= $limit;
     }
 
     public static function isLengthLessThan(mixed $var, int $limit): bool
     {
-        return static::is($var) && mb_strlen((string) $var) < $limit;
+        return static::is($var) && mb_strlen((string) strval($var)) < $limit;
     }
 
     public static function isLengthLessOrEqualsThan(mixed $var, int $limit): bool
     {
-        return static::is($var) && mb_strlen((string) $var) <= $limit;
+        return static::is($var) && mb_strlen((string) strval($var)) <= $limit;
     }
 
     public static function isValueStartingWith(mixed $var, mixed $needle): bool
     {
-        return static::is($var) && StringValidation::isValueStartingWith((string) $var, (string) $needle);
+        return static::is($var) && StringValidation::isValueStartingWith((string) strval($var), (string) strval($needle));
     }
 
     public static function isValueStartingWithAny(mixed $var, mixed ...$needles): bool
@@ -90,7 +90,7 @@ class NumberValidation extends AbstractValidation implements BasicValidatorsInte
 
     public static function isValueEndingWith(mixed $var, mixed $needle): bool
     {
-        return static::is($var) && StringValidation::isValueEndingWith((string) $var, (string) $needle);
+        return static::is($var) && StringValidation::isValueEndingWith((string) strval($var), (string) strval($needle));
     }
 
     public static function isValueEndingWithAny(mixed $var, mixed ...$needles): bool
@@ -105,7 +105,7 @@ class NumberValidation extends AbstractValidation implements BasicValidatorsInte
 
     public static function isValueContaining(mixed $var, mixed $needle): bool
     {
-        return static::is($var) && StringValidation::isValueContaining((string) $var, (string) $needle);
+        return static::is($var) && StringValidation::isValueContaining((string) strval($var), (string) strval($needle));
     }
 
     public static function isValueContainingAny(mixed $var, mixed ...$needles): bool

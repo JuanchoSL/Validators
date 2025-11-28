@@ -158,7 +158,7 @@ class IterableTest extends TestCase
 
     public function testIsEntiyValidatingTrue()
     {
-        $this->assertTrue(IterableValidation::isEntityValidating([
+        $this->assertTrue(IterableValidation::isValueAttributeValidating([
             ['url' => "http://url.com"],
             ['url' => "https://url.com"],
             ['url' => "https://www.url.com"],
@@ -170,19 +170,19 @@ class IterableTest extends TestCase
 
     public function testIsEntiyValidatingFalse()
     {
-        $this->assertFalse(IterableValidation::isEntityValidating([
+        $this->assertFalse(IterableValidation::isValueAttributeValidating([
             ['url' => "http://url.com"],
             ['url' => "https://url.com"],
+            ['url' => ""],
             ['url' => "https://www.url.com"],
             ['url' => "ftp://ftp.url.com"],
-            ['url' => "ftps://ftp.url.com"],
-            ['url' => ""]
+            ['url' => "ftps://ftp.url.com"]
         ], 'url', (new StringValidations())->isUrl()), "Don't all values are urls");
     }
 /*
     public function testIsEntiyValidatingAnyTrue()
     {
-        $this->assertTrue(IterableValidation::isEntityValidating([
+        $this->assertTrue(IterableValidation::isValueAttributeValidating([
             ['url' => "http://url.com"],
             ['url' => "https://url.com"],
             ['url' => "https://www.url.com"],
@@ -194,7 +194,7 @@ class IterableTest extends TestCase
 
     public function testIsEntiyValidatingAnyFalse()
     {
-        $this->assertFalse(IterableValidation::isEntityValidatingAny([
+        $this->assertFalse(IterableValidation::isValueAttributeValidatingAny([
             ['url' => "http://url.com"],
             ['url' => "https://url.com"],
             ['url' => "https://www.url.com"],
