@@ -1,11 +1,28 @@
-# Change Log Validators
+# Change Log - Validators
+
+## [1.0.7] - 2025
+
+### Added
+
+- New Primitive validations in order to convert *equivalent* bool numbers and strings: true, yes, on, 1 as true and falase, no, off, 0 as false
+- strval before cast to string into number validations for length checkers
+- strval before cast to string into string validations for length checkers
+- Checked full compatibility with php 8.5
+
+### Changed
+
+- changed iterable test for check entity param to isValueAttribute in order to clear use
+
+### Fixed
+
+- check if var is an iterable before use it in order to return false if it not is
 
 ## [1.0.6] - 2025-11-07
 
 ### Added
 
 - New Iterable validator, single and multi
-- More String *Any validators
+- More String \*Any validators
 - New equals validation
 - More String tests
 - New intoRange Number validations
