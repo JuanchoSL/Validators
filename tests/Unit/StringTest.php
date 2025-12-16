@@ -301,4 +301,35 @@ class StringTest extends TestCase
         $this->assertFalse(StringValidation::isValueEqualsAny('Cadena original', 'cadena', 'original', 'cadena original'), "equals any false");
         $this->assertFalse(StringValidation::isValueEqualsAny('Cadena original', ...['Cadena', 'original', 'Cadena origina']), "equals any false");
     }
+
+    public function testIsDateStringTrue()
+    {
+        $this->assertTrue(StringValidation::isDate("2025-11-30"));
+        $this->assertTrue(StringValidation::isDate("2025/11/30"));
+        $this->assertTrue(StringValidation::isDate("30-11-2025"));
+        $this->assertTrue(StringValidation::isDate("30.11.2025"));
+        $this->assertTrue(StringValidation::isDate("11/30/2025"));
+    }
+
+    public function testIsDateStringFalse()
+    {
+        $this->assertFalse(StringValidation::isDate("2025.11.30"));
+        $this->assertFalse(StringValidation::isDate("30/11/2025"));
+        $this->assertFalse(StringValidation::isDate("11-30-2025"));
+        $this->assertFalse(StringValidation::isDate("11.30.2025"));
+    }
+
+    public function testIsFullDateStringTrue()
+    {
+        $dates = [
+            "Thu, 01 Jan 26 00:00:00 +0000",
+            "Thursday, 01-Jan-26 00:00:00 UTC",
+            "2026-01-01T00:00:00.000+00:00",
+            "2026-01-01T00:00:00+00:00",
+            "+2026-01-01T00:00:00+00:00",
+        ];
+        foreach ($dates as $date) {
+            $this->assertTrue(StringValidation::isDate($date));
+        }
+    }
 }

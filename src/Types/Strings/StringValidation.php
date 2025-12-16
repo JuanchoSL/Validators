@@ -2,6 +2,8 @@
 
 namespace JuanchoSL\Validators\Types\Strings;
 
+use DateMalformedStringException;
+use DateTimeImmutable;
 use JuanchoSL\Validators\Contracts\Single\BasicValidatorsInterface;
 use JuanchoSL\Validators\Contracts\Single\ContentValidatorsInterface;
 use JuanchoSL\Validators\Contracts\Single\LengthValidatorsInterface;
@@ -99,6 +101,15 @@ class StringValidation extends AbstractValidation implements BasicValidatorsInte
     public static function isNumber(mixed $var): bool
     {
         return is_numeric($var);
+    }
+    public static function isDate(mixed $var): bool
+    {
+        try {
+            new DateTimeImmutable($var);
+            return true;
+        } catch (DateMalformedStringException $e) {
+            return false;
+        }
     }
 
     public static function isFloat(mixed $var): bool

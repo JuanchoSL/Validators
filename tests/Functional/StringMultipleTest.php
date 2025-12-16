@@ -177,4 +177,36 @@ class StringMultipleTest extends TestCase
             ->isValueEndingWith('end');
         $this->assertFalse($this->validator->getResult('starting string false'));
     }
+
+    
+    public function testIsDateStringTrue()
+    {
+        $this->assertTrue($this->validator->isDate()->getResult("2025-11-30"));
+        $this->assertTrue($this->validator->isDate()->getResult("2025/11/30"));
+        $this->assertTrue($this->validator->isDate()->getResult("30-11-2025"));
+        $this->assertTrue($this->validator->isDate()->getResult("30.11.2025"));
+        $this->assertTrue($this->validator->isDate()->getResult("11/30/2025"));
+    }
+
+    public function testIsDateStringFalse()
+    {
+        $this->assertFalse($this->validator->isDate()->getResult("2025.11.30"));
+        $this->assertFalse($this->validator->isDate()->getResult("30/11/2025"));
+        $this->assertFalse($this->validator->isDate()->getResult("11-30-2025"));
+        $this->assertFalse($this->validator->isDate()->getResult("11.30.2025"));
+    }
+
+    public function testIsFullDateStringTrue()
+    {
+        $dates = [
+            "Thu, 01 Jan 26 00:00:00 +0000",
+            "Thursday, 01-Jan-26 00:00:00 UTC",
+            "2026-01-01T00:00:00.000+00:00",
+            "2026-01-01T00:00:00+00:00",
+            "+2026-01-01T00:00:00+00:00",
+        ];
+        foreach ($dates as $date) {
+            $this->assertTrue($this->validator->isDate()->getResult($date));
+        }
+    }
 }
