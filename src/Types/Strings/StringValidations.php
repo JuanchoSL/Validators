@@ -17,6 +17,10 @@ class StringValidations extends AbstractValidations implements BasicValidatorsIn
 
     use BasicValidationsTrait, LengthValidationsTrait, ContainsValidationsTrait;
 
+    /**
+     * 
+     * @var class-string $validator
+     */
     protected string $validator = StringValidation::class;
 
     public function isValueEquals(mixed $needle): static
@@ -48,6 +52,18 @@ class StringValidations extends AbstractValidations implements BasicValidatorsIn
         return $this->addTest($this->validator, 'isValueEndingWithAny', func_get_args());
     }
 
+    public function isNumber(): static
+    {
+        return $this->addTest($this->validator, 'isNumber', func_get_args());
+    }
+    public function isInteger(): static
+    {
+        return $this->addTest($this->validator, 'isInteger', func_get_args());
+    }
+    public function isFloat(): static
+    {
+        return $this->addTest($this->validator, 'isFloat', func_get_args());
+    }
     public function isEmail(): static
     {
         return $this->addTest($this->validator, 'isEmail', func_get_args());
