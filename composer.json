@@ -6,7 +6,13 @@
     "homepage": "https://github.com/JuanchoSL/Validators",
     "keywords": [
         "log",
-        "debug"
+        "debug",
+        "validation",
+        "validator",
+        "validate",
+        "iterables",
+        "numbers",
+        "string"
     ],
     "authors": [
         {

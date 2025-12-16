@@ -82,7 +82,7 @@ $validator
 
 ### Alternative validations (OR) over values
 
-You can perform a alternative checks over the values in order to accept it if pass ANY of some condicions
+You can perform some alternative checks over the values in order to accept it if pass ANY of some condicions
 
 ```php
 $validator = new StringValidations();

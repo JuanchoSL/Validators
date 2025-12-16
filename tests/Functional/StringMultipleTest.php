@@ -14,6 +14,50 @@ class StringMultipleTest extends TestCase
     {
         $this->validator = new StringValidations();
     }
+
+    public function testIsNumberTrue()
+    {
+        $this->assertTrue($this->validator->isNumber()->getResult("12345.6789"), "Is a number");
+        $this->assertTrue($this->validator->isNumber()->getResult("0.123456789"), "Is a number");
+        $this->assertTrue($this->validator->isNumber()->getResult(12345.6789), "Is a number");
+        $this->assertTrue($this->validator->isNumber()->getResult(0.123456789), "Is a number");
+        $this->assertTrue($this->validator->isNumber()->getResult("12345"), "Is a number");
+        $this->assertTrue($this->validator->isNumber()->getResult("123456789"), "Is a number");
+        $this->assertTrue($this->validator->isNumber()->getResult(12345), "Is a number");
+        $this->assertTrue($this->validator->isNumber()->getResult(123456789), "Is a number");
+    }
+    public function testIsNumberFalse()
+    {
+        $this->assertFalse($this->validator->isNumber()->getResult("12345.6789€"), "Is not a number");
+        $this->assertFalse($this->validator->isNumber()->getResult("0.123456789€"), "Is not a number");
+        $this->assertFalse($this->validator->isNumber()->getResult("6789€"), "Is not a number");
+        $this->assertFalse($this->validator->isNumber()->getResult("123456789€"), "Is not a number");
+    }
+    public function testIsIntegerTrue()
+    {
+        $this->assertTrue($this->validator->isInteger()->getResult("12345"), "Is an integer");
+        $this->assertTrue($this->validator->isInteger()->getResult("123456789"), "Is an integer");
+        $this->assertTrue($this->validator->isInteger()->getResult(12345), "Is an integer");
+        $this->assertTrue($this->validator->isInteger()->getResult(123456789), "Is an integer");
+    }
+    public function testIsIntegerFalse()
+    {
+        $this->assertFalse($this->validator->isInteger()->getResult("12345.6789€"), "Is not an integer");
+        $this->assertFalse($this->validator->isInteger()->getResult("0.123456789€"), "Is not an integer");
+    }
+    public function testIsFloatTrue()
+    {
+        $this->assertTrue($this->validator->isFloat()->getResult(12345.6789), "Is a float");
+        $this->assertTrue($this->validator->isFloat()->getResult(0.123456789), "Is a float");
+        $this->assertTrue($this->validator->isFloat()->getResult("12345.6789"), "Is a float");
+        $this->assertTrue($this->validator->isFloat()->getResult("0.123456789"), "Is a float");
+    }
+    public function testIsFloatFalse()
+    {
+        $this->assertFalse($this->validator->isFloat()->getResult("12345.6789€"), "Is not a float");
+        $this->assertFalse($this->validator->isFloat()->getResult("0.123456789€"), "Is not a float");
+    }
+
     public function testLongString()
     {
         $this->validator

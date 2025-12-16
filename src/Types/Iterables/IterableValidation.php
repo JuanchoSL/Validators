@@ -50,8 +50,10 @@ class IterableValidation extends AbstractValidation implements BasicValidatorsIn
 
     public static function isValueContaining(mixed $var, mixed $needle): bool
     {
-        if (!static::is($var))
+        if (!static::is($var) || static::isEmpty($var)) {
             return false;
+        }
+
         $var = (array) $var;
         $results = true;
         foreach ($var as $entity) {
@@ -66,8 +68,10 @@ class IterableValidation extends AbstractValidation implements BasicValidatorsIn
 
     public static function isValueContainingAny(mixed $var, mixed ...$needles): bool
     {
-        if (!static::is($var))
+        if (!static::is($var) || static::isEmpty($var)) {
             return false;
+        }
+
         $var = (array) $var;
         $results = true;
         foreach ($var as $entity) {
@@ -78,8 +82,10 @@ class IterableValidation extends AbstractValidation implements BasicValidatorsIn
 
     public static function isKeyContainingAny(mixed $var, mixed ...$needles): bool
     {
-        if (!static::is($var))
+        if (!static::is($var) || static::isEmpty($var)) {
             return false;
+        }
+
         $var = (array) $var;
         $results = true;
         foreach ($var as $key => $entity) {
@@ -90,8 +96,9 @@ class IterableValidation extends AbstractValidation implements BasicValidatorsIn
 
     public static function isKeyContaining(mixed $var, mixed $needle): bool
     {
-        if (!static::is($var))
+        if (!static::is($var) || static::isEmpty($var)) {
             return false;
+        }
         $var = (array) $var;
         $results = true;
         foreach ($var as $key => $entity) {
@@ -106,8 +113,9 @@ class IterableValidation extends AbstractValidation implements BasicValidatorsIn
 
     public static function isValueValidating(mixed $var, AbstractValidations $needle): bool
     {
-        if (!static::is($var))
+        if (!static::is($var)) {
             return false;
+        }
         $var = (array) $var;
         $results = true;
         foreach ($var as $entity) {
@@ -122,8 +130,9 @@ class IterableValidation extends AbstractValidation implements BasicValidatorsIn
 
     public static function isValueValidatingAny(mixed $var, AbstractValidations ...$needles): bool
     {
-        if (!static::is($var))
+        if (!static::is($var)) {
             return false;
+        }
         $var = (array) $var;
         $results = true;
         foreach ($var as $entity) {
@@ -141,8 +150,9 @@ class IterableValidation extends AbstractValidation implements BasicValidatorsIn
 
     public static function isValueAttributeValidating(mixed $var, string $attribute, AbstractValidations $needle): bool
     {
-        if (!static::is($var))
+        if (!static::is($var) || static::isEmpty($var)) {
             return false;
+        }
         $var = (array) $var;
         $results = true;
         foreach ($var as $entity) {
@@ -165,8 +175,9 @@ class IterableValidation extends AbstractValidation implements BasicValidatorsIn
     }
     public static function isValueAttributeValidatingAny(mixed $var, string $attribute, AbstractValidations ...$needles): bool
     {
-        if (!static::is($var))
+        if (!static::is($var) || static::isEmpty($var)) {
             return false;
+        }
         $var = (array) $var;
         $results = true;
         foreach ($var as $entity) {

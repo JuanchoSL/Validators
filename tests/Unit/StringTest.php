@@ -21,6 +21,48 @@ class StringTest extends TestCase
         $this->assertFalse(StringValidation::is(true), "Is not a string");
         $this->assertFalse(StringValidation::is(null), "Is not a string");
     }
+    public function testIsNumberTrue()
+    {
+        $this->assertTrue(StringValidation::isNumber("12345.6789"), "Is a number");
+        $this->assertTrue(StringValidation::isNumber("0.123456789"), "Is a number");
+        $this->assertTrue(StringValidation::isNumber(12345.6789), "Is a number");
+        $this->assertTrue(StringValidation::isNumber(0.123456789), "Is a number");
+        $this->assertTrue(StringValidation::isNumber("12345"), "Is a number");
+        $this->assertTrue(StringValidation::isNumber("123456789"), "Is a number");
+        $this->assertTrue(StringValidation::isNumber(12345), "Is a number");
+        $this->assertTrue(StringValidation::isNumber(123456789), "Is a number");
+    }
+    public function testIsNumberFalse()
+    {
+        $this->assertFalse(StringValidation::isNumber("12345.6789€"), "Is not a number");
+        $this->assertFalse(StringValidation::isNumber("0.123456789€"), "Is not a number");
+        $this->assertFalse(StringValidation::isNumber("6789€"), "Is not a number");
+        $this->assertFalse(StringValidation::isNumber("123456789€"), "Is not a number");
+    }
+    public function testIsIntegerTrue()
+    {
+        $this->assertTrue(StringValidation::isNumber("12345"), "Is an integer");
+        $this->assertTrue(StringValidation::isNumber("123456789"), "Is an integer");
+        $this->assertTrue(StringValidation::isNumber(12345), "Is an integer");
+        $this->assertTrue(StringValidation::isNumber(123456789), "Is an integer");
+    }
+    public function testIsIntegerFalse()
+    {
+        $this->assertFalse(StringValidation::isNumber("12345.6789€"), "Is not an integer");
+        $this->assertFalse(StringValidation::isNumber("0.123456789€"), "Is not an integer");
+    }
+    public function testIsFloatTrue()
+    {
+        $this->assertTrue(StringValidation::isNumber(12345.6789), "Is a float");
+        $this->assertTrue(StringValidation::isNumber(0.123456789), "Is a float");
+        $this->assertTrue(StringValidation::isNumber("12345.6789"), "Is a float");
+        $this->assertTrue(StringValidation::isNumber("0.123456789"), "Is a float");
+    }
+    public function testIsFloatFalse()
+    {
+        $this->assertFalse(StringValidation::isNumber("12345.6789€"), "Is not a float");
+        $this->assertFalse(StringValidation::isNumber("0.123456789€"), "Is not a float");
+    }
     public function testIsEmptyTrue()
     {
         $this->assertTrue(StringValidation::isEmpty(""), "Is an empty string");

@@ -96,6 +96,19 @@ class StringValidation extends AbstractValidation implements BasicValidatorsInte
         return false;
     }
 
+    public static function isNumber(mixed $var): bool
+    {
+        return is_numeric($var);
+    }
+
+    public static function isFloat(mixed $var): bool
+    {
+        return (filter_var((string) strval($var), FILTER_VALIDATE_FLOAT) !== false);
+    }
+    public static function isInteger(mixed $var): bool
+    {
+        return (filter_var((string) strval($var), FILTER_VALIDATE_INT) !== false);
+    }
     public static function isEmail(mixed $var): bool
     {
         return (filter_var((string) strval($var), FILTER_VALIDATE_EMAIL) !== false);
