@@ -2,7 +2,6 @@
 
 namespace JuanchoSL\Validators\Types\Strings;
 
-use DateMalformedStringException;
 use DateTimeImmutable;
 use Exception;
 use JuanchoSL\Validators\Contracts\Single\BasicValidatorsInterface;
@@ -149,7 +148,6 @@ class StringValidation extends AbstractValidation implements BasicValidatorsInte
     public static function isSerialized(string $value): bool
     {
         if (static::isValueEndingWith($value, ';') || static::isValueEndingWith($value, '}')) {
-            //    if (in_array(mb_substr($value, -1), ['}', ';'])) {
             return ($value == 'b:0;') ? true : @unserialize($value) !== false;
         }
         return false;
