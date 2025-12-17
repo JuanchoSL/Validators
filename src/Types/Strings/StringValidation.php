@@ -4,6 +4,7 @@ namespace JuanchoSL\Validators\Types\Strings;
 
 use DateMalformedStringException;
 use DateTimeImmutable;
+use Exception;
 use JuanchoSL\Validators\Contracts\Single\BasicValidatorsInterface;
 use JuanchoSL\Validators\Contracts\Single\ContentValidatorsInterface;
 use JuanchoSL\Validators\Contracts\Single\LengthValidatorsInterface;
@@ -107,7 +108,7 @@ class StringValidation extends AbstractValidation implements BasicValidatorsInte
         try {
             new DateTimeImmutable($var);
             return true;
-        } catch (DateMalformedStringException $e) {
+        } catch (Exception $e) {
             return false;
         }
     }

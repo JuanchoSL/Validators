@@ -72,7 +72,12 @@ abstract class AbstractValidations
 
     public function __tostring(): string
     {
-        return serialize($this->tests);
+        $tests = $this->tests;
+        array_walk($tests, function (&$data, $key) {
+            $params = empty($data['params']) ? '' : "(" . implode(',', $data['params']) . ")";
+            $data = /*substr($data['class'], strrpos($data['class'], '\\') + 1) . "->" .*/ $data['method'] . $params;
+        });
+        return implode('|', $tests);
     }
 
     public function __serialize(): array

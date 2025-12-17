@@ -302,6 +302,19 @@ class StringTest extends TestCase
         $this->assertFalse(StringValidation::isValueEqualsAny('Cadena original', ...['Cadena', 'original', 'Cadena origina']), "equals any false");
     }
 
+    public function testIsDateReducedStringTrue()
+    {
+        $dates = [
+            "25-11-30" => "2025-11-30",
+            //"30/11/25" => "2025/11/30",
+            "25-11-31" => "31-11-2025",
+            "2025-11-30" => "30-11-2025"
+        ];
+        foreach ($dates as $date => $full) {
+            $this->assertTrue(StringValidation::isDate($date), "With: {$date}");
+            $this->assertEquals(strtotime($date), strtotime($full));
+        }
+    }
     public function testIsDateStringTrue()
     {
         $this->assertTrue(StringValidation::isDate("2025-11-30"));
