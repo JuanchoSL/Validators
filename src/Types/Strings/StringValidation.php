@@ -104,6 +104,9 @@ class StringValidation extends AbstractValidation implements BasicValidatorsInte
     }
     public static function isDate(mixed $var): bool
     {
+        $date = @date_parse($var);
+        return ($date !== false && $date['error_count'] == 0);
+        
         try {
             new DateTimeImmutable($var);
             return true;
