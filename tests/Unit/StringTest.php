@@ -21,6 +21,48 @@ class StringTest extends TestCase
         $this->assertFalse(StringValidation::is(true), "Is not a string");
         $this->assertFalse(StringValidation::is(null), "Is not a string");
     }
+    public function testIsNumberTrue()
+    {
+        $this->assertTrue(StringValidation::isNumber("12345.6789"), "Is a number");
+        $this->assertTrue(StringValidation::isNumber("0.123456789"), "Is a number");
+        $this->assertTrue(StringValidation::isNumber(12345.6789), "Is a number");
+        $this->assertTrue(StringValidation::isNumber(0.123456789), "Is a number");
+        $this->assertTrue(StringValidation::isNumber("12345"), "Is a number");
+        $this->assertTrue(StringValidation::isNumber("123456789"), "Is a number");
+        $this->assertTrue(StringValidation::isNumber(12345), "Is a number");
+        $this->assertTrue(StringValidation::isNumber(123456789), "Is a number");
+    }
+    public function testIsNumberFalse()
+    {
+        $this->assertFalse(StringValidation::isNumber("12345.6789€"), "Is not a number");
+        $this->assertFalse(StringValidation::isNumber("0.123456789€"), "Is not a number");
+        $this->assertFalse(StringValidation::isNumber("6789€"), "Is not a number");
+        $this->assertFalse(StringValidation::isNumber("123456789€"), "Is not a number");
+    }
+    public function testIsIntegerTrue()
+    {
+        $this->assertTrue(StringValidation::isNumber("12345"), "Is an integer");
+        $this->assertTrue(StringValidation::isNumber("123456789"), "Is an integer");
+        $this->assertTrue(StringValidation::isNumber(12345), "Is an integer");
+        $this->assertTrue(StringValidation::isNumber(123456789), "Is an integer");
+    }
+    public function testIsIntegerFalse()
+    {
+        $this->assertFalse(StringValidation::isNumber("12345.6789€"), "Is not an integer");
+        $this->assertFalse(StringValidation::isNumber("0.123456789€"), "Is not an integer");
+    }
+    public function testIsFloatTrue()
+    {
+        $this->assertTrue(StringValidation::isNumber(12345.6789), "Is a float");
+        $this->assertTrue(StringValidation::isNumber(0.123456789), "Is a float");
+        $this->assertTrue(StringValidation::isNumber("12345.6789"), "Is a float");
+        $this->assertTrue(StringValidation::isNumber("0.123456789"), "Is a float");
+    }
+    public function testIsFloatFalse()
+    {
+        $this->assertFalse(StringValidation::isNumber("12345.6789€"), "Is not a float");
+        $this->assertFalse(StringValidation::isNumber("0.123456789€"), "Is not a float");
+    }
     public function testIsEmptyTrue()
     {
         $this->assertTrue(StringValidation::isEmpty(""), "Is an empty string");
@@ -258,5 +300,49 @@ class StringTest extends TestCase
         $this->assertFalse(StringValidation::isValueEqualsAny('Cadena original', 'Cadena', 'original', 'Cadena origina'), "equals any false");
         $this->assertFalse(StringValidation::isValueEqualsAny('Cadena original', 'cadena', 'original', 'cadena original'), "equals any false");
         $this->assertFalse(StringValidation::isValueEqualsAny('Cadena original', ...['Cadena', 'original', 'Cadena origina']), "equals any false");
+    }
+
+    public function testIsDateReducedStringTrue()
+    {
+        $dates = [
+            "25-11-30" => "2025-11-30",
+            //"30/11/25" => "2025/11/30",
+            "25-11-31" => "31-11-2025",
+            "2025-11-30" => "30-11-2025"
+        ];
+        foreach ($dates as $date => $full) {
+            $this->assertTrue(StringValidation::isDate($date), "With: {$date}");
+            $this->assertEquals(strtotime($date), strtotime($full));
+        }
+    }
+    public function testIsDateStringTrue()
+    {
+        $this->assertTrue(StringValidation::isDate("2025-11-30"));
+        $this->assertTrue(StringValidation::isDate("2025/11/30"));
+        $this->assertTrue(StringValidation::isDate("30-11-2025"));
+        $this->assertTrue(StringValidation::isDate("30.11.2025"));
+        $this->assertTrue(StringValidation::isDate("11/30/2025"));
+    }
+
+    public function testIsDateStringFalse()
+    {
+        $this->assertFalse(StringValidation::isDate("2025.11.30"));
+        $this->assertFalse(StringValidation::isDate("30/11/2025"));
+        $this->assertFalse(StringValidation::isDate("11-30-2025"));
+        $this->assertFalse(StringValidation::isDate("11.30.2025"));
+    }
+
+    public function testIsFullDateStringTrue()
+    {
+        $dates = [
+            "Thu, 01 Jan 26 00:00:00 +0000",
+            "Thursday, 01-Jan-26 00:00:00 UTC",
+            "2026-01-01T00:00:00.000+00:00",
+            "2026-01-01T00:00:00+00:00",
+            "+2026-01-01T00:00:00+00:00",
+        ];
+        foreach ($dates as $date) {
+            $this->assertTrue(StringValidation::isDate($date));
+        }
     }
 }

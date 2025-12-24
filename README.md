@@ -19,7 +19,8 @@ composer update
 - General numbers
 - Specific integers
 - Specific floats
-- General Iterables
+- Entity iterable, as objects or assoc arrays
+- General Iterables, as indexed arrays or recursive validations
 - Primitive boolean, reals or equivalents and Null checking
 
 ### Single validation
@@ -30,7 +31,7 @@ You can perform an only check over a single value
 StringValidation::isEmail("juanchosl@hotmail.com"); //true
 ```
 
-### Multiple validation over 1 value
+### Multiple validations over 1 value
 
 You can perform a few checks over a single value
 
@@ -82,7 +83,7 @@ $validator
 
 ### Alternative validations (OR) over values
 
-You can perform a alternative checks over the values in order to accept it if pass ANY of some condicions
+You can perform some alternative checks over the values in order to accept it if pass ANY of some condicions
 
 ```php
 $validator = new StringValidations();
@@ -93,9 +94,27 @@ $validator
     ->getResult('juan'); //true
 ```
 
+### Validations over associative arrays or entities
+
+You can perform checks over the values of an associative array or object, can be simple validations or any other complex validation, indicating the target index. The results of the validations are unitary, for each element
+
+```php
+$datas = [
+    ["nombre" => "pepe", "apellidos" => "salmuera", "email" => "aaaa@bbb.com", "telephone" => 123456789],
+    ["nombre" => "juan", "apellidos" => "benito", "email" => "bbb@ccc.es", "telephone" => 123456789],
+];
+$validator = new EntityValidations();
+$validator->isValueAttributeValidating('email', (new StringValidations())->isEmail());
+$validator->isValueAttributeValidating('telephone', (new IntegerValidations())->isLengthGreatherOrEqualsThan(9)->isLengthLessOrEqualsThan(12));
+
+foreach($datas as $data){
+    $validator->getResult($data);
+}
+```
+
 ### Validations over iterables
 
-You can perform checks over the keys or values of an iterable, can be simple validations or any other complex validation
+Instead of iterate over a collection, as the previous example, you can perform checks over the keys or values of an iterable, can be simple validations or any other complex validation
 
 ```php
 $validator = new IterableValidations();
@@ -111,9 +130,10 @@ $datas = [
     ["nombre" => "pepe", "apellidos" => "salmuera", "email" => "aaaa@bbb.com", "telephone" => 123456789],
     ["nombre" => "juan", "apellidos" => "benito", "email" => "bbb@ccc.es", "telephone" => 123456789],
 ];
-    $validator->isValueAttributeValidating('email', (new StringValidations())->isEmail());
-    $validator->isValueAttributeValidating('telephone', (new IntegerValidations())->isLengthGreatherOrEqualsThan(9)->isLengthLessOrEqualsThan(12));
+$validator->isValueAttributeValidating('email', (new StringValidations())->isEmail());
+$validator->isValueAttributeValidating('telephone', (new IntegerValidations())->isLengthGreatherOrEqualsThan(9)->isLengthLessOrEqualsThan(12));
 
+$validator->getResult($datas);
 ************
 
 $datas = ["aaaa@bbb.com", "bbb@ccc.es"];

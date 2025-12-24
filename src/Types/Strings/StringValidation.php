@@ -1,7 +1,9 @@
-<?php declare(strict_types=1);
+<?php /*declare(strict_types=1);*/
 
 namespace JuanchoSL\Validators\Types\Strings;
 
+use DateTimeImmutable;
+use Exception;
 use JuanchoSL\Validators\Contracts\Single\BasicValidatorsInterface;
 use JuanchoSL\Validators\Contracts\Single\ContentValidatorsInterface;
 use JuanchoSL\Validators\Contracts\Single\LengthValidatorsInterface;
@@ -96,6 +98,31 @@ class StringValidation extends AbstractValidation implements BasicValidatorsInte
         return false;
     }
 
+    public static function isNumber(mixed $var): bool
+    {
+        return is_numeric($var);
+    }
+    public static function isDate(mixed $var): bool
+    {
+        $date = @date_parse($var);
+        return ($date !== false && $date['error_count'] == 0);
+        
+        try {
+            new DateTimeImmutable($var);
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
+    public static function isFloat(mixed $var): bool
+    {
+        return (filter_var((string) strval($var), FILTER_VALIDATE_FLOAT) !== false);
+    }
+    public static function isInteger(mixed $var): bool
+    {
+        return (filter_var((string) strval($var), FILTER_VALIDATE_INT) !== false);
+    }
     public static function isEmail(mixed $var): bool
     {
         return (filter_var((string) strval($var), FILTER_VALIDATE_EMAIL) !== false);
@@ -124,7 +151,6 @@ class StringValidation extends AbstractValidation implements BasicValidatorsInte
     public static function isSerialized(string $value): bool
     {
         if (static::isValueEndingWith($value, ';') || static::isValueEndingWith($value, '}')) {
-            //    if (in_array(mb_substr($value, -1), ['}', ';'])) {
             return ($value == 'b:0;') ? true : @unserialize($value) !== false;
         }
         return false;

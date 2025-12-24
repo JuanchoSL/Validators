@@ -87,6 +87,8 @@ class IterableMultipleTest extends TestCase
         $this->validator->isValueAttributeValidating('telephone', (new IntegerValidations())->isLengthGreatherOrEqualsThan(9)->isLengthLessOrEqualsThan(12));
 
         $this->assertTrue($this->validator->getResult($datas), "complex validations");
+        $datas = json_decode(json_encode($datas), false);
+        $this->assertTrue($this->validator->getResult($datas), "complex validations");
     }
     public function testEntitiesValidatingKo()
     {
@@ -96,9 +98,11 @@ class IterableMultipleTest extends TestCase
         ];
         $this->validator->isValueAttributeValidating('email', (new StringValidations())->isEmail());
         $this->validator->isValueAttributeValidating('telephone', (new IntegerValidations())->isLengthGreatherOrEqualsThan(9)->isLengthLessOrEqualsThan(12));
-
+        $this->assertFalse($this->validator->getResult($datas), "complex validations");
+        $datas = json_decode(json_encode($datas), false);
         $this->assertFalse($this->validator->getResult($datas), "complex validations");
     }
+
     public function testEntitiesValidatingAnyOk()
     {
         $datas = [
@@ -107,9 +111,11 @@ class IterableMultipleTest extends TestCase
         ];
         $this->validator->isValueAttributeValidatingAny('email', (new StringValidations())->isEmpty(), (new StringValidations())->isEmail());
         //$this->validator->isValueAttributeValidatingAny('telephone', (new IntegerValidations())->isLengthGreatherOrEqualsThan(9)->isLengthLessOrEqualsThan(12));
-
+        $this->assertTrue($this->validator->getResult($datas), "complex validations");
+        $datas = json_decode(json_encode($datas), false);
         $this->assertTrue($this->validator->getResult($datas), "complex validations");
     }
+
     public function testEntitiesValidatingAnyKo()
     {
         $datas = [
@@ -118,32 +124,8 @@ class IterableMultipleTest extends TestCase
         ];
         $this->validator->isValueAttributeValidatingAny('email', (new StringValidations())->isEmpty(), (new StringValidations())->isEmail());
         $this->validator->isValueAttributeValidatingAny('telephone', (new IntegerValidations())->isLengthGreatherOrEqualsThan(9)->isLengthLessOrEqualsThan(12));
-
-        $this->assertFalse($this->validator->getResult($datas), "complex validations");
+        $this->assertFalse($this->validator->getResult($datas), "complex validations as array");
+        $datas = json_decode(json_encode($datas), false);
+        $this->assertFalse($this->validator->getResult($datas), "complex validations as object");
     }
-    /*
-
-public function testComplexEntitiesIndexFalse()
-{
-$datas = [
-    ["nombre" => "pepe", "apellidos" => "salmuera", "email" => "aaaa@bbb.com", "telephone" => 123456789],
-    ["nombre" => "juan", "apellidos" => "benito", "email" => "bbb@ccc.es", "telephone" => 123456789],
-];
-$this->validator->isValueValidating((new IterableValidations())->isKeyContainingAny(...['gorrion', 'golondrino']));
-$this->validator->isValueValidating((new IntegerValidations())->isLengthGreatherOrEqualsThan(9)->isLengthLessOrEqualsThan(12), 'telephone');
-
-$this->assertFalse($this->validator->getResult($datas), "complex validations");
-}
-
-public function testComplexEntitiesValueNumberFalse()
-{
-$datas = [
-    ["nombre" => "pepe", "apellidos" => "salmuera", "email" => "aaaa@bbb.com", "telephone" => 1234567890123456789],
-    ["nombre" => "juan", "apellidos" => "benito", "email" => "bbb@ccc.es", "telephone" => 123456789],
-];
-$this->validator->isValueValidating((new IntegerValidations())->isLengthGreatherOrEqualsThan(9)->isLengthLessOrEqualsThan(12), 'telephone');
-
-$this->assertFalse($this->validator->getResult($datas), "complex validations");
-}
-*/
 }

@@ -1,9 +1,33 @@
-<?php
-declare(strict_types=1);
+<?php declare(strict_types=1);
 namespace JuanchoSL\Validators\Contracts\Single;
 
 interface StringContentsTypeValidatorsInterface
 {
+    /**
+     * Check if the passed value validate as a string date
+     * @param string $var The value to check
+     * @return bool The result of the check
+     */
+    public static function isDate(string $var): bool;
+    /**
+     * Check if the passed value validate as a number
+     * @param string $var The value to check
+     * @return bool The result of the check
+     */
+    public static function isNumber(string $var): bool;
+    /**
+     * Check if the passed value validate as an integer number
+     * @param string $var The value to check
+     * @return bool The result of the check
+     */
+    public static function isInteger(string $var): bool;
+    /**
+     * Check if the passed value validate as a float number
+     * @param string $var The value to check
+     * @return bool The result of the check
+     */
+    public static function isFloat(string $var): bool;
+
     /**
      * Check if the passed value validate as email
      * @param string $var The value to check
