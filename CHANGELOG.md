@@ -1,10 +1,34 @@
 # Change Log - Validators
 
-## [1.0.7] - 2025
+## [1.0.8] - 2025-12-27
 
 ### Added
 
-- New Primitive validations in order to convert *equivalent* bool numbers and strings: true, yes, on, 1 as true and falase, no, off, 0 as false
+- StringValidation::isNumber in order to verify that a string can be used as number
+- StringValidations->isNumber in order to verify that a string can be used as number
+- StringValidation::isInteger in order to verify that a string can be used as integer
+- StringValidations->isInteger in order to verify that a string can be used as integer
+- StringValidation::isFloat in order to verify that a string can be used as float
+- StringValidations->isFloat in order to verify that a string can be used as float
+- StringValidation::isDate in order to verify that a string can be used as date
+- StringValidations->isDate in order to verify that a string can be used as date
+- EntityValidation in order to verify objects or assoc arrays checking values using keys
+- EntityValidations in order to verify objects or assoc arrays checking values using keys
+
+### Changed
+
+- Iterable values containing validations check for not empty before try
+- update composer to use php 8.1 in order to update phpunit to last version
+
+### Fixed
+
+- Check for full compatibility with php 8.5
+
+## [1.0.7] - 2025-11-29
+
+### Added
+
+- New Primitive validations in order to convert _equivalent_ bool numbers and strings: true, yes, on, 1 as true and false, no, off, 0 as false
 - strval before cast to string into number validations for length checkers
 - strval before cast to string into string validations for length checkers
 - Checked full compatibility with php 8.5
