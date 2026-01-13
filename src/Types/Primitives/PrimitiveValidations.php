@@ -16,19 +16,19 @@ class PrimitiveValidations extends AbstractValidations implements BasicValidator
      */
     protected string $validator = PrimitiveValidation::class;
 
-    public function isBoolEquivalent(mixed $var): static
+    public function isBoolEquivalent(): static
     {
         return $this->addTest($this->validator, 'isBoolEquivalent', func_get_args());
     }
-    public function isTrue(mixed $var): static
+    public function isTrue(): static
     {
         return $this->addTest($this->validator, 'isTrue', func_get_args());
     }
-    public function isFalse(mixed $var): static
+    public function isFalse(): static
     {
         return $this->addTest($this->validator, 'isFalse', func_get_args());
     }
-    public function isNull(mixed $var): static
+    public function isNull(): static
     {
         return $this->addTest($this->validator, 'isNull', func_get_args());
     }
