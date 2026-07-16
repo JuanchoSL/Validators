@@ -26,6 +26,20 @@ interface StringContentsTypeValidatorsInterface
     public function isFloat(): static;
 
     /**
+     * Check if the passed value is a multibyte string
+     * @return static The object to perform more checks
+     */
+    public function isMultibyte(): static;
+
+    /**
+     * Check if the passed value validate with proposed encoding
+     * @param array|string $encoding The encoding/s to check
+     * @param bool $strict True for check the real encondg or false to check if it is equivalent with the actual encoding
+     * @return static The object to perform more checks
+     */
+    public function isEncodedAs(array|string $encoding, bool $strict = true): static;
+
+    /**
      * Check if the passed value validate as email
      * @return static The object to perform more checks
      */

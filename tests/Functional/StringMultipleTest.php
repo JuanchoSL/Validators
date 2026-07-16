@@ -178,7 +178,7 @@ class StringMultipleTest extends TestCase
         $this->assertFalse($this->validator->getResult('starting string false'));
     }
 
-    
+
     public function testIsDateStringTrue()
     {
         $this->assertTrue($this->validator->isDate()->getResult("2025-11-30"));
@@ -207,6 +207,32 @@ class StringMultipleTest extends TestCase
         ];
         foreach ($dates as $date) {
             $this->assertTrue($this->validator->isDate()->getResult($date));
+        }
+    }
+
+    public function testIsMultibyteStringTrue()
+    {
+        $strings = [
+            "áeiou",
+            "aéiou",
+            "aeíou",
+            "aeióu",
+            "aeioú",
+            "äeiou",
+            "aëiou",
+        ];
+        foreach ($strings as $string) {
+            $this->assertTrue($this->validator->isMultibyte()->getResult($string));
+        }
+    }
+    public function testIsMultibyteStringFalse()
+    {
+        $strings = [
+            "aeiou",
+            "bcdef",
+        ];
+        foreach ($strings as $string) {
+            $this->assertFalse($this->validator->isMultibyte()->getResult($string));
         }
     }
 }

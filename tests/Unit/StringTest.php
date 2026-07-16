@@ -345,4 +345,88 @@ class StringTest extends TestCase
             $this->assertTrue(StringValidation::isDate($date));
         }
     }
+
+    public function testIsMultibyteStringTrue()
+    {
+        $strings = [
+            "áeiou",
+            "aéiou",
+            "aeíou",
+            "aeióu",
+            "aeioú",
+            "äeiou",
+            "aëiou",
+        ];
+        foreach ($strings as $string) {
+            $this->assertTrue(StringValidation::isMultibyte($string));
+        }
+    }
+    public function testIsMultibyteStringFalse()
+    {
+        $strings = [
+            "aeiou",
+            "bcdef",
+        ];
+        foreach ($strings as $string) {
+            $this->assertFalse(StringValidation::isMultibyte($string));
+        }
+    }
+    public function testIsEncodedAsTrue()
+    {
+        $strings = [
+            'UTF-8' => [
+                "aeiou",
+                "bcdef",
+                "bcdéf",
+                "&euro;",
+                '\x80',
+            ]
+        ];
+        foreach ($strings as $encoding => $values) {
+            foreach ($values as $string) {
+                $this->assertTrue(StringValidation::isEncodedAs($string, $encoding, true), sprintf("check %s as %s encoded with strict mode", $string, $encoding));
+                $this->assertTrue(StringValidation::isEncodedAs($string, $encoding, false), sprintf("check %s as %s encoded without strict mode", $string, $encoding));
+            }
+        }
+
+        //check without strict mode
+        $strings = [
+            'UTF-8' => [
+                chr(0xFF),
+                "\x80",
+                mb_convert_encoding("bcdéf", 'ISO-8859-1', 'UTF-8')
+            ]
+        ];
+        foreach ($strings as $encoding => $values) {
+            foreach ($values as $string) {
+                $this->assertTrue(StringValidation::isEncodedAs($string, $encoding, false), sprintf("check %s as %s encoded with strict mode", $string, $encoding));
+            }
+        }
+    }
+    public function testIsEncodedAsFalse()
+    {
+        $strings = [
+            'UTF-8' => [
+            ]
+        ];
+        foreach ($strings as $encoding => $values) {
+            foreach ($values as $string) {
+                $this->assertFalse(StringValidation::isEncodedAs($string, $encoding, true), sprintf("check %s as %s encoded with strict mode", $string, $encoding));
+                $this->assertFalse(StringValidation::isEncodedAs($string, $encoding, false), sprintf("check %s as %s encoded without strict mode", $string, $encoding));
+            }
+        }
+        //check only strict mode
+        $strings = [
+            'UTF-8' => [
+                "\x80",
+                chr(0xFF),
+                mb_convert_encoding("bcdéf", 'ISO-8859-1', 'UTF-8')
+            ]
+        ];
+        foreach ($strings as $encoding => $values) {
+            foreach ($values as $string) {
+                $this->assertFalse(StringValidation::isEncodedAs($string, $encoding, true), sprintf("check %s as %s encoded with strict mode", $string, $encoding));
+            }
+        }
+    }
 }

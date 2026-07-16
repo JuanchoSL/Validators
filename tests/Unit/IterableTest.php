@@ -139,16 +139,20 @@ class IterableTest extends TestCase
     public function testIsValueValidatingTrue()
     {
         $this->assertTrue(IterableValidation::isValueValidating(["aaaa@bbb.com", "bbb@ccc.es"], (new StringValidations())->isEmail()), "All values are emails");
+        $this->assertTrue(IterableValidation::isValueValidating(['aeióu', 'áeiou'], (new StringValidations())->isMultibyte()), "All values are multibyte");
     }
 
     public function testIsValueValidatingFalse()
     {
         $this->assertFalse(IterableValidation::isValueValidating(["aaaa@bbb.com", "bbb@ccc.es", ""], (new StringValidations())->isEmail()), "All values are not emails");
+        $this->assertFalse(IterableValidation::isValueValidating(['', 'aeiou'], (new StringValidations())->isMultibyte()), "All values are not multibyte");
+        $this->assertFalse(IterableValidation::isValueValidating(['', 'áeiou'], (new StringValidations())->isMultibyte()), "All values are not multibyte");
     }
 
     public function testIsValueValidatingAnyTrue()
     {
         $this->assertTrue(IterableValidation::isValueValidatingAny(["aaaa@bbb.com", "bbb@ccc.es", ''], (new StringValidations())->isEmpty(), (new StringValidations())->isEmail()), "All values are emails or empty");
+        $this->assertTrue(IterableValidation::isValueValidatingAny(['', 'áeiou'], (new StringValidations())->isEmpty(), (new StringValidations())->isMultibyte()), "Some value is multibyte");
     }
 
     public function testIsValueValidatingAnyFalse()
@@ -156,7 +160,7 @@ class IterableTest extends TestCase
         $this->assertFalse(IterableValidation::isValueValidatingAny(["aaaa@bbb.com", "bbb@ccc.es", "a"], (new StringValidations())->isEmpty(), (new StringValidations())->isEmail()), "All values are emails or empty failing");
     }
 
-    public function testIsEntiyValidatingTrue()
+    public function testIsEntityValidatingTrue()
     {
         $this->assertTrue(IterableValidation::isValueAttributeValidating([
             ['url' => "http://url.com"],
@@ -166,9 +170,17 @@ class IterableTest extends TestCase
             ['url' => "ftps://ftp.url.com"],
             ['url' => "https://www.url.com/index.php"]
         ], 'url', (new StringValidations())->isUrl()), "All values at index url are urls");
+
+        $this->assertTrue(IterableValidation::isValueAttributeValidating([
+            ['text' => "áeiou"],
+            ['text' => "aéiou"],
+            ['text' => "aeíou"],
+            ['text' => "aeióu"],
+            ['text' => "aeioú"]
+        ], 'text', (new StringValidations())->isMultibyte()), "All values at index text are multibyte");
     }
 
-    public function testIsEntiyValidatingFalse()
+    public function testIsEntityValidatingFalse()
     {
         $this->assertFalse(IterableValidation::isValueAttributeValidating([
             ['url' => "http://url.com"],
@@ -178,8 +190,18 @@ class IterableTest extends TestCase
             ['url' => "ftp://ftp.url.com"],
             ['url' => "ftps://ftp.url.com"]
         ], 'url', (new StringValidations())->isUrl()), "Don't all values are urls");
+
+        $this->assertFalse(IterableValidation::isValueAttributeValidating([
+            ['text' => ""],
+            ['text' => "áeiou"],
+            ['text' => "aéiou"],
+            ['text' => "aeíou"],
+            ['text' => "aeióu"],
+            ['text' => "aeioú"]
+        ], 'text', (new StringValidations())->isMultibyte()), "Don't all values are multibyte");
     }
-/*
+
+    /*
     public function testIsEntiyValidatingAnyTrue()
     {
         $this->assertTrue(IterableValidation::isValueAttributeValidating([
@@ -204,4 +226,5 @@ class IterableTest extends TestCase
         ], 'url', (new StringValidations())->isUrl()), "Don't all values are urls");
     }
 */
+
 }

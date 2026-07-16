@@ -52,6 +52,14 @@ class StringValidations extends AbstractValidations implements BasicValidatorsIn
         return $this->addTest($this->validator, 'isValueEndingWithAny', func_get_args());
     }
 
+    public function isMultibyte(): static
+    {
+        return $this->addTest($this->validator, 'isMultibyte', func_get_args());
+    }
+    public function isEncodedAs(array|string $encoding, bool $strict = true): static
+    {
+        return $this->addTest($this->validator, 'isEncodedAs', func_get_args());
+    }
     public function isDate(): static
     {
         return $this->addTest($this->validator, 'isDate', func_get_args());

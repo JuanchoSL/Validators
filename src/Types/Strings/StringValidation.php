@@ -98,6 +98,15 @@ class StringValidation extends AbstractValidation implements BasicValidatorsInte
         return false;
     }
 
+    public static function isMultibyte(mixed $var): bool
+    {
+        return mb_strlen($var, 'UTF-8') < strlen($var);
+    }
+
+    public static function isEncodedAs(string $var, array|string $encoding, bool $strict = true): bool
+    {
+        return (mb_detect_encoding($var, $encoding, $strict) !== false);
+    }
     public static function isNumber(mixed $var): bool
     {
         return is_numeric($var);
@@ -106,7 +115,7 @@ class StringValidation extends AbstractValidation implements BasicValidatorsInte
     {
         $date = @date_parse($var);
         return ($date !== false && $date['error_count'] == 0);
-        
+
         try {
             new DateTimeImmutable($var);
             return true;

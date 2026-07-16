@@ -36,6 +36,22 @@ interface StringContentsTypeValidatorsInterface
     public static function isEmail(string $var): bool;
 
     /**
+     * Check if the passed value is a multibyte string
+     * @param string $var The value to check
+     * @return bool The result of the check
+     */
+    public static function isMultibyte(string $var): bool;
+
+    /**
+     * Check if the passed value validate with proposed encoding
+     * @param string $var The value to check
+     * @param array|string $encoding The encoding/s to check
+     * @param bool $strict True for check the real encondg or false to check if it is equivalent with the actual encoding
+     * @return bool The result of the check
+     */
+    public static function isEncodedAs(string $var, array|string $encoding, bool $strict = true): bool;
+
+    /**
      * Check if the passed value validate as url
      * @param string $var The value to check
      * @return bool The result of the check
