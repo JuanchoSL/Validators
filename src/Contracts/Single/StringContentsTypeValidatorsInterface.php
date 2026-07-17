@@ -36,6 +36,18 @@ interface StringContentsTypeValidatorsInterface
     public static function isEmail(string $var): bool;
 
     /**
+     * Check if the passed value is a binary string
+     * @param string $var The value to check
+     * @return bool The result of the check
+     */
+    public static function isBinary(string $var): bool;
+    /**
+     * Check if the passed value is a hex string
+     * @param string $var The value to check
+     * @return bool The result of the check
+     */
+    public static function isHexadecimal(string $var): bool;
+    /**
      * Check if the passed value is a multibyte string
      * @param string $var The value to check
      * @return bool The result of the check

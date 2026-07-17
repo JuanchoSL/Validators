@@ -170,5 +170,18 @@ class StringValidation extends AbstractValidation implements BasicValidatorsInte
         preg_match($expresion, (string) strval($var), $results);
         return !empty($results);
     }
+    public static function isBinary(mixed $var): bool
+    {
+        $cadenaLimpia = preg_replace('/\s/', '', (string) $var);
+        return !empty($cadenaLimpia) && !ctype_print($cadenaLimpia);
+    }
+    public static function isHexadecimal(mixed $var): bool
+    {
+        if (substr($var, 0, 2) == "0x" OR substr($var, 0, 3) == '\0x') {
+            $var = explode("0x", $var, 2)[1];
+        }
+        return ctype_xdigit($var);
+    }
+    
 
 }

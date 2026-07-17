@@ -19,11 +19,25 @@ interface StringContentsTypeValidatorsInterface
      * @return static The object to perform more checks
      */
     public function isInteger(): static;
+
     /**
      * Check if the passed value validate as a float number
      * @return static The object to perform more checks
      */
     public function isFloat(): static;
+
+    /**
+     * Check if the passed value is a binary string
+     * @return static The object to perform more checks
+     */
+
+    public function isBinary(): static;
+    /**
+     * Check if the passed value is a hex string
+     * @return static The object to perform more checks
+     */
+
+    public function isHexadecimal(): static;
 
     /**
      * Check if the passed value is a multibyte string
