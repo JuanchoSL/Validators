@@ -16,6 +16,7 @@ composer update
 ### Validation availability
 
 - Strings
+- Hashes (with and without HMAC)
 - General numbers
 - Specific integers
 - Specific floats
