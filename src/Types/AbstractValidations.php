@@ -92,4 +92,10 @@ abstract class AbstractValidations
     {
         $this->tests = $vars;
     }
+
+    public function clear(): static
+    {
+        $this->tests = $this->results = [];
+        return $this;
+    }
 }
