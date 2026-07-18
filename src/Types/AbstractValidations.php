@@ -2,8 +2,19 @@
 
 namespace JuanchoSL\Validators\Types;
 
-abstract class AbstractValidations
+use JuanchoSL\DataManipulation\Manipulators\Numbers\NumbersManipulators;
+use JuanchoSL\DataManipulation\Sanitizers\Numbers\NumberSanitizers;
+use JuanchoSL\Validators\Contracts\DebuggableInterface;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerAwareTrait;
+use Psr\Log\LogLevel;
+use Stringable;
+
+abstract class AbstractValidations implements LoggerAwareInterface, DebuggableInterface
 {
+
+    use LoggerAwareTrait;
+
     /**
      * @var array<int, array{"class": class-string , "method": string, "params":array<int, mixed>}> $tests
      */
@@ -12,6 +23,8 @@ abstract class AbstractValidations
      * @var array<string, bool> $results
      */
     protected array $results = [];
+
+    protected bool $debug = false;
 
     public function getResult(mixed $var): bool
     {
@@ -28,7 +41,17 @@ abstract class AbstractValidations
      */
     public function getResults(mixed $var): array
     {
+        $lap = new NumbersManipulators(microtime(true));
         $this->process($var);
+        if (!$this->debug) {
+            $context = [
+                'var' => $var,
+                'results' => $this->results,
+                'lap' => (string) $lap->sub(microtime(true))->absolute()->roundHalfUp(8),
+                'mem' => (new NumberSanitizers)->integer(true)->__invoke((string) memory_get_usage(true))
+            ];
+            $this->log(LogLevel::INFO, "Processing test: {test_name} for value {value}", $context);
+        }
         return $this->results;
     }
 
@@ -48,10 +71,21 @@ abstract class AbstractValidations
     {
         $this->results = [];
         foreach ($this->tests as $tests) {
-            //$callable = (isset($tests['class'], $tests['method'])) ? [$tests['class'], $tests['method']] : $tests['method'];
-            //$tests['params'] = $tests['params'] ?? [];
+            $lap = new NumbersManipulators(microtime(true));
             $key = $this->createKey($tests['method'], (array) $tests['params']);
             $this->results[$key] = call_user_func_array([$tests['class'], $tests['method']], array_merge([$var], $tests['params'])) !== false;
+            if ($this->debug) {
+                $context = [
+                    'key' => $key,
+                    'value' => $var,
+                    'test_name' => $tests['method'],
+                    'test' => $tests,
+                    'result' => "" . $this->results[$key],
+                ];
+                $context['lap'] = (string) $lap->sub(microtime(true))->absolute()->roundHalfUp(8);
+                $context['mem'] = (new NumberSanitizers)->integer(true)->__invoke((string) memory_get_usage(true));
+                $this->log(LogLevel::DEBUG, "Processing test: {test_name} for value {value}", $context);
+            }
         }
     }
 
@@ -97,5 +131,15 @@ abstract class AbstractValidations
     {
         $this->tests = $this->results = [];
         return $this;
+    }
+
+    public function setDebug(bool $debug): void
+    {
+        $this->debug = $debug;
+    }
+
+    protected function log(string|LogLevel $level, string|Stringable $message, iterable $context = [])
+    {
+        $this->logger?->log($level, $message, $context);
     }
 }
