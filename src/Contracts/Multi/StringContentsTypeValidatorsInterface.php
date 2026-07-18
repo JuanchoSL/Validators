@@ -9,11 +9,13 @@ interface StringContentsTypeValidatorsInterface
      * @return static The object to perform more checks
      */
     public function isDate(): static;
+
     /**
      * Check if the passed value validate as a number
      * @return static The object to perform more checks
      */
     public function isNumber(): static;
+
     /**
      * Check if the passed value validate as an integer number
      * @return static The object to perform more checks
@@ -30,13 +32,12 @@ interface StringContentsTypeValidatorsInterface
      * Check if the passed value is a binary string
      * @return static The object to perform more checks
      */
-
     public function isBinary(): static;
+
     /**
      * Check if the passed value is a hex string
      * @return static The object to perform more checks
      */
-
     public function isHexadecimal(): static;
 
     /**
@@ -88,6 +89,7 @@ interface StringContentsTypeValidatorsInterface
      * @return static The object to perform more checks
      */
     public function isDomain(): static;
+
     /**
      * Check if the passed value validate as a serialized value
      * @return static The object to perform more checks
