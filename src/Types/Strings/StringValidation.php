@@ -105,7 +105,7 @@ class StringValidation extends AbstractValidation implements BasicValidatorsInte
 
     public static function isEncodedAs(string $var, array|string $encoding, bool $strict = true): bool
     {
-        return (mb_detect_encoding($var, $encoding, $strict) !== false);
+        return ($strict) ? (mb_detect_encoding($var, $encoding, $strict) !== false) : mb_check_encoding($var, $encoding);
     }
     public static function isNumber(mixed $var): bool
     {
@@ -182,6 +182,5 @@ class StringValidation extends AbstractValidation implements BasicValidatorsInte
         }
         return ctype_xdigit($var);
     }
-    
 
 }

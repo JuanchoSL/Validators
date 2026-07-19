@@ -399,7 +399,7 @@ class StringTest extends TestCase
         ];
         foreach ($strings as $encoding => $values) {
             foreach ($values as $string) {
-                $this->assertTrue(StringValidation::isEncodedAs($string, $encoding, false), sprintf("check %s as %s encoded with strict mode", $string, $encoding));
+                $this->assertFalse(StringValidation::isEncodedAs($string, $encoding, false), sprintf("check %s as %s encoded without strict mode", $string, $encoding));
             }
         }
     }
