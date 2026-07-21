@@ -57,7 +57,7 @@ interface StringContentsTypeValidatorsInterface
     /**
      * Check if the passed value validate with proposed encoding
      * @param string $var The value to check
-     * @param array|string $encoding The encoding/s to check
+     * @param array|string $encoding The encoding/s to check (array or some comma separated encodings, or a only one encoding to verify)
      * @param bool $strict True for check the real encondg or false to check if it is equivalent with the actual encoding
      * @return bool The result of the check
      */

@@ -16,6 +16,10 @@ class NumberValidations extends AbstractValidations implements BasicValidatorsIn
 
     use BasicValidationsTrait, LengthValidationsTrait, ContainsValidationsTrait;
 
+    /**
+     * 
+     * @var class-string $validator
+     */
     protected string $validator = NumberValidation::class;
 
     public function isValueEqualsThan(int|float $comparator): static
