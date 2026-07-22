@@ -9,10 +9,17 @@ interface NumberValueValidatorsInterface
 
     /**
      * Check if the passed value is equals to
-     * @param int|float $comparator The comprator
+     * @param int|float $comparator The comparator
      * @return static The object to perform more checks
      */
     public function isValueEqualsThan(int|float $comparator): static;
+
+    /**
+     * Check if the passed value is equals to
+     * @param int|float $comparators The values to compare
+     * @return static The object to perform more checks
+     */
+    public function isValueEqualsThanAny(int|float ...$comparators): static;
 
     /**
      * Check if the passed value is into range, included limits, same as (greater or equals than and less or equals than)

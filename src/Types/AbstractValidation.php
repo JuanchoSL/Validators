@@ -16,7 +16,7 @@ abstract class AbstractValidation
 
     public static function isValueEquals(mixed $var, mixed $needle): bool
     {
-        return ($var === $needle);
+        return ($var == $needle);
     }
 
     public static function isValueEqualsAny(mixed $var, mixed ...$needles): bool

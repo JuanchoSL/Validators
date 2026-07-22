@@ -26,7 +26,7 @@ abstract class AbstractValidations implements LoggerAwareInterface, DebuggableIn
 
     protected bool $debug = false;
 
-    public function getResult(mixed $var): bool
+    public function __invoke(mixed $var): bool
     {
         foreach ($this->getResults($var) as $result) {
             if (!$result) {
@@ -34,6 +34,11 @@ abstract class AbstractValidations implements LoggerAwareInterface, DebuggableIn
             }
         }
         return true;
+    }
+
+    public function getResult(mixed $var): bool
+    {
+        return $this($var);
     }
 
     /**
@@ -50,7 +55,7 @@ abstract class AbstractValidations implements LoggerAwareInterface, DebuggableIn
                 'lap' => (string) $lap->sub(microtime(true))->absolute()->roundHalfUp(8),
                 'mem' => (new NumberSanitizers)->integer(true)->__invoke((string) memory_get_usage(true))
             ];
-            $this->log(LogLevel::INFO, "Processing test: {test_name} for value {value}", $context);
+            $this->log(LogLevel::INFO, "Processed defined tests for value '{var}'", $context);
         }
         return $this->results;
     }
