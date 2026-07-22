@@ -149,8 +149,8 @@ class NumberMultipleTest extends TestCase
     }
     public function testIsStartingAny()
     {
-        $this->assertTrue($this->validator->isValueStartingWith(1, 4, 5)->getResult(14), "starting any true");
-        $this->assertFalse($this->validator->isValueStartingWith(5, 6, 7)->getResult(14), "starting any false");
+        $this->assertTrue($this->validator->isValueStartingWithAny(1, 4, 5)->getResult(14), "starting any true");
+        $this->assertFalse($this->validator->isValueStartingWithAny(5, 6, 7)->getResult(14), "starting any false");
     }
     public function testIsEnding()
     {
