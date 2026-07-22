@@ -60,38 +60,44 @@ class StringMultipleTest extends TestCase
 
     public function testLongString()
     {
-        $this->validator
+        $validator = $this->validator
             ->is()
             ->isNotEmpty()
             ->isLengthGreatherThan(15);
 
         $this->assertTrue($this->validator->getResult('pepeillo surname'));
+        $this->assertTrue($this->validator->__invoke('pepeillo surname'));
+        $this->assertTrue($validator('pepeillo surname'));
     }
 
     public function testLongStringFail()
     {
-        $this->validator
+        $validator = $this->validator
             ->is()
             ->isNotEmpty()
             ->isLengthGreatherThan(15);
 
         $this->assertFalse($this->validator->getResult('pepeillo'));
+        $this->assertFalse($this->validator->__invoke('pepeillo'));
+        $this->assertFalse($validator('pepeillo'));
     }
 
     public function testLongEmail()
     {
-        $this->validator
+        $validator = $this->validator
             ->is()
             ->isNotEmpty()
             ->isLengthGreatherThan(15)
             ->isEmail();
 
         $this->assertTrue($this->validator->getResult('pepeillo@mydomain.com'));
+        $this->assertTrue($this->validator->__invoke('pepeillo@mydomain.com'));
+        $this->assertTrue($validator('pepeillo@mydomain.com'));
     }
 
     public function testLongEmails()
     {
-        $this->validator
+        $validator = $this->validator
             ->is()
             ->isNotEmpty()
             ->isLengthGreatherThan(15)
@@ -99,83 +105,101 @@ class StringMultipleTest extends TestCase
 
         foreach (['pepeillo@mydomain.com', 'manolete@mydomain.com'] as $email) {
             $this->assertTrue($this->validator->getResult($email));
+            $this->assertTrue($this->validator->__invoke($email));
+            $this->assertTrue($validator($email));
         }
     }
 
     public function testLongDomain()
     {
-        $this->validator
+        $validator = $this->validator
             ->is()
             ->isNotEmpty()
             ->isLengthGreatherThan(15)
             ->isDomain();
 
         $this->assertTrue($this->validator->getResult('mylongdomain.com'));
+        $this->assertTrue($this->validator->__invoke('mylongdomain.com'));
+        $this->assertTrue($validator('mylongdomain.com'));
     }
 
     public function testLongUrl()
     {
-        $this->validator
+        $validator = $this->validator
             ->is()
             ->isNotEmpty()
             ->isLengthGreatherThan(15)
             ->isUrl();
 
         $this->assertTrue($this->validator->getResult('https://mylongdomain.com'));
+        $this->assertTrue($this->validator->__invoke('https://mylongdomain.com'));
+        $this->assertTrue($validator('https://mylongdomain.com'));
     }
 
     public function testStartTrue()
     {
-        $this->validator
+        $validator = $this->validator
             ->is()
             ->isNotEmpty()
             ->isValueStartingWith('start');
         $this->assertTrue($this->validator->getResult('starts string true'));
+        $this->assertTrue($this->validator->__invoke('starts string true'));
+        $this->assertTrue($validator('starts string true'));
     }
 
     public function testStartAnyTrue()
     {
-        $this->validator
+        $validator = $this->validator
             ->is()
             ->isNotEmpty()
             ->isValueStartingWithAny('start', 'going');
         $this->assertTrue($this->validator->getResult('starts string true'));
+        $this->assertTrue($this->validator->__invoke('starts string true'));
+        $this->assertTrue($validator('starts string true'));
     }
 
     public function testStartFalse()
     {
-        $this->validator
+        $validator = $this->validator
             ->is()
             ->isNotEmpty()
             ->isValueStartingWith('starts');
         $this->assertFalse($this->validator->getResult('starting string false'));
+        $this->assertFalse($this->validator->__invoke('starting string false'));
+        $this->assertFalse($validator('starting string false'));
     }
 
     public function testEndTrue()
     {
-        $this->validator
+        $validator = $this->validator
             ->is()
             ->isNotEmpty()
             ->isValueEndingWith('end');
         $this->assertTrue($this->validator->getResult('going to the end'));
+        $this->assertTrue($this->validator->__invoke('going to the end'));
+        $this->assertTrue($validator('going to the end'));
     }
 
     public function testEndAnyTrue()
     {
-        $this->validator
+        $validator = $this->validator
             ->is()
             ->isNotEmpty()
             ->isValueEndingWithAny('end', 'ending');
         $this->assertTrue($this->validator->getResult('going to the end'));
+        $this->assertTrue($this->validator->__invoke('going to the end'));
+        $this->assertTrue($validator('going to the end'));
     }
 
     public function testEndFalse()
     {
-        $this->validator
+        $validator = $this->validator
             ->is()
             ->isNotEmpty()
             ->isValueEndingWith('end');
         $this->assertFalse($this->validator->getResult('starting string false'));
+        $this->assertFalse($this->validator->__invoke('starting string false'));
+        $this->assertFalse($validator('starting string false'));
     }
 
 

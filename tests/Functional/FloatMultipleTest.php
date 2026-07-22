@@ -15,41 +15,49 @@ class FloatMultipleTest extends TestCase
     }
     public function testLongNumber()
     {
-        $this->validator
+        $validator = $this->validator
             ->is()
             ->isNotEmpty()
             ->isLengthGreatherThan(12);
 
-            $this->assertTrue($this->validator->getResult(1234567890.123456789));
+        $this->assertTrue($this->validator->getResult(1234567890.123456789));
+        $this->assertTrue($this->validator->__invoke(1234567890.123456789));
+        $this->assertTrue($validator(1234567890.123456789));
     }
 
     public function testLongNumberFail()
     {
-        $this->validator
+        $validator = $this->validator
             ->is()
             ->isNotEmpty()
             ->isLengthGreatherThan(15);
 
         $this->assertFalse($this->validator->getResult(1234.56789));
+        $this->assertFalse($this->validator->__invoke(1234.56789));
+        $this->assertFalse($validator(1234.56789));
     }
 
     public function testLessNumber()
     {
-        $this->validator
+        $validator = $this->validator
             ->is()
             ->isNotEmpty()
             ->isLengthLessThan(25);
 
         $this->assertTrue($this->validator->getResult(1234567890.123456));
+        $this->assertTrue($this->validator->__invoke(1234567890.123456));
+        $this->assertTrue($validator(1234567890.123456));
     }
 
     public function testLessNumberFail()
     {
-        $this->validator
+        $validator = $this->validator
             ->is()
             ->isNotEmpty()
             ->isLengthLessThan(5);
 
         $this->assertFalse($this->validator->getResult(123456.789));
+        $this->assertFalse($this->validator->__invoke(123456.789));
+        $this->assertFalse($validator(123456.789));
     }
 }
