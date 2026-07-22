@@ -24,6 +24,10 @@ composer update
 - General Iterables, as indexed arrays or recursive validations
 - Primitive boolean, reals or equivalents and Null checking
 
+> Important: from version 1.0.9 the multi-validations classes has been callables, you can prepare a sequence of validations into a variable and call it as a unction with the values to check as parameters.
+>
+> The **getResult** method, maybe can be removed on future versions
+
 ### Single validation
 
 You can perform an only check over a single value
