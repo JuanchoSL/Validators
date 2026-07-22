@@ -17,6 +17,10 @@ class IterableValidations extends AbstractValidations implements BasicValidators
 
     use BasicValidationsTrait, ContainsValidationsTrait, LengthValidationsTrait;
 
+    /**
+     * 
+     * @var class-string $validator
+     */
     protected string $validator = IterableValidation::class;
 
     public function isKeyContaining(mixed $needle): static
@@ -29,12 +33,12 @@ class IterableValidations extends AbstractValidations implements BasicValidators
         return $this->addTest($this->validator, 'isKeyContainingAny', func_get_args());
     }
 
-    public function isValueAttributeValidating(string $index, AbstractValidations $validations): static
+    public function isValueAttributeValidating(string $index, AbstractValidations|callable $validations): static
     {
         return $this->addTest($this->validator, 'isValueAttributeValidating', func_get_args());
     }
 
-    public function isValueAttributeValidatingAny(string $index, AbstractValidations ...$validations): static
+    public function isValueAttributeValidatingAny(string $index, AbstractValidations|callable ...$validations): static
     {
         return $this->addTest($this->validator, 'isValueAttributeValidatingAny', func_get_args());
     }

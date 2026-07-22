@@ -5,6 +5,7 @@ namespace JuanchoSL\Validators\Types\Entities;
 use JuanchoSL\Validators\Contracts\Single\BasicValidatorsInterface;
 use JuanchoSL\Validators\Types\AbstractValidation;
 use JuanchoSL\Validators\Types\AbstractValidations;
+use JuanchoSL\Validators\Types\Strings\StringValidation;
 
 class EntityValidation extends AbstractValidation implements BasicValidatorsInterface
 {
@@ -23,12 +24,12 @@ class EntityValidation extends AbstractValidation implements BasicValidatorsInte
         return !static::isEmpty($var);
     }
 
-    public static function isValueAttributeValidating(mixed $entity, string $key, AbstractValidations $needle): bool
+    public static function isValueAttributeValidating(mixed $entity, string $key, AbstractValidations|callable $needle): bool
     {
         return static::isValueAttributeValidatingAny($entity, $key, $needle);
     }
 
-    public static function isValueAttributeValidatingAny(mixed $entity, string $key, AbstractValidations ...$needles): bool
+    public static function isValueAttributeValidatingAny(mixed $entity, string $key, AbstractValidations|callable ...$needles): bool
     {
         if (is_array($entity) && array_key_exists($key, $entity)) {
             $entity = $entity[$key];
@@ -38,7 +39,9 @@ class EntityValidation extends AbstractValidation implements BasicValidatorsInte
             return false;
         }
         foreach ($needles as $needle) {
-            if ($needle->getResult($entity)) {
+            if ((StringValidation::is($needle) OR is_array($needle)) && call_user_func($needle, $entity)) {
+                return true;
+            } elseif (is_callable($needle) && $needle($entity)) {
                 return true;
             }
         }

@@ -112,7 +112,7 @@ class IterableValidation extends AbstractValidation implements BasicValidatorsIn
         return $results;
     }
 
-    public static function isValueValidating(mixed $var, AbstractValidations $needle): bool
+    public static function isValueValidating(mixed $var, AbstractValidations|callable $needle): bool
     {
         if (!static::is($var)) {
             return false;
@@ -120,16 +120,14 @@ class IterableValidation extends AbstractValidation implements BasicValidatorsIn
         $var = (array) $var;
         $results = true;
         foreach ($var as $entity) {
-            $result = true;
-            if (!$needle->getResult($entity)) {
-                return $result = false;
+            if (!$needle($entity)) {
+                return false;
             }
-            //$results = ($results && $result);
         }
         return $results;
     }
 
-    public static function isValueValidatingAny(mixed $var, AbstractValidations ...$needles): bool
+    public static function isValueValidatingAny(mixed $var, AbstractValidations|callable ...$needles): bool
     {
         if (!static::is($var)) {
             return false;
@@ -140,7 +138,7 @@ class IterableValidation extends AbstractValidation implements BasicValidatorsIn
             $result = true;
             $sub_result = false;
             foreach ($needles as $needle) {
-                if ($needle->getResult($entity)) {
+                if ($needle($entity)) {
                     $sub_result = true;
                 }
             }
@@ -149,12 +147,12 @@ class IterableValidation extends AbstractValidation implements BasicValidatorsIn
         return $results;
     }
 
-    public static function isValueAttributeValidating(mixed $var, string $attribute, AbstractValidations $needle): bool
+    public static function isValueAttributeValidating(mixed $var, string $attribute, AbstractValidations|callable $needle): bool
     {
         return static::isValueAttributeValidatingAny($var, $attribute, $needle);
     }
 
-    public static function isValueAttributeValidatingAny(mixed $var, string $attribute, AbstractValidations ...$needles): bool
+    public static function isValueAttributeValidatingAny(mixed $var, string $attribute, AbstractValidations|callable ...$needles): bool
     {
         if (!static::is($var) || static::isEmpty($var)) {
             return false;

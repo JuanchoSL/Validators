@@ -10,7 +10,12 @@ use JuanchoSL\Validators\Contracts\Single\RegexValidatorsInterface;
 use JuanchoSL\Validators\Types\AbstractValidation;
 use JuanchoSL\Validators\Types\Strings\StringValidation;
 
-class NumberValidation extends AbstractValidation implements BasicValidatorsInterface, LengthValidatorsInterface, RegexValidatorsInterface, NumberValueValidatorsInterface, ContentValidatorsInterface
+class NumberValidation extends AbstractValidation implements
+    BasicValidatorsInterface,
+    LengthValidatorsInterface,
+    RegexValidatorsInterface,
+    NumberValueValidatorsInterface,
+    ContentValidatorsInterface
 {
 
     public static function is(mixed $var): bool
@@ -21,6 +26,16 @@ class NumberValidation extends AbstractValidation implements BasicValidatorsInte
     public static function isValueEqualsThan(int|float $var, int|float $comparator): bool
     {
         return $var == $comparator;
+    }
+
+    public static function isValueEqualsThanAny(int|float $var, int|float ...$needles): bool
+    {
+        foreach ($needles as $needle) {
+            if (static::isValueEqualsThan($var, $needle)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static function isValueGreatherThanOrEquals(int|float $var, int|float $comparator): bool

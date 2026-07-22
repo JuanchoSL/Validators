@@ -8,12 +8,20 @@ interface NumberValueValidatorsInterface
 {
 
     /**
-     * Check if the passed value is equals to
+     * Check if the passed value is equals to other with type check
      * @param int|float $var The value to check
      * @param int|float $comparator The comparator
      * @return bool The result of the check
      */
     public static function isValueEqualsThan(int|float $var, int|float $comparator): bool;
+
+    /**
+     * Check if the passed value is equals to any others with type check
+     * @param int|float $var The value to check
+     * @param int|float $comparators The comparators
+     * @return bool The result of the check
+     */
+    public static function isValueEqualsThanAny(int|float $var, int|float ...$comparators): bool;
 
 
     /**

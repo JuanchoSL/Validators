@@ -345,4 +345,142 @@ class StringTest extends TestCase
             $this->assertTrue(StringValidation::isDate($date));
         }
     }
+
+    public function testIsMultibyteStringTrue()
+    {
+        $strings = [
+            "áeiou",
+            "aéiou",
+            "aeíou",
+            "aeióu",
+            "aeioú",
+            "äeiou",
+            "aëiou",
+        ];
+        foreach ($strings as $string) {
+            $this->assertTrue(StringValidation::isMultibyte($string));
+        }
+    }
+    public function testIsMultibyteStringFalse()
+    {
+        $strings = [
+            "aeiou",
+            "bcdef",
+        ];
+        foreach ($strings as $string) {
+            $this->assertFalse(StringValidation::isMultibyte($string));
+        }
+    }
+    public function testIsEncodedAsTrue()
+    {
+        $strings = [
+            'UTF-8' => [
+                "aeiou",
+                "bcdef",
+                "bcdéf",
+                "&euro;",
+                '\x80',
+            ]
+        ];
+        foreach ($strings as $encoding => $values) {
+            foreach ($values as $string) {
+                $this->assertTrue(StringValidation::isEncodedAs($string, $encoding, true), sprintf("check %s as %s encoded with strict mode", $string, $encoding));
+                $this->assertTrue(StringValidation::isEncodedAs($string, $encoding, false), sprintf("check %s as %s encoded without strict mode", $string, $encoding));
+            }
+        }
+
+        //check without strict mode
+        $strings = [
+            'UTF-8' => [
+                chr(0xFF),
+                "\x80",
+                mb_convert_encoding("bcdéf", 'ISO-8859-1', 'UTF-8')
+            ]
+        ];
+        foreach ($strings as $encoding => $values) {
+            foreach ($values as $string) {
+                $this->assertFalse(StringValidation::isEncodedAs($string, $encoding, false), sprintf("check %s as %s encoded without strict mode", $string, $encoding));
+            }
+        }
+    }
+    public function testIsEncodedAsFalse()
+    {
+        $strings = [
+            'UTF-8' => [
+            ]
+        ];
+        foreach ($strings as $encoding => $values) {
+            foreach ($values as $string) {
+                $this->assertFalse(StringValidation::isEncodedAs($string, $encoding, true), sprintf("check %s as %s encoded with strict mode", $string, $encoding));
+                $this->assertFalse(StringValidation::isEncodedAs($string, $encoding, false), sprintf("check %s as %s encoded without strict mode", $string, $encoding));
+            }
+        }
+        //check only strict mode
+        $strings = [
+            'UTF-8' => [
+                "\x80",
+                chr(0xFF),
+                mb_convert_encoding("bcdéf", 'ISO-8859-1', 'UTF-8')
+            ]
+        ];
+        foreach ($strings as $encoding => $values) {
+            foreach ($values as $string) {
+                $this->assertFalse(StringValidation::isEncodedAs($string, $encoding, true), sprintf("check %s as %s encoded with strict mode", $string, $encoding));
+            }
+        }
+    }
+
+    public function testIsHexadecimalTrue()
+    {
+        $values = [
+            "1A3F9e",
+            "123341414141",
+            "0x1A3F",
+            '\0x1A3F',
+            "AB10BC99",
+            "ab12bc99",
+        ];
+        foreach ($values as $value) {
+            $this->assertTrue(StringValidation::isHexadecimal($value), sprintf("%s is an hex value", $value));
+        }
+    }
+    public function testIsHexadecimalFalse()
+    {
+        $values = [
+            "asdfg",
+            "0xasdfg",
+            '\0xasdfg',
+            "dñlkj24klkj234",
+            "clmkc987wer89kl",
+        ];
+        foreach ($values as $value) {
+            $this->assertFalse(StringValidation::isHexadecimal($value));
+        }
+    }
+
+    public function testIsBinary()
+    {
+        $string = "Lorem ipsum dolor sit amet consectetur adipiscing elit lobortis, faucibus duis hendrerit sagittis ridiculus volutpat sodales, cursus id nulla platea tellus pulvinar nisi. Neque vel dictumst ut dui felis porta integer ante morbi, fringilla aptent rutrum nulla fermentum nunc condimentum venenatis, scelerisque dignissim augue magna cursus id euismod metus. In potenti arcu fringilla lacinia ornare leo eleifend blandit, phasellus vel habitasse ligula tellus primis diam, tempor pharetra fusce nibh nulla integer mi.";
+        $values = [
+            "md5",
+            "sha1",
+            "sha256",
+            "sha384",
+            "sha512",
+        ];
+        foreach ($values as $value) {
+            ${$value} = hash($value, $string, false);
+            $this->assertFalse(StringValidation::isBinary(${$value}));
+            $this->assertTrue(StringValidation::isHexadecimal(${$value}));
+            ${$value} = hash($value, $string, true);
+            $this->assertTrue(StringValidation::isBinary(${$value}));
+            $this->assertFalse(StringValidation::isHexadecimal(${$value}));
+            ${$value} = hash_hmac($value, $string, 'secret', false);
+            $this->assertFalse(StringValidation::isBinary(${$value}));
+            $this->assertTrue(StringValidation::isHexadecimal(${$value}));
+            ${$value} = hash_hmac($value, $string, 'secret', true);
+            $this->assertTrue(StringValidation::isBinary(${$value}));
+            $this->assertFalse(StringValidation::isHexadecimal(${$value}));
+        }
+    }
 }

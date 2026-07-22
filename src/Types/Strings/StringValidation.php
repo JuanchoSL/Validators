@@ -98,6 +98,15 @@ class StringValidation extends AbstractValidation implements BasicValidatorsInte
         return false;
     }
 
+    public static function isMultibyte(mixed $var): bool
+    {
+        return mb_strlen($var, 'UTF-8') < strlen($var);
+    }
+
+    public static function isEncodedAs(string $var, array|string $encoding, bool $strict = true): bool
+    {
+        return ($strict) ? (mb_detect_encoding($var, $encoding, $strict) !== false) : mb_check_encoding($var, $encoding);
+    }
     public static function isNumber(mixed $var): bool
     {
         return is_numeric($var);
@@ -106,7 +115,7 @@ class StringValidation extends AbstractValidation implements BasicValidatorsInte
     {
         $date = @date_parse($var);
         return ($date !== false && $date['error_count'] == 0);
-        
+
         try {
             new DateTimeImmutable($var);
             return true;
@@ -160,6 +169,18 @@ class StringValidation extends AbstractValidation implements BasicValidatorsInte
         $results = [];
         preg_match($expresion, (string) strval($var), $results);
         return !empty($results);
+    }
+    public static function isBinary(mixed $var): bool
+    {
+        $cadenaLimpia = preg_replace('/\s/', '', (string) $var);
+        return !empty($cadenaLimpia) && !ctype_print($cadenaLimpia);
+    }
+    public static function isHexadecimal(mixed $var): bool
+    {
+        if (substr($var, 0, 2) == "0x" OR substr($var, 0, 3) == '\0x') {
+            $var = explode("0x", $var, 2)[1];
+        }
+        return ctype_xdigit($var);
     }
 
 }

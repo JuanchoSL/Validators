@@ -16,12 +16,59 @@ composer update
 ### Validation availability
 
 - Strings
+- Hashes (with and without HMAC)
 - General numbers
 - Specific integers
 - Specific floats
 - Entity iterable, as objects or assoc arrays
 - General Iterables, as indexed arrays or recursive validations
 - Primitive boolean, reals or equivalents and Null checking
+
+> Important: from version 1.0.9 the multi-validations classes has been callables, you can prepare a sequence of validations into a variable and call it as a unction with the values to check as parameters.
+>
+> The **getResult** method, maybe can be removed on future versions
+
+#### Generic methods
+| Validation | Strings | Numbers | Iterables | Primitives |
+| ---------- | ------- | ------- | --------- | ---------- |
+| is                            | x | x | x | x |
+| isEmpty                       | x | x | x | x |
+| isNotEmpty                    | x | x | x | x |
+| isValueStartingWith           | x | x |  |  |
+| isValueStartingWithAny        | x | x |  |  |
+| isValueEndingWith             | x | x |  |  |
+| isValueEndingWithAny          | x | x |  |  |
+| isValueContaining             | x | x | x |  |
+| isValueContainingAny          | x | x | x |  |
+| isValueValidating             | x | x | x |  |
+| isValueValidatingAny          | x | x | x |  |
+| isValueEquals                 | x | x |  |  |
+| isValueEqualsAny              | x | x |  |  |
+| isLengthEqualsThan            | x | x | x |  |
+| isLengthGreatherThan          | x | x | x |  |
+| isLengthGreatherOrEqualsThan  | x | x | x |  |
+| isLengthLessThan              | x | x | x |  |
+| isLengthLessOrEqualsThan      | x | x | x |  |
+| isRegex                       | x | x |  |  |
+
+#### Exclusive methods
+| Strings | Primitives | Numerics | Hashes |
+| - | - | - | - |
+| isNumber | isBoolEquivalent | isValueEqualsThan | isValidatingHash |
+| isInteger | isNull | isValueEqualsThanAny | isValidatingHashHmac |
+| isFloat | isTrue | isValueIntoRange | isHash |
+| isBinary | isFalse | isValueGreatherThan |
+| isHexadecimal | | isValueGreatherThanOrEquals |
+| isMultibyte | | isValueLessThan |
+| isEncodedAs | | isValueLessThanOrEquals |
+| isEmail |||
+| isUrl |||
+| isIpV4 |||
+| isIpv6 |||
+| isMac |||
+| isDomain |||
+| isDate |||
+| isSerialized |||
 
 ### Single validation
 

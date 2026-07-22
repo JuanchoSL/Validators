@@ -5,6 +5,7 @@ namespace JuanchoSL\Validators\Tests\Functional;
 use JuanchoSL\Validators\Types\Integers\IntegerValidations;
 use JuanchoSL\Validators\Types\Iterables\IterableValidations;
 use JuanchoSL\Validators\Types\Numbers\NumberValidations;
+use JuanchoSL\Validators\Types\Strings\StringValidation;
 use JuanchoSL\Validators\Types\Strings\StringValidations;
 use PHPUnit\Framework\TestCase;
 
@@ -97,6 +98,8 @@ class IterableMultipleTest extends TestCase
             ["nombre" => "juan", "apellidos" => "benito", "email" => "bbb@ccc", "telephone" => 123456789],
         ];
         $this->validator->isValueAttributeValidating('email', (new StringValidations())->isEmail());
+        $this->validator->isValueAttributeValidating('email', [StringValidation::class, 'isEmail']);
+        $this->validator->isValueAttributeValidating('email', [new StringValidations, 'isEmail']);
         $this->validator->isValueAttributeValidating('telephone', (new IntegerValidations())->isLengthGreatherOrEqualsThan(9)->isLengthLessOrEqualsThan(12));
         $this->assertFalse($this->validator->getResult($datas), "complex validations");
         $datas = json_decode(json_encode($datas), false);
@@ -110,7 +113,7 @@ class IterableMultipleTest extends TestCase
             ["nombre" => "juan", "apellidos" => "benito", "email" => "bbb@ccc.es", "telephone" => 123456789],
         ];
         $this->validator->isValueAttributeValidatingAny('email', (new StringValidations())->isEmpty(), (new StringValidations())->isEmail());
-        //$this->validator->isValueAttributeValidatingAny('telephone', (new IntegerValidations())->isLengthGreatherOrEqualsThan(9)->isLengthLessOrEqualsThan(12));
+        $this->validator->isValueAttributeValidatingAny('telephone', (new IntegerValidations())->isLengthGreatherOrEqualsThan(9)->isLengthLessOrEqualsThan(12));
         $this->assertTrue($this->validator->getResult($datas), "complex validations");
         $datas = json_decode(json_encode($datas), false);
         $this->assertTrue($this->validator->getResult($datas), "complex validations");
@@ -123,9 +126,13 @@ class IterableMultipleTest extends TestCase
             ["nombre" => "juan", "apellidos" => "benito", "email" => "bbb@ccc", "telephone" => 123456789],
         ];
         $this->validator->isValueAttributeValidatingAny('email', (new StringValidations())->isEmpty(), (new StringValidations())->isEmail());
+        $this->validator->isValueAttributeValidatingAny('email', [new StringValidations, 'isEmpty'], [new StringValidations, 'isEmail']);
         $this->validator->isValueAttributeValidatingAny('telephone', (new IntegerValidations())->isLengthGreatherOrEqualsThan(9)->isLengthLessOrEqualsThan(12));
+        $this->validator->isValueAttributeValidatingAny('email', 'is_string', [new StringValidations, 'isEmail']);
         $this->assertFalse($this->validator->getResult($datas), "complex validations as array");
+        $this->assertFalse($this->validator->__invoke($datas), "complex validations as array");
         $datas = json_decode(json_encode($datas), false);
         $this->assertFalse($this->validator->getResult($datas), "complex validations as object");
+        $this->assertFalse($this->validator->__invoke($datas), "complex validations as object");
     }
 }

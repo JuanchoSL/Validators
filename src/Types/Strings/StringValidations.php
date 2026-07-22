@@ -12,7 +12,12 @@ use JuanchoSL\Validators\Types\Traits\BasicValidationsTrait;
 use JuanchoSL\Validators\Types\Traits\ContainsValidationsTrait;
 use JuanchoSL\Validators\Types\Traits\LengthValidationsTrait;
 
-class StringValidations extends AbstractValidations implements BasicValidatorsInterface, RegexValidatorsInterface, LengthValidatorsInterface, StringContentsTypeValidatorsInterface, ContentValidatorsInterface
+class StringValidations extends AbstractValidations implements
+    BasicValidatorsInterface,
+    RegexValidatorsInterface,
+    LengthValidatorsInterface,
+    StringContentsTypeValidatorsInterface,
+    ContentValidatorsInterface
 {
 
     use BasicValidationsTrait, LengthValidationsTrait, ContainsValidationsTrait;
@@ -22,36 +27,35 @@ class StringValidations extends AbstractValidations implements BasicValidatorsIn
      * @var class-string $validator
      */
     protected string $validator = StringValidation::class;
-
-    public function isValueEquals(mixed $needle): static
+    /*
+        public function isValueEquals(mixed $needle): static
+        {
+            return $this->addTest($this->validator, 'isValueEquals', func_get_args());
+        }
+        public function isValueEqualsAny(mixed ...$needle): static
+        {
+            return $this->addTest($this->validator, 'isValueEqualsAny', func_get_args());
+        }
+    */
+    public function isBinary(): static
     {
-        return $this->addTest($this->validator, 'isValueEquals', func_get_args());
-    }
-    public function isValueEqualsAny(mixed ...$needle): static
-    {
-        return $this->addTest($this->validator, 'isValueEqualsAny', func_get_args());
-    }
-
-    public function isValueStartingWith(mixed $needle): static
-    {
-        return $this->addTest($this->validator, 'isValueStartingWith', func_get_args());
-    }
-
-    public function isValueStartingWithAny(mixed ...$needles): static
-    {
-        return $this->addTest($this->validator, 'isValueStartingWithAny', func_get_args());
+        return $this->addTest($this->validator, 'isBinary', func_get_args());
     }
 
-    public function isValueEndingWith(mixed $needle): static
+    public function isHexadecimal(): static
     {
-        return $this->addTest($this->validator, 'isValueEndingWith', func_get_args());
+        return $this->addTest($this->validator, 'isHexadecimal', func_get_args());
     }
 
-    public function isValueEndingWithAny(mixed ...$needles): static
+    public function isMultibyte(): static
     {
-        return $this->addTest($this->validator, 'isValueEndingWithAny', func_get_args());
+        return $this->addTest($this->validator, 'isMultibyte', func_get_args());
     }
 
+    public function isEncodedAs(array|string $encoding, bool $strict = true): static
+    {
+        return $this->addTest($this->validator, 'isEncodedAs', func_get_args());
+    }
     public function isDate(): static
     {
         return $this->addTest($this->validator, 'isDate', func_get_args());

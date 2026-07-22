@@ -7,6 +7,10 @@ use JuanchoSL\Validators\Types\Numbers\NumberValidations;
 class FloatValidations extends NumberValidations
 {
 
+    /**
+     * 
+     * @var class-string $validator
+     */
     protected string $validator = FloatValidation::class;
 
 }

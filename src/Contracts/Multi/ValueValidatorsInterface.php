@@ -9,10 +9,10 @@ interface ValueValidatorsInterface
 
     /**
      * Use a complex validation
-     * @param \JuanchoSL\Validators\Types\AbstractValidations $needle
+     * @param AbstractValidations|callable $needle
      * @return static The object
      */
-    public function isValueValidating(AbstractValidations $needle): static;
-    public function isValueValidatingAny(AbstractValidations ...$needles): static;
+    public function isValueValidating(AbstractValidations|callable $needle): static;
+    public function isValueValidatingAny(AbstractValidations|callable ...$needles): static;
 
 }
