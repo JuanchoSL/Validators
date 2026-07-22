@@ -3,6 +3,7 @@
 namespace JuanchoSL\Validators\Types\Numbers;
 
 use JuanchoSL\Validators\Contracts\Multi\BasicValidatorsInterface;
+use JuanchoSL\Validators\Contracts\Multi\ContentValidatorsInterface;
 use JuanchoSL\Validators\Contracts\Multi\NumberValueValidatorsInterface;
 use JuanchoSL\Validators\Contracts\Multi\RegexValidatorsInterface;
 use JuanchoSL\Validators\Types\AbstractValidations;
@@ -11,7 +12,12 @@ use JuanchoSL\Validators\Types\Traits\BasicValidationsTrait;
 use JuanchoSL\Validators\Types\Traits\ContainsValidationsTrait;
 use JuanchoSL\Validators\Types\Traits\LengthValidationsTrait;
 
-class NumberValidations extends AbstractValidations implements BasicValidatorsInterface, LengthValidatorsInterface, RegexValidatorsInterface, NumberValueValidatorsInterface
+class NumberValidations extends AbstractValidations implements
+    BasicValidatorsInterface,
+    LengthValidatorsInterface,
+    RegexValidatorsInterface,
+    NumberValueValidatorsInterface,
+    ContentValidatorsInterface
 {
 
     use BasicValidationsTrait, LengthValidationsTrait, ContainsValidationsTrait;
@@ -25,6 +31,11 @@ class NumberValidations extends AbstractValidations implements BasicValidatorsIn
     public function isValueEqualsThan(int|float $comparator): static
     {
         return $this->addTest($this->validator, 'isValueEqualsThan', func_get_args());
+    }
+
+    public function isValueEqualsThanAny(int|float ...$comparators): static
+    {
+        return $this->addTest($this->validator, 'isValueEqualsThanAny', func_get_args());
     }
     public function isValueIntoRange(int|float $min, int|float $max): static
     {
