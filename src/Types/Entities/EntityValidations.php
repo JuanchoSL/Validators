@@ -17,12 +17,12 @@ class EntityValidations extends AbstractValidations implements BasicValidatorsIn
      */
     protected string $validator = EntityValidation::class;
 
-    public function isValueAttributeValidating(string $index, AbstractValidations $validations): static
+    public function isValueAttributeValidating(string $index, AbstractValidations|callable $validations): static
     {
         return $this->addTest($this->validator, 'isValueAttributeValidating', func_get_args());
     }
 
-    public function isValueAttributeValidatingAny(string $index, AbstractValidations ...$validations): static
+    public function isValueAttributeValidatingAny(string $index, AbstractValidations|callable ...$validations): static
     {
         return $this->addTest($this->validator, 'isValueAttributeValidatingAny', func_get_args());
     }
