@@ -1,5 +1,30 @@
 # Change Log - Validators
 
+## [1.0.9] - 2026-07-22
+
+### Added
+
+- Tests for multi PrimitiveValidations in order to evaluate strings or numbers as booleans
+- isBinary string validation
+- isHexadecimal string validation
+- isMultibyte string validation
+- isEncodingAs string validation, for check if a string is really encoded (strict=true) or if it is in a compatible encoding (strict=false)
+- HashValidations, in order to verify if a string is valid as hash for a knowed algo and check if is the valid signature for a provided string
+- Added clear method on Multi test queue in order to remove all tests and reuse the Validations instance
+- Added LoggerAwaire implementation, in order to save checkings into log for debug
+- Added Debug implementation, if TRUE, log a result for each check, with time and memory used, otherwise, log only one INFO from full checking results. 
+- Added __invoke method, in order to validate a sequence values without call getResult
+- The Iterable validators that check for extra validations, can use too callable parameters, as array with class and method or strings names of native or your own functions
+
+### Changed
+
+- Removed unnecessary parameter on multi function PrimitiveValidations, for check strings or number as bool equivalents
+- Removed strict type comparation for isEquals
+
+### Fixed
+
+- Verified 8.6 compatibility
+
 ## [1.0.8] - 2025-12-27
 
 ### Added
