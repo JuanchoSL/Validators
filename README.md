@@ -52,15 +52,23 @@ composer update
 | isRegex                       | x | x |  |  |
 
 #### Exclusive methods
-| Primitives | Numerics | Hashes |
-| - | - | - |
-| isBoolEquivalent | isValueEqualsThan | isValidatingHash |
-| isNull | isValueEqualsThanAny | isValidatingHashHmac |
-| isTrue | isValueIntoRange | isHash |
-| isFalse | isValueGreatherThan |
-| | isValueGreatherThanOrEquals |
-| | isValueLessThan |
-| | isValueLessThanOrEquals |
+| Strings | Primitives | Numerics | Hashes |
+| - | - | - | - |
+| isNumber | isBoolEquivalent | isValueEqualsThan | isValidatingHash |
+| isInteger | isNull | isValueEqualsThanAny | isValidatingHashHmac |
+| isFloat | isTrue | isValueIntoRange | isHash |
+| isBinary | isFalse | isValueGreatherThan |
+| isHexadecimal | | isValueGreatherThanOrEquals |
+| isMultibyte | | isValueLessThan |
+| isEncodedAs | | isValueLessThanOrEquals |
+| isEmail |||
+| isUrl |||
+| isIpV4 |||
+| isIpv6 |||
+| isMac |||
+| isDomain |||
+| isDate |||
+| isSerialized |||
 
 ### Single validation
 
