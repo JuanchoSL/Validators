@@ -24,7 +24,7 @@ interface IterableValueValidatorsInterface
     public static function isValueContainingAny(mixed $var, mixed ...$needles): bool;
 
     /**
-     * Check into the iterable value, if the values are validating a more complex validation
+     * Check into the iterable value, if all values are validating a more complex validation
      * @param mixed $var The iterable to check
      * @param AbstractValidations|callable $needle The validation to call in order to check or each iterable's values 
      * @return bool Result of the operation
@@ -32,11 +32,45 @@ interface IterableValueValidatorsInterface
     public static function isValueValidating(mixed $var, AbstractValidations|callable $needle): bool;
 
     /**
-     * Check into the iterable value, if the values are validating any of more complex validations
+     * Check into the iterable value, if all values are validating any of more complex validations
+     * @param mixed $var The iterable to check
+     * @param AbstractValidations|callable $needles The validations to call in order to check for each iterable's values 
+     * @return bool Result of the operation
+     */
+    public static function isValueValidatingAny(mixed $var, AbstractValidations|callable ...$needles): bool;
+
+    /**
+     * Check into the iterable value, if some value are validating a more complex validation
+     * @param mixed $var The iterable to check
+     * @param AbstractValidations|callable $needle The validation to call in order to check for each iterable's values 
+     * @return bool Result of the operation
+     */
+    public static function isAnyValueValidating(mixed $var, AbstractValidations|callable $needle): bool;
+
+    /**
+     * Check into the iterable value, if any value are validating any of more complex validations
      * @param mixed $var The iterable to check
      * @param AbstractValidations|callable $needles The validations to call in order to check or each iterable's values 
      * @return bool Result of the operation
      */
-    public static function isValueValidatingAny(mixed $var, AbstractValidations|callable ...$needles): bool;
+    public static function isAnyValueValidatingAny(mixed $var, AbstractValidations|callable ...$needles): bool;
+
+    /**
+     * Check into the selected key of all elements from the iterable, if some value are validating a more complex validation
+     * @param mixed $var The iterable to check
+     * @param string $key The key to check
+     * @param AbstractValidations|callable $needle The validation to call in order to check for each iterable's values 
+     * @return bool Result of the operation
+     */
+    public static function isAnyValueAttributeValidating(mixed $var, string $key, AbstractValidations|callable $needle): bool;
+
+    /**
+     * Check into the selected key of all elements from the iterable, if any value are validating any of more complex validations
+     * @param mixed $var The iterable to check
+     * @param string $key The key to check
+     * @param AbstractValidations|callable $needles The validations to call in order to check or each iterable's values 
+     * @return bool Result of the operation
+     */
+    public static function isAnyValueAttributeValidatingAny(mixed $var, string $key, AbstractValidations|callable ...$needles): bool;
 
 }

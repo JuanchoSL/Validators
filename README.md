@@ -52,12 +52,12 @@ composer update
 | isRegex                       | x | x |  |  |
 
 #### Exclusive methods
-| Strings | Primitives | Numerics | Hashes |
-| - | - | - | - |
-| isNumber | isBoolEquivalent | isValueEqualsThan | isValidatingHash |
-| isInteger | isNull | isValueEqualsThanAny | isValidatingHashHmac |
-| isFloat | isTrue | isValueIntoRange | isHash |
-| isBinary | isFalse | isValueGreatherThan |
+| Strings | Primitives | Numerics | Hashes | Iterables |
+| - | - | - | - | - |
+| isNumber | isBoolEquivalent | isValueEqualsThan | isValidatingHash | isValueAttributeValidating |
+| isInteger | isNull | isValueEqualsThanAny | isValidatingHashHmac | isValueAttributeValidatingAny |
+| isFloat | isTrue | isValueIntoRange | isHash | isAnyValueAttributeValidating |
+| isBinary | isFalse | isValueGreatherThan | | isAnyValueAttributeValidatingAny |
 | isHexadecimal | | isValueGreatherThanOrEquals |
 | isMultibyte | | isValueLessThan |
 | isEncodedAs | | isValueLessThanOrEquals |
