@@ -173,7 +173,7 @@ class IterableMultipleTest extends TestCase
             ["nombre" => "pepe", "apellidos" => "salmuera", "email" => "aaaa@bbb.com", "telephone" => 123456789],
             ["nombre" => "juan", "apellidos" => "benito", "email" => "bbb@ccc.com", "telephone" => 123456789],
         ];
-        $this->validator->clear()->isAnyValueAttributeValidatingAny('email', [new StringValidations()->isEmpty(), '__invoke'], [new StringValidations()->isMac(), '__invoke']);
+        $this->validator->clear()->isAnyValueAttributeValidatingAny('email', [(new StringValidations())->isEmpty(), '__invoke'], [(new StringValidations())->isMac(), '__invoke']);
         $this->assertFalse($this->validator->getResult($datas), "complex validations");
         $this->validator->clear()->isAnyValueAttributeValidatingAny('email', (new StringValidations())->isValueEquals('aaaa@bbb.com'));
         $this->assertTrue($this->validator->getResult($datas), "complex validations");
