@@ -7,7 +7,7 @@ use JuanchoSL\DataManipulation\Sanitizers\Numbers\NumberSanitizers;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 
-class ValidatorTest extends TestCase
+class SanitizersTest extends TestCase
 {
 
     public function testNumberSanitizer()

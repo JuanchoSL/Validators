@@ -12,7 +12,11 @@ use JuanchoSL\Validators\Types\Traits\BasicValidationsTrait;
 use JuanchoSL\Validators\Types\Traits\ContainsValidationsTrait;
 use JuanchoSL\Validators\Types\Traits\LengthValidationsTrait;
 
-class IterableValidations extends AbstractValidations implements BasicValidatorsInterface, LengthValidatorsInterface, IterableKeyValidatorsInterface, ValueValidatorsInterface
+class IterableValidations extends AbstractValidations implements
+    BasicValidatorsInterface,
+    LengthValidatorsInterface,
+    IterableKeyValidatorsInterface,
+    ValueValidatorsInterface
 {
 
     use BasicValidationsTrait, ContainsValidationsTrait, LengthValidationsTrait;

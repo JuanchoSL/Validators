@@ -26,6 +26,8 @@ class HashTest extends TestCase
         ];
         $key = "secret";
         foreach ($values as $value) {
+            ${"binhash_" . $value} = hash_hmac($value, $string, $key, true);
+            ${"bin" . $value} = hash($value, $string, true);
             ${"hash_" . $value} = hash_hmac($value, $string, $key);
             ${$value} = hash($value, $string);
         }
@@ -54,9 +56,11 @@ class HashTest extends TestCase
         $this->assertTrue(HashValidation::isHashSha512($sha512));
         foreach ($values as $algo) {
             $this->assertTrue(HashValidation::isValidatingHash(${$algo}, $algo, $string));
+            $this->assertTrue(HashValidation::isValidatingHash(${"bin" . $algo}, $algo, $string));
             $this->assertFalse(HashValidation::isValidatingHash(${$algo}, $algo, $string . '.'));
             $this->assertFalse(HashValidation::isValidatingHash(${"hash_" . $algo}, $algo, $string));
             $this->assertTrue(HashValidation::isValidatingHashHmac(${"hash_{$algo}"}, $algo, $string, $key));
+            $this->assertTrue(HashValidation::isValidatingHashHmac(${"binhash_{$algo}"}, $algo, $string, $key));
             $this->assertFalse(HashValidation::isValidatingHashHmac(${"hash_{$algo}"}, $algo, $string . '.', $key));
         }
     }
@@ -72,7 +76,7 @@ class HashTest extends TestCase
             ${"hash_" . $value} = @hash_hmac($value, $string, $key);
             ${$value} = @hash($value, $string);
         }
-        
+
         foreach ($values as $algo) {
             $this->assertFalse(HashValidation::isValidatingHash(${$algo}, $algo, $string));
             $this->assertFalse(HashValidation::isValidatingHash(${$algo}, $algo, $string . '.'));

@@ -3,9 +3,14 @@
 namespace JuanchoSL\Validators\Types\Hashes;
 
 use JuanchoSL\Validators\Types\AbstractValidations;
+use JuanchoSL\Validators\Types\Traits\BasicValidationsTrait;
+use JuanchoSL\Validators\Types\Traits\HashTypesValidationsTrait;
 
 class HashValidations extends AbstractValidations
 {
+
+    use HashTypesValidationsTrait, BasicValidationsTrait;
+
     protected string $validator = HashValidation::class;
 
     public function isValidatingHash(string $algo, string $string): static
@@ -21,25 +26,6 @@ class HashValidations extends AbstractValidations
     {
         return $this->addTest($this->validator, 'isHash', func_get_args());
     }
-    public function isHashMd5(): static
-    {
-        return $this->addTest($this->validator, 'isHashMd5', func_get_args());
-    }
-    public function isHashSha1(): static
-    {
-        return $this->addTest($this->validator, 'isHashSha1', func_get_args());
-    }
-    public function isHashSha256(): static
-    {
-        return $this->addTest($this->validator, 'isHashSha256', func_get_args());
-    }
-    public function isHashSha384(): static
-    {
-        return $this->addTest($this->validator, 'isHashSha384', func_get_args());
-    }
-    public function isHashSha512(): static
-    {
-        return $this->addTest($this->validator, 'isHashSha512', func_get_args());
-    }
+
 
 }
