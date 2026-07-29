@@ -7,20 +7,39 @@ use JuanchoSL\Validators\Types\Strings\StringValidation;
 
 class HashValidation
 {
+    public static function is(mixed $hash, string $algo): bool
+    {
+        return static::isHash($hash, $algo);
+    }
+    public static function isNotEmpty(mixed $hash): bool
+    {
+        return !static::isEmpty($hash);
+    }
+    public static function isEmpty(mixed $hash): bool
+    {
+        $hash = StringValidation::isBinary($hash) ? bin2hex($hash) : $hash;
+        $hash = (string) $hash;
+        return StringValidation::isEmpty($hash);
+    }
+
     public static function isValidatingHash(mixed $hash, string $algo, string $string): bool
     {
+        $hash = StringValidation::isBinary($hash) ? bin2hex($hash) : $hash;
         $hash = (string) $hash;
         return (static::isHash($hash, $algo) && hash_equals(hash($algo, $string), $hash));
     }
     public static function isValidatingHashHmac(mixed $hash, string $algo, string $string, string $key): bool
     {
+        $hash = StringValidation::isBinary($hash) ? bin2hex($hash) : $hash;
         $hash = (string) $hash;
         return (static::isHash($hash, $algo) && hash_equals(hash_hmac($algo, $string, $key), $hash));
     }
-    public static function isHash(mixed $var, string $algo_type): bool
+    public static function isHash(mixed $hash, string $algo_type): bool
     {
-        return StringValidation::isHexadecimal($var) && StringValidation::isLengthEqualsThan($var, static::getHashLength($algo_type));
+        $hash = StringValidation::isBinary($hash) ? bin2hex($hash) : $hash;
+        return StringValidation::isHexadecimal($hash) && StringValidation::isLengthEqualsThan($hash, static::getHashLength($algo_type));
     }
+
     public static function isHashMd5(mixed $var): bool
     {
         return static::isHash($var, 'md5');

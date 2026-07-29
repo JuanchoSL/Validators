@@ -12,7 +12,11 @@ use JuanchoSL\Validators\Types\Traits\BasicValidationsTrait;
 use JuanchoSL\Validators\Types\Traits\ContainsValidationsTrait;
 use JuanchoSL\Validators\Types\Traits\LengthValidationsTrait;
 
-class IterableValidations extends AbstractValidations implements BasicValidatorsInterface, LengthValidatorsInterface, IterableKeyValidatorsInterface, ValueValidatorsInterface
+class IterableValidations extends AbstractValidations implements
+    BasicValidatorsInterface,
+    LengthValidatorsInterface,
+    IterableKeyValidatorsInterface,
+    ValueValidatorsInterface
 {
 
     use BasicValidationsTrait, ContainsValidationsTrait, LengthValidationsTrait;
@@ -41,5 +45,25 @@ class IterableValidations extends AbstractValidations implements BasicValidators
     public function isValueAttributeValidatingAny(string $index, AbstractValidations|callable ...$validations): static
     {
         return $this->addTest($this->validator, 'isValueAttributeValidatingAny', func_get_args());
+    }
+
+    public function isAnyValueValidating(AbstractValidations|callable $validations): static
+    {
+        return $this->addTest($this->validator, 'isAnyValueValidating', func_get_args());
+    }
+
+    public function isAnyValueValidatingAny(AbstractValidations|callable ...$validations): static
+    {
+        return $this->addTest($this->validator, 'isAnyValueValidatingAny', func_get_args());
+    }
+
+    public function isAnyValueAttributeValidating(string $index, AbstractValidations|callable $validations): static
+    {
+        return $this->addTest($this->validator, 'isAnyValueAttributeValidating', func_get_args());
+    }
+
+    public function isAnyValueAttributeValidatingAny(string $index, AbstractValidations|callable ...$validations): static
+    {
+        return $this->addTest($this->validator, 'isAnyValueAttributeValidatingAny', func_get_args());
     }
 }

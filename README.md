@@ -29,35 +29,35 @@ composer update
 > The **getResult** method, maybe can be removed on future versions
 
 #### Generic methods
-| Validation | Strings | Numbers | Iterables | Primitives |
-| ---------- | ------- | ------- | --------- | ---------- |
-| is                            | x | x | x | x |
-| isEmpty                       | x | x | x | x |
-| isNotEmpty                    | x | x | x | x |
-| isValueStartingWith           | x | x |  |  |
-| isValueStartingWithAny        | x | x |  |  |
-| isValueEndingWith             | x | x |  |  |
-| isValueEndingWithAny          | x | x |  |  |
-| isValueContaining             | x | x | x |  |
-| isValueContainingAny          | x | x | x |  |
-| isValueValidating             | x | x | x |  |
-| isValueValidatingAny          | x | x | x |  |
-| isValueEquals                 | x | x |  |  |
-| isValueEqualsAny              | x | x |  |  |
-| isLengthEqualsThan            | x | x | x |  |
-| isLengthGreatherThan          | x | x | x |  |
-| isLengthGreatherOrEqualsThan  | x | x | x |  |
-| isLengthLessThan              | x | x | x |  |
-| isLengthLessOrEqualsThan      | x | x | x |  |
-| isRegex                       | x | x |  |  |
+| Validation | Strings | Numbers | Iterables | Primitives | Hashes |
+| ---------- | ------- | ------- | --------- | ---------- | ------ |
+| is                            | x | x | x | x | x |
+| isEmpty                       | x | x | x | x | x |
+| isNotEmpty                    | x | x | x | x | x |
+| isValueStartingWith           | x | x |  |  |  |
+| isValueStartingWithAny        | x | x |  |  |  |
+| isValueEndingWith             | x | x |  |  |  |
+| isValueEndingWithAny          | x | x |  |  |  |
+| isValueContaining             | x | x | x |  |  |
+| isValueContainingAny          | x | x | x |  |  |
+| isValueValidating             | x | x | x |  |  |
+| isValueValidatingAny          | x | x | x |  |  |
+| isValueEquals                 | x | x |  |  |  |
+| isValueEqualsAny              | x | x |  |  |  |
+| isLengthEqualsThan            | x | x | x |  |  |
+| isLengthGreatherThan          | x | x | x |  |  |
+| isLengthGreatherOrEqualsThan  | x | x | x |  |  |
+| isLengthLessThan              | x | x | x |  |  |
+| isLengthLessOrEqualsThan      | x | x | x |  |  |
+| isRegex                       | x | x |  |  |  |
 
 #### Exclusive methods
-| Strings | Primitives | Numerics | Hashes |
-| - | - | - | - |
-| isNumber | isBoolEquivalent | isValueEqualsThan | isValidatingHash |
-| isInteger | isNull | isValueEqualsThanAny | isValidatingHashHmac |
-| isFloat | isTrue | isValueIntoRange | isHash |
-| isBinary | isFalse | isValueGreatherThan |
+| Strings | Primitives | Numerics | Hashes | Iterables |
+| - | - | - | - | - |
+| isNumber | isBoolEquivalent | isValueEqualsThan | isValidatingHash | isValueAttributeValidating |
+| isInteger | isNull | isValueEqualsThanAny | isValidatingHashHmac | isValueAttributeValidatingAny |
+| isFloat | isTrue | isValueIntoRange | isHash | isAnyValueAttributeValidating |
+| isBinary | isFalse | isValueGreatherThan | | isAnyValueAttributeValidatingAny |
 | isHexadecimal | | isValueGreatherThanOrEquals |
 | isMultibyte | | isValueLessThan |
 | isEncodedAs | | isValueLessThanOrEquals |

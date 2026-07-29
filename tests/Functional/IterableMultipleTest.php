@@ -135,4 +135,51 @@ class IterableMultipleTest extends TestCase
         $this->assertFalse($this->validator->getResult($datas), "complex validations as object");
         $this->assertFalse($this->validator->__invoke($datas), "complex validations as object");
     }
+
+    public function testAnyValueValidating()
+    {
+        $datas = ["aaaa@bbb.com", "bbb@ccc.es", ""];
+        $this->validator->clear()->isAnyValueValidating((new StringValidations())->isValueEquals('aaaa@bbb.com'));
+        $this->assertTrue($this->validator->getResult($datas), "complex validations");
+        $this->validator->clear()->isAnyValueValidating([new StringValidations(), 'isEmpty']);
+        $this->assertTrue($this->validator->getResult($datas), "complex validations");
+        $this->validator->clear()->isAnyValueValidating([StringValidation::class, 'isInteger']);
+        $this->assertFalse($this->validator->getResult($datas), "complex validations");
+    }
+
+    public function testAnyValueValidatingAny()
+    {
+        $datas = ["aaaa@bbb.com", "bbb@ccc.es", ""];
+        $this->validator->clear()->isAnyValueValidatingAny((new StringValidations())->isEmpty(), (new StringValidations())->isValueEquals('aaaa@bbb.com'));
+        $this->assertTrue($this->validator->getResult($datas), "complex validations");
+    }
+    public function testAnyAttributeValidating()
+    {
+        $datas = [
+            ["nombre" => "pepe", "apellidos" => "salmuera", "email" => "aaaa@bbb", "telephone" => 123456789],
+            ["nombre" => "juan", "apellidos" => "benito", "email" => "bbb@ccc", "telephone" => 123456789],
+        ];
+        $this->validator->clear()->isAnyValueAttributeValidating('email', (new StringValidations())->isInteger());
+        $this->assertFalse($this->validator->__invoke($datas), "complex validations as array");
+        $this->validator->clear()->isAnyValueAttributeValidating('email', [StringValidation::class, 'isInteger']);
+        $this->assertFalse($this->validator->__invoke($datas), "complex validations as array");
+        $this->validator->clear()->isAnyValueAttributeValidating('email', (new StringValidations())->isValueEquals('aaaa@bbb'));
+        $this->assertTrue($this->validator->__invoke($datas), "complex validations as array");
+    }
+
+    public function testAnyAttributeValidatingAny()
+    {
+        $datas = [
+            ["nombre" => "pepe", "apellidos" => "salmuera", "email" => "aaaa@bbb.com", "telephone" => 123456789],
+            ["nombre" => "juan", "apellidos" => "benito", "email" => "bbb@ccc.com", "telephone" => 123456789],
+        ];
+        $this->validator->clear()->isAnyValueAttributeValidatingAny('email', [(new StringValidations())->isEmpty(), '__invoke'], [(new StringValidations())->isMac(), '__invoke']);
+        $this->assertFalse($this->validator->getResult($datas), "complex validations");
+        $this->validator->clear()->isAnyValueAttributeValidatingAny('email', (new StringValidations())->isValueEquals('aaaa@bbb.com'));
+        $this->assertTrue($this->validator->getResult($datas), "complex validations");
+        $this->validator->clear()->isAnyValueAttributeValidatingAny('email', [StringValidation::class, 'isEmpty'], [StringValidation::class, 'isEmail']);
+        $this->assertTrue($this->validator->getResult($datas), "complex validations");
+        $this->validator->clear()->isAnyValueAttributeValidatingAny('email', [StringValidation::class, 'isEmpty'], [StringValidation::class, 'isInteger']);
+        $this->assertFalse($this->validator->getResult($datas), "complex validations");
+    }
 }

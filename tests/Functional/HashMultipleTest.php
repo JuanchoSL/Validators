@@ -32,7 +32,9 @@ class HashMultipleTest extends TestCase
         $key = "secret";
         foreach ($values as $value) {
             ${"hash_" . $value} = hash_hmac($value, $string, $key);
+            ${"binhash_" . $value} = hash_hmac($value, $string, $key, true);
             ${$value} = hash($value, $string);
+            ${"bin_" . $value} = hash($value, $string, true);
         }
         /*
         $hash_md5 = hash_hmac('md5', $string, $key);
@@ -59,13 +61,16 @@ class HashMultipleTest extends TestCase
         $this->assertTrue($this->validator->clear()->isHashSha512()->getResult($sha512));
         foreach ($values as $algo) {
             $this->assertTrue($this->validator->clear()->isValidatingHash($algo, $string)->getResult(${$algo}), sprintf("Algo %s with value: '%s'", $algo, ${$algo}));
+            $this->assertTrue($this->validator->clear()->isValidatingHash($algo, $string)->getResult(${"bin_" . $algo}), sprintf("Algo %s with value in binary", $algo));
+            $this->assertTrue($this->validator->clear()->isValidatingHashHmac($algo, $string, $key)->getResult(${"hash_{$algo}"}), sprintf("Algo HMAC %s with value: '%s'", $algo, ${"hash_" . $algo}));
+            $this->assertTrue($this->validator->clear()->isValidatingHashHmac($algo, $string, $key)->getResult(${"binhash_{$algo}"}), sprintf("Algo HMAC %s with value in binary", $algo));
             $this->assertFalse($this->validator->clear()->isValidatingHash($algo, $string . '.')->getResult(${$algo}), sprintf("Algo %s with value: '%s'", $algo, ${$algo}));
-            $this->assertFalse($this->validator->clear()->isValidatingHash($algo, $string)->getResult(${"hash_" . $algo}), sprintf("Algo %s with value: '%s'", $algo, ${"hash_" . $algo}));
-            //$this->assertTrue($this->validator->clear()->isValidatingHashHmac($algo, $string, $key)->getResult(${"hash_{$algo}"}), sprintf("Algo HMAC %s with value: '%s'", $algo, ${"hash_" . $algo}));
+            $this->assertFalse($this->validator->clear()->isValidatingHash($algo, $string . '.')->getResult(${$algo}), sprintf("Algo %s with value in binary", $algo));
+            $this->assertFalse($this->validator->clear()->isValidatingHash($algo, $string)->getResult(${"hash_" . $algo}), sprintf("Algo HMAC %s with value: '%s' verifying as NOT HMAC", $algo, ${"hash_" . $algo}));
+            $this->assertFalse($this->validator->clear()->isValidatingHashHmac($algo, $string, $key)->getResult(${$algo}), sprintf("Algo NOT HMAC %s with value: '%s' verifying as HMAC", $algo, ${$algo}));
             $this->assertFalse($this->validator->clear()->isValidatingHashHmac($algo, $string . '.', $key)->getResult(${"hash_{$algo}"}), sprintf("Algo HMAC %s with value: '%s'", $algo, ${"hash_" . $algo}));
-            }
-            /*
-            */
+            $this->assertFalse($this->validator->clear()->isValidatingHashHmac($algo, $string . '.', $key)->getResult(${"binhash_{$algo}"}), sprintf("Algo HMAC %s with value in binary", $algo));
+        }
     }
     public function testIsHashAndValidateFailure()
     {

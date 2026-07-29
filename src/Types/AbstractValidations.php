@@ -2,6 +2,7 @@
 
 namespace JuanchoSL\Validators\Types;
 
+use Closure;
 use JuanchoSL\DataManipulation\Manipulators\Numbers\NumbersManipulators;
 use JuanchoSL\DataManipulation\Sanitizers\Numbers\NumberSanitizers;
 use JuanchoSL\Validators\Contracts\DebuggableInterface;
@@ -29,7 +30,7 @@ abstract class AbstractValidations implements LoggerAwareInterface, DebuggableIn
     public function __invoke(mixed $var): bool
     {
         foreach ($this->getResults($var) as $result) {
-            if (!$result) {
+            if ($result !== true) {
                 return false;
             }
         }
@@ -66,7 +67,24 @@ abstract class AbstractValidations implements LoggerAwareInterface, DebuggableIn
      */
     protected function createKey(string $method, array $params = []): string
     {
-        if (!empty($params)) {
+        if (!empty($params) and is_iterable($params)) {
+            foreach ($params as $i => $param) {
+                if (is_iterable($param)) {
+                    if ($param instanceof Stringable) {
+                        $param = (string) $param;
+                    } elseif ($param instanceof Closure) {
+                        $param = 'closure()';
+                    } elseif (is_callable($param) && count($param) == 2) {
+                        $param = implode('::', $param);//static::createKey(',', array_values($param));
+                        if (str_contains($param, "\\")) {
+                            $param = substr($param, strrpos($param, '\\') + 1);
+                        }
+                    } else {
+                        $param = static::createKey('', $param);
+                    }
+                    $params[$i] = $param;
+                }
+            }
             $method .= ": " . implode(',', $params);
         }
         return $method;
@@ -116,7 +134,7 @@ abstract class AbstractValidations implements LoggerAwareInterface, DebuggableIn
             $params = empty($data['params']) ? '' : "(" . implode(',', $data['params']) . ")";
             $data = /*substr($data['class'], strrpos($data['class'], '\\') + 1) . "->" .*/ $data['method'] . $params;
         });
-        return implode('|', $tests);
+        return substr(get_class($this), strrpos(get_class($this), '\\') + 1) . "->" . implode('->', $tests);
     }
 
     public function __serialize(): array

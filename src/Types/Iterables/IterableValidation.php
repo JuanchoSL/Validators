@@ -2,6 +2,7 @@
 
 namespace JuanchoSL\Validators\Types\Iterables;
 
+use ArrayIterator;
 use JuanchoSL\Validators\Contracts\Single\BasicValidatorsInterface;
 use JuanchoSL\Validators\Contracts\Single\IterableKeyValidatorsInterface;
 use JuanchoSL\Validators\Contracts\Single\IterableValueValidatorsInterface;
@@ -11,7 +12,11 @@ use JuanchoSL\Validators\Types\AbstractValidations;
 use JuanchoSL\Validators\Types\Entities\EntityValidation;
 use JuanchoSL\Validators\Types\Strings\StringValidation;
 
-class IterableValidation extends AbstractValidation implements BasicValidatorsInterface, LengthValidatorsInterface, IterableKeyValidatorsInterface, IterableValueValidatorsInterface
+class IterableValidation extends AbstractValidation implements
+    BasicValidatorsInterface,
+    LengthValidatorsInterface,
+    IterableKeyValidatorsInterface,
+    IterableValueValidatorsInterface
 {
 
     public static function is(mixed $var): bool
@@ -114,22 +119,15 @@ class IterableValidation extends AbstractValidation implements BasicValidatorsIn
 
     public static function isValueValidating(mixed $var, AbstractValidations|callable $needle): bool
     {
-        if (!static::is($var)) {
-            return false;
+        if (version_compare(PHP_VERSION, '8.4.0', '>=')) {
+            return array_all($var, $needle);
         }
-        $var = (array) $var;
-        $results = true;
-        foreach ($var as $entity) {
-            if (!$needle($entity)) {
-                return false;
-            }
-        }
-        return $results;
+        return static::isValueValidatingAny($var, $needle);
     }
 
     public static function isValueValidatingAny(mixed $var, AbstractValidations|callable ...$needles): bool
     {
-        if (!static::is($var)) {
+        if (!static::is($var) || static::isEmpty($var)) {
             return false;
         }
         $var = (array) $var;
@@ -158,10 +156,60 @@ class IterableValidation extends AbstractValidation implements BasicValidatorsIn
             return false;
         }
         $var = (array) $var;
+        $var = array_column($var, $attribute);
+        return static::isValueValidatingAny($var, ...$needles);
+
         $results = true;
         foreach ($var as $entity) {
             $results = EntityValidation::isValueAttributeValidatingAny($entity, $attribute, ...$needles) ? $results : false;
         }
         return $results;
     }
+
+    public static function isAnyValueValidating(mixed $var, AbstractValidations|callable $validation): bool
+    {
+        if (!static::is($var) || static::isEmpty($var)) {
+            return false;
+        }
+        if (version_compare(PHP_VERSION, '8.4.0', '>=')) {
+            return array_any($var, $validation);
+        }
+        $var = new ArrayIterator($var);
+        $oks = true;
+        iterator_apply($var, function ($a, $validation, &$oks) {
+            foreach ($a as $e) {
+                if (call_user_func($validation, $e)) {
+                    return $oks = false;
+                }
+            }
+            return true;
+        }, [$var, $validation, &$oks]);
+        return !$oks;
+    }
+
+    public static function isAnyValueValidatingAny(mixed $var, AbstractValidations|callable ...$validations): bool
+    {
+        if (!static::is($var) || static::isEmpty($var)) {
+            return false;
+        }
+        foreach ($validations as $validation) {
+            if (static::isAnyValueValidating($var, $validation)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static function isAnyValueAttributeValidating(mixed $var, string $index, AbstractValidations|callable $validations): bool
+    {
+        return static::isAnyValueAttributeValidatingAny($var, $index, $validations);
+    }
+
+    public static function isAnyValueAttributeValidatingAny(mixed $var, string $index, AbstractValidations|callable ...$validations): bool
+    {
+        $var = (array) $var;
+        $var = array_column($var, $index);
+        return static::isAnyValueValidatingAny($var, ...$validations);
+    }
+
 }
