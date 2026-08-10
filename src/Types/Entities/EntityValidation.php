@@ -12,7 +12,6 @@ use JuanchoSL\Validators\Types\Iterables\ListValidation;
 use JuanchoSL\Validators\Types\Strings\StringValidation;
 use JuanchoSL\Validators\Types\Traits\Single\CountableTrait;
 use JuanchoSL\Validators\Types\Traits\Single\IterableKeysTrait;
-use JuanchoSL\Validators\Types\Traits\Single\EntityValuesTrait;
 
 class EntityValidation extends AbstractValidation implements
     BasicValidatorsInterface,
@@ -20,7 +19,7 @@ class EntityValidation extends AbstractValidation implements
     IterableKeyValidatorsInterface
 {
 
-    use CountableTrait, IterableKeysTrait, EntityValuesTrait;
+    use CountableTrait, IterableKeysTrait;
 
     public static function is(mixed $var): bool
     {

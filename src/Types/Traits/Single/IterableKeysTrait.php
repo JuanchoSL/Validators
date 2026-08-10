@@ -23,17 +23,5 @@ trait IterableKeysTrait
     public static function isKeyContaining(mixed $var, mixed $needle): bool
     {
         return static::isKeyContainingAny($var, $needle);
-
-        if (!static::is($var) || static::isEmpty($var)) {
-            return false;
-        }
-        $var = (array) $var;
-        $results = true;
-        foreach ($var as $key => $entity) {
-            if (!StringValidation::isValueContaining((string) $key, (string) strval($needle))) {
-                return false;
-            }
-        }
-        return $results;
     }
 }

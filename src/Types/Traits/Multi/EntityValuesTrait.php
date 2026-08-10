@@ -4,15 +4,17 @@ namespace JuanchoSL\Validators\Types\Traits\Multi;
 
 use JuanchoSL\Validators\Types\AbstractValidations;
 
-trait CollectionValuesTrait
+trait EntityValuesTrait
 {
-    public function isAnyValueAttributeValidating(string $index, AbstractValidations|callable $validations): static
+
+    public function isValueAttributeValidating(string $attribute, AbstractValidations|callable $needle): static
     {
         return $this->addTest($this->validator, __FUNCTION__, func_get_args());
     }
 
-    public function isAnyValueAttributeValidatingAny(string $index, AbstractValidations|callable ...$validations): static
+    public function isValueAttributeValidatingAny(string $attribute, AbstractValidations|callable ...$needles): static
     {
         return $this->addTest($this->validator, __FUNCTION__, func_get_args());
     }
+
 }

@@ -3,17 +3,20 @@
 namespace JuanchoSL\Validators\Types\Entities;
 
 use JuanchoSL\Validators\Contracts\Multi\BasicValidatorsInterface;
+use JuanchoSL\Validators\Contracts\Multi\EntityValueValidatorsInterface;
 use JuanchoSL\Validators\Contracts\Multi\IterableKeyValidatorsInterface;
 use JuanchoSL\Validators\Types\AbstractValidations;
 use JuanchoSL\Validators\Types\Traits\Multi\BasicValidationsTrait;
 use JuanchoSL\Validators\Types\Traits\Multi\CollectionKeysTrait;
+use JuanchoSL\Validators\Types\Traits\Multi\EntityValuesTrait;
 
 class EntityValidations extends AbstractValidations implements
     BasicValidatorsInterface,
-    IterableKeyValidatorsInterface
+    IterableKeyValidatorsInterface,
+    EntityValueValidatorsInterface
 {
 
-    use BasicValidationsTrait, CollectionKeysTrait;
+    use BasicValidationsTrait, CollectionKeysTrait, EntityValuesTrait;
 
     /**
      * 
@@ -21,13 +24,4 @@ class EntityValidations extends AbstractValidations implements
      */
     protected string $validator = EntityValidation::class;
 
-    public function isValueAttributeValidating(string $index, AbstractValidations|callable $validations): static
-    {
-        return $this->addTest($this->validator, __FUNCTION__, func_get_args());
-    }
-
-    public function isValueAttributeValidatingAny(string $index, AbstractValidations|callable ...$validations): static
-    {
-        return $this->addTest($this->validator, __FUNCTION__, func_get_args());
-    }
 }

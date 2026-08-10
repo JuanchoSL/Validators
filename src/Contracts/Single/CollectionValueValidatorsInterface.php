@@ -7,6 +7,9 @@ use JuanchoSL\Validators\Types\AbstractValidations;
 interface CollectionValueValidatorsInterface
 {
 
+    public static function isValueAttributeValidating(mixed $var, string $key, AbstractValidations|callable $needle): bool;
+    public static function isValueAttributeValidatingAny(mixed $var, string $key, AbstractValidations|callable ...$needles): bool;
+    
     /**
      * Check into the selected key of all elements from the iterable, if some value are validating a more complex validation
      * @param mixed $var The iterable to check

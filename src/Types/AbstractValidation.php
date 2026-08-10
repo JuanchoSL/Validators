@@ -6,11 +6,14 @@ use JuanchoSL\Exceptions\PreconditionFailedException;
 
 abstract class AbstractValidation
 {
+
     protected static function isStrict(mixed $var): bool
     {
         return static::is($var) or throw new PreconditionFailedException("The checked element does not have the rigth type");
     }
 
+    abstract public static function is(mixed $var): bool;
+    
     public static function isEmpty(mixed $var): bool
     {
         return empty($var);
