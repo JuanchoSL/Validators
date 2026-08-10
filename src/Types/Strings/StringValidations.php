@@ -6,11 +6,11 @@ use JuanchoSL\Validators\Contracts\Multi\ContentValidatorsInterface;
 use JuanchoSL\Validators\Contracts\Multi\RegexValidatorsInterface;
 use JuanchoSL\Validators\Contracts\Multi\StringContentsTypeValidatorsInterface;
 use JuanchoSL\Validators\Contracts\Multi\BasicValidatorsInterface;
-use JuanchoSL\Validators\Types\AbstractValidations;
 use JuanchoSL\Validators\Contracts\Multi\LengthValidatorsInterface;
-use JuanchoSL\Validators\Types\Traits\BasicValidationsTrait;
-use JuanchoSL\Validators\Types\Traits\ContainsValidationsTrait;
-use JuanchoSL\Validators\Types\Traits\LengthValidationsTrait;
+use JuanchoSL\Validators\Types\AbstractValidations;
+use JuanchoSL\Validators\Types\Traits\Multi\BasicValidationsTrait;
+use JuanchoSL\Validators\Types\Traits\Multi\ContainsValidationsTrait;
+use JuanchoSL\Validators\Types\Traits\Multi\LengthValidationsTrait;
 
 class StringValidations extends AbstractValidations implements
     BasicValidatorsInterface,
@@ -30,70 +30,70 @@ class StringValidations extends AbstractValidations implements
 
     public function isBinary(): static
     {
-        return $this->addTest($this->validator, 'isBinary', func_get_args());
+        return $this->addTest($this->validator, __FUNCTION__, func_get_args());
     }
 
     public function isHexadecimal(): static
     {
-        return $this->addTest($this->validator, 'isHexadecimal', func_get_args());
+        return $this->addTest($this->validator, __FUNCTION__, func_get_args());
     }
 
     public function isMultibyte(): static
     {
-        return $this->addTest($this->validator, 'isMultibyte', func_get_args());
+        return $this->addTest($this->validator, __FUNCTION__, func_get_args());
     }
 
     public function isEncodedAs(array|string $encoding, bool $strict = true): static
     {
-        return $this->addTest($this->validator, 'isEncodedAs', func_get_args());
+        return $this->addTest($this->validator, __FUNCTION__, func_get_args());
     }
     public function isDate(): static
     {
-        return $this->addTest($this->validator, 'isDate', func_get_args());
+        return $this->addTest($this->validator, __FUNCTION__, func_get_args());
     }
     public function isNumber(): static
     {
-        return $this->addTest($this->validator, 'isNumber', func_get_args());
+        return $this->addTest($this->validator, __FUNCTION__, func_get_args());
     }
     public function isInteger(): static
     {
-        return $this->addTest($this->validator, 'isInteger', func_get_args());
+        return $this->addTest($this->validator, __FUNCTION__, func_get_args());
     }
     public function isFloat(): static
     {
-        return $this->addTest($this->validator, 'isFloat', func_get_args());
+        return $this->addTest($this->validator, __FUNCTION__, func_get_args());
     }
     public function isEmail(): static
     {
-        return $this->addTest($this->validator, 'isEmail', func_get_args());
+        return $this->addTest($this->validator, __FUNCTION__, func_get_args());
     }
     public function isUrl(): static
     {
-        return $this->addTest($this->validator, 'isUrl', func_get_args());
+        return $this->addTest($this->validator, __FUNCTION__, func_get_args());
     }
     public function isIpV4(): static
     {
-        return $this->addTest($this->validator, 'isIpV4', func_get_args());
+        return $this->addTest($this->validator, __FUNCTION__, func_get_args());
     }
     public function isIpV6(): static
     {
-        return $this->addTest($this->validator, 'isIpV6', func_get_args());
+        return $this->addTest($this->validator, __FUNCTION__, func_get_args());
     }
     public function isMac(): static
     {
-        return $this->addTest($this->validator, 'isMac', func_get_args());
+        return $this->addTest($this->validator, __FUNCTION__, func_get_args());
     }
     public function isDomain(): static
     {
-        return $this->addTest($this->validator, 'isDomain', func_get_args());
+        return $this->addTest($this->validator, __FUNCTION__, func_get_args());
     }
     public function isSerialized(): static
     {
-        return $this->addTest($this->validator, 'isSerialized', func_get_args());
+        return $this->addTest($this->validator, __FUNCTION__, func_get_args());
     }
     public function isRegex(string $expresion): static
     {
-        return $this->addTest($this->validator, 'isRegex', func_get_args());
+        return $this->addTest($this->validator, __FUNCTION__, func_get_args());
     }
 
 }

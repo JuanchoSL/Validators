@@ -2,8 +2,15 @@
 
 namespace JuanchoSL\Validators\Types;
 
+use JuanchoSL\Exceptions\PreconditionFailedException;
+
 abstract class AbstractValidation
 {
+    protected static function isStrict(mixed $var): bool
+    {
+        return static::is($var) or throw new PreconditionFailedException("The check element is not the correct type");
+    }
+
     public static function isEmpty(mixed $var): bool
     {
         return empty($var);

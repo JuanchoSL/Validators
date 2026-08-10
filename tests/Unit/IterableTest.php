@@ -3,6 +3,7 @@
 namespace JuanchoSL\Validators\Tests\Unit;
 
 
+use JuanchoSL\Exceptions\PreconditionFailedException;
 use JuanchoSL\Validators\Types\Iterables\IterableValidation;
 use JuanchoSL\Validators\Types\Strings\StringValidations;
 use PHPUnit\Framework\TestCase;
@@ -39,8 +40,12 @@ class IterableTest extends TestCase
     public function testIsNotEmptyFalse()
     {
         $this->assertFalse(IterableValidation::isNotEmpty([]), "Is an empty iterable");
-        $this->assertFalse(IterableValidation::isNotEmpty(null), "Is an empty iterable");
-        $this->assertFalse(IterableValidation::isNotEmpty(false), "Is an empty iterable");
+    }
+    public function testIsNotEmptyError()
+    {
+        $this->expectException(PreconditionFailedException::class);
+        $this->assertFalse(IterableValidation::isNotEmpty(null), "Is not an iterable");
+        $this->assertFalse(IterableValidation::isNotEmpty(false), "Is not an iterable");
     }
 
     public function testIsLengthEqualsTrue()
@@ -201,7 +206,6 @@ class IterableTest extends TestCase
         ], 'text', (new StringValidations())->isMultibyte()), "Don't all values are multibyte");
     }
 
-    /*
     public function testIsEntiyValidatingAnyTrue()
     {
         $this->assertTrue(IterableValidation::isValueAttributeValidating([
@@ -225,6 +229,5 @@ class IterableTest extends TestCase
             ['url' => ""]
         ], 'url', (new StringValidations())->isUrl()), "Don't all values are urls");
     }
-*/
 
 }

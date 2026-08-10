@@ -4,8 +4,64 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cf48d121e80e4c5487330a1ff5ed6195",
+    "content-hash": "5d270346c2058360913fa80c5cad276a",
     "packages": [
+        {
+            "name": "fig/http-message-util",
+            "version": "1.1.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/http-message-util.git",
+                "reference": "9d94dc0154230ac39e5bf89398b324a86f63f765"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/http-message-util/zipball/9d94dc0154230ac39e5bf89398b324a86f63f765",
+                "reference": "9d94dc0154230ac39e5bf89398b324a86f63f765",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.3 || ^7.0 || ^8.0"
+            },
+            "suggest": {
+                "psr/http-message": "The package containing the PSR-7 interfaces"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Fig\\Http\\Message\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "https://www.php-fig.org/"
+                }
+            ],
+            "description": "Utility classes and constants for use with PSR-7 (psr/http-message)",
+            "keywords": [
+                "http",
+                "http-message",
+                "psr",
+                "psr-7",
+                "request",
+                "response"
+            ],
+            "support": {
+                "issues": "https://github.com/php-fig/http-message-util/issues",
+                "source": "https://github.com/php-fig/http-message-util/tree/1.1.5"
+            },
+            "time": "2020-11-24T22:02:12+00:00"
+        },
         {
             "name": "juanchosl/datamanipulation",
             "version": "1.0.2",
@@ -59,6 +115,55 @@
                 "source": "https://github.com/JuanchoSL/DataManipulation/tree/1.0.2"
             },
             "time": "2026-01-30T20:01:12+00:00"
+        },
+        {
+            "name": "juanchosl/exceptions",
+            "version": "1.0.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/JuanchoSL/Exceptions.git",
+                "reference": "b8b61554a918c26bb8e0b8d5ef9f5e1f80045bf8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/JuanchoSL/Exceptions/zipball/b8b61554a918c26bb8e0b8d5ef9f5e1f80045bf8",
+                "reference": "b8b61554a918c26bb8e0b8d5ef9f5e1f80045bf8",
+                "shasum": ""
+            },
+            "require": {
+                "fig/http-message-util": "1.1.*",
+                "php": "^7.4 || ^8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "9.6.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "JuanchoSL\\Exceptions\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Juan Sánchez Lecegui",
+                    "email": "Juan.Sanchez@tecnicosweb.com",
+                    "homepage": "https://www.linkedin.com/in/juansanchezlecegui/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A small, lightweight collection of Exceptions that are using the standard status codes for use on requests",
+            "homepage": "https://github.com/JuanchoSL/Exceptions",
+            "keywords": [
+                "exceptions"
+            ],
+            "support": {
+                "source": "https://github.com/JuanchoSL/Exceptions/tree/1.0.6"
+            },
+            "time": "2025-12-05T17:35:35+00:00"
         },
         {
             "name": "psr/log",
@@ -403,11 +508,11 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.12.33",
+            "version": "1.12.34",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/37982d6fc7cbb746dda7773530cda557cdf119e1",
-                "reference": "37982d6fc7cbb746dda7773530cda557cdf119e1",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/4dd89ca7aa30fdc6760be21550d583bcc32e8476",
+                "reference": "4dd89ca7aa30fdc6760be21550d583bcc32e8476",
                 "shasum": ""
             },
             "require": {
@@ -452,7 +557,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-02-28T20:30:03+00:00"
+            "time": "2026-07-28T10:04:39+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -1931,7 +2036,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "^8.1",
+        "php": "^8.0",
         "ext-mbstring": "*"
     },
     "platform-dev": {},
