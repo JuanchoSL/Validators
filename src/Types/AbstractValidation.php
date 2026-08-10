@@ -8,7 +8,7 @@ abstract class AbstractValidation
 {
     protected static function isStrict(mixed $var): bool
     {
-        return static::is($var) or throw new PreconditionFailedException("The check element is not the correct type");
+        return static::is($var) or throw new PreconditionFailedException("The checked element does not have the rigth type");
     }
 
     public static function isEmpty(mixed $var): bool
