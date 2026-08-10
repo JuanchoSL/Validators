@@ -3,25 +3,28 @@
 namespace JuanchoSL\Validators\Types\Entities;
 
 use JuanchoSL\Validators\Contracts\Single\BasicValidatorsInterface;
+use JuanchoSL\Validators\Contracts\Single\IterableKeyValidatorsInterface;
+use JuanchoSL\Validators\Contracts\Single\LengthValidatorsInterface;
 use JuanchoSL\Validators\Types\AbstractValidation;
 use JuanchoSL\Validators\Types\AbstractValidations;
+use JuanchoSL\Validators\Types\Iterables\ArrayValidation;
+use JuanchoSL\Validators\Types\Iterables\ListValidation;
 use JuanchoSL\Validators\Types\Strings\StringValidation;
+use JuanchoSL\Validators\Types\Traits\Single\CountableTrait;
+use JuanchoSL\Validators\Types\Traits\Single\IterableKeysTrait;
+use JuanchoSL\Validators\Types\Traits\Single\EntityValuesTrait;
 
-class EntityValidation extends AbstractValidation implements BasicValidatorsInterface
+class EntityValidation extends AbstractValidation implements
+    BasicValidatorsInterface,
+    LengthValidatorsInterface,
+    IterableKeyValidatorsInterface
 {
+
+    use CountableTrait, IterableKeysTrait, EntityValuesTrait;
 
     public static function is(mixed $var): bool
     {
-        return is_iterable($var);
-    }
-    public static function isEmpty(mixed $var): bool
-    {
-        return parent::isEmpty($var) || count($var) == 0;
-    }
-
-    public static function isNotEmpty(mixed $var): bool
-    {
-        return !static::isEmpty($var);
+        return (ArrayValidation::is($var) && !ListValidation::is($var)) OR is_object($var);
     }
 
     public static function isValueAttributeValidating(mixed $entity, string $key, AbstractValidations|callable $needle): bool

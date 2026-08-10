@@ -8,32 +8,31 @@ interface IterableValueValidatorsInterface
 {
 
     /**
-     * Check into the iterable value, if some value are validating a more complex validation
+     * Check into the iterable, if each value is validating a more complex validation
+     * @param AbstractValidations|callable $needle The validation to call in order to check for each iterable's values 
+     * @return static The object to perform more checks
+     */
+    public function isValueValidating(AbstractValidations|callable $needle): static;
+
+    /**
+     * Check into the iterable, if each value is validating any of more complex validation
+     * @param AbstractValidations|callable $needles The validation to call in order to check for each iterable's values 
+     * @return static The object to perform more checks
+     */
+    public function isValueValidatingAny(AbstractValidations|callable ...$needles): static;
+
+    /**
+     * Check into the iterable, if some value are validating a more complex validation
      * @param AbstractValidations|callable $needle The validation to call in order to check for each iterable's values 
      * @return static The object to perform more checks
      */
     public function isAnyValueValidating(AbstractValidations|callable $needle): static;
 
     /**
-     * Check into the iterable value, if any value are validating any of more complex validations
+     * Check into the iterable, if any value are validating any of more complex validations
      * @param AbstractValidations|callable $needles The validations to call in order to check or each iterable's values 
      * @return static The object to perform more checks
      */
     public function isAnyValueValidatingAny(AbstractValidations|callable ...$needles): static;
 
-    /**
-     * Check into the selected key of all elements from the iterable, if some value are validating a more complex validation
-     * @param string $key The key to check
-     * @param AbstractValidations|callable $needle The validation to call in order to check for each iterable's values 
-     * @return static The object to perform more checks
-     */
-    public function isAnyValueAttributeValidating(string $key, AbstractValidations|callable $needle): static;
-
-    /**
-     * Check into the selected key of all elements from the iterable, if any value are validating any of more complex validations
-     * @param string $key The key to check
-     * @param AbstractValidations|callable $needles The validations to call in order to check or each iterable's values 
-     * @return static The object to perform more checks
-     */
-    public function isAnyValueAttributeValidatingAny(string $key, AbstractValidations|callable ...$needles): static;
 }
