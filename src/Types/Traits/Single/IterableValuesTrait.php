@@ -43,7 +43,7 @@ trait IterableValuesTrait
     public static function isValueValidating(mixed $var, AbstractValidations|callable $needle): bool
     {
         if (version_compare(PHP_VERSION, '8.4.0', '>=')) {
-            return array_all($var, $needle);
+            return static::is($var) && array_all($var, $needle);
         }
         return static::isValueValidatingAny($var, $needle);
     }
