@@ -13,11 +13,12 @@ trait IterableKeysTrait
         }
 
         $var = (array) $var;
-        $results = true;
         foreach ($var as $key => $entity) {
-            $results = (StringValidation::isValueContainingAny((string) $key, ...$needles)) ? $results : false;
+            if(StringValidation::isValueEqualsAny((string) $key, ...$needles)){
+                return true;
+            }
         }
-        return $results;
+        return false;
     }
 
     public static function isKeyContaining(mixed $var, mixed $needle): bool
