@@ -3,6 +3,7 @@
 namespace JuanchoSL\Validators\Types\Traits\Single;
 
 use JuanchoSL\Validators\Types\Strings\StringValidation;
+use JuanchoSL\Validators\Types\Strings\StringValidations;
 
 trait IterableKeysTrait
 {
@@ -11,29 +12,20 @@ trait IterableKeysTrait
         if (!static::is($var) || static::isEmpty($var)) {
             return false;
         }
-
+        return (static::isAnyValueValidating(array_keys((array) $var), (new StringValidations())->isValueEqualsAny(...$needles)));
+        /*
         $var = (array) $var;
-        $results = true;
         foreach ($var as $key => $entity) {
-            $results = (StringValidation::isValueContainingAny((string) $key, ...$needles)) ? $results : false;
+            if (StringValidation::isValueEqualsAny((string) $key, ...$needles)) {
+                return true;
+            }
         }
-        return $results;
+        return false;
+        */
     }
 
     public static function isKeyContaining(mixed $var, mixed $needle): bool
     {
         return static::isKeyContainingAny($var, $needle);
-
-        if (!static::is($var) || static::isEmpty($var)) {
-            return false;
-        }
-        $var = (array) $var;
-        $results = true;
-        foreach ($var as $key => $entity) {
-            if (!StringValidation::isValueContaining((string) $key, (string) strval($needle))) {
-                return false;
-            }
-        }
-        return $results;
     }
 }

@@ -5,31 +5,31 @@ namespace JuanchoSL\Validators\Types\Iterables;
 use JuanchoSL\Validators\Contracts\Multi\BasicValidatorsInterface;
 use JuanchoSL\Validators\Contracts\Multi\CollectionValueValidatorsInterface;
 use JuanchoSL\Validators\Contracts\Multi\IterableKeyValidatorsInterface;
-use JuanchoSL\Validators\Contracts\Multi\IterableValueValidatorsInterface;
 use JuanchoSL\Validators\Contracts\Multi\LengthValidatorsInterface;
 use JuanchoSL\Validators\Types\AbstractValidations;
-use JuanchoSL\Validators\Types\Iterables\IterableValidation;
 use JuanchoSL\Validators\Types\Traits\Multi\BasicValidationsTrait;
 use JuanchoSL\Validators\Types\Traits\Multi\CollectionKeysTrait;
 use JuanchoSL\Validators\Types\Traits\Multi\CollectionValuesTrait;
 use JuanchoSL\Validators\Types\Traits\Multi\EntityValuesTrait;
-use JuanchoSL\Validators\Types\Traits\Multi\IterableValuesTrait;
 use JuanchoSL\Validators\Types\Traits\Multi\LengthValidationsTrait;
 
-class IterableValidations extends AbstractValidations implements
+class CollectionValidations extends AbstractValidations implements
     BasicValidatorsInterface,
     LengthValidatorsInterface,
     IterableKeyValidatorsInterface,
-    IterableValueValidatorsInterface,
     CollectionValueValidatorsInterface
 {
 
-    use BasicValidationsTrait, CollectionKeysTrait, CollectionValuesTrait, IterableValuesTrait, LengthValidationsTrait, EntityValuesTrait;
+    use BasicValidationsTrait,
+        LengthValidationsTrait,
+        CollectionKeysTrait,
+        CollectionValuesTrait,
+        EntityValuesTrait;
 
     /**
      * 
      * @var class-string $validator
      */
-    protected string $validator = IterableValidation::class;
+    protected string $validator = CollectionValidation::class;
 
 }

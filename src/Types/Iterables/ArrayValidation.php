@@ -13,7 +13,7 @@ use JuanchoSL\Validators\Types\Traits\Single\CountableTrait;
 use JuanchoSL\Validators\Types\Traits\Single\IterableKeysTrait;
 use JuanchoSL\Validators\Types\Traits\Single\IterableValuesTrait;
 
-class IterableValidation extends AbstractValidation implements
+class ArrayValidation extends AbstractValidation implements
     BasicValidatorsInterface,
     LengthValidatorsInterface,
     IterableKeyValidatorsInterface,
@@ -25,7 +25,7 @@ class IterableValidation extends AbstractValidation implements
 
     public static function is(mixed $var): bool
     {
-        return is_iterable($var);
+        return is_array($var);
     }
 
 }

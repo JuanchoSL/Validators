@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace JuanchoSL\Validators\Types\Traits\Multi;
 
@@ -11,7 +9,6 @@ trait LengthValidationsTrait
     {
         return $this->addTest($this->validator, __FUNCTION__, func_get_args());
     }
-
     public function isLengthGreatherThan(int $limit): static
     {
         return $this->addTest($this->validator, __FUNCTION__, func_get_args());

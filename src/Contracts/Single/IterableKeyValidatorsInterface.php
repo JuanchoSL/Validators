@@ -6,7 +6,7 @@ interface IterableKeyValidatorsInterface
 {
 
     /**
-     * Check for an iterable value, if the keys list names contains a desired name
+     * Check for an iterable value, if the desired key is present
      * @param mixed $var The iterable to check
      * @param mixed $needle The name to find into keys list names
      * @return bool Result of the operation
@@ -14,7 +14,7 @@ interface IterableKeyValidatorsInterface
     public static function isKeyContaining(mixed $var, mixed $needle): bool;
 
     /**
-     * Check for an iterable value, if the keys list names contains any desired names
+     * Check for an iterable value, if any desired key is present
      * @param mixed $var The iterable to check
      * @param mixed $needles The list names to find into keys list names
      * @return bool Result of the operation

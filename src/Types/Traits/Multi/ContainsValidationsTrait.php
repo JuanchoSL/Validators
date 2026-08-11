@@ -2,8 +2,6 @@
 
 namespace JuanchoSL\Validators\Types\Traits\Multi;
 
-use JuanchoSL\Validators\Types\AbstractValidations;
-
 trait ContainsValidationsTrait
 {
 
@@ -41,16 +39,6 @@ trait ContainsValidationsTrait
         return $this->addTest($this->validator, __FUNCTION__, func_get_args());
     }
     public function isValueContainingAny(mixed ...$needle): static
-    {
-        return $this->addTest($this->validator, __FUNCTION__, func_get_args());
-    }
-
-    public function isValueValidating(AbstractValidations|callable $validations): static
-    {
-        return $this->addTest($this->validator, __FUNCTION__, func_get_args());
-    }
-
-    public function isValueValidatingAny(AbstractValidations|callable ...$validations): static
     {
         return $this->addTest($this->validator, __FUNCTION__, func_get_args());
     }

@@ -20,55 +20,85 @@ composer update
 - General numbers
 - Specific integers
 - Specific floats
-- Entity iterable, as objects or assoc arrays
-- General Iterables, as indexed arrays or recursive validations
+- Iterables (all types)
+- Array (in Specific, indexed or associative)
+- List (indexed array with keys from _0_ to count()-1)
+- Collection (iterable of iterables)
+- Entity (iterable with named keys, as objects or assoc arrays)
 - Primitive boolean, reals or equivalents and Null checking
 
 > Important: from version 1.0.9 the multi-validations classes has been callables, you can prepare a sequence of validations into a variable and call it as a unction with the values to check as parameters.
 >
 > The **getResult** method, maybe can be removed on future versions
 
+#### How works
+
+##### Primitives and scalars
+
+The validators checking the type of value, and provide a relative options, as a number compartions for NumberValidators, but not for StringValidators, or a PrimitiveValidation::isBoolEquivalent for strings as true, yes, on, false, no, off...but not on StringValidation (a string false is a string really), in order to reduce and group the logics for every task
+
+##### Hashes
+
+We have the hash and hashhmac signatures validations, usefull for any project, can be reused very easy in any task, as to verificate downloaded or received files, authorization headers, security tokens, payloads, etc...
+
+##### Iterables
+
+We have some grouped validations for each type of structures, can be checked distincts type of iterables for any situation
+
+- **List** is an indexed array with numbered keys from 0 to count($) - 1, true for indexed array, false for associative
+- **Array** indexed with any key order, or assoc with text keys
+- **Iterable** parent of List and Array
+- **Entity** any iterable with named keys, array or objects are valid
+- **Collection** an iterable of iterables, calling validations from here, launch the validation for every contained _Entity_
+
+The iterables have validations with the same name of scalar validations (isValueContaining, isValueValidating...), but perform the checking over each element, in order to verify all contents with an only call.
+As Scalar validations, not all iterables have the same validators, a list does not check keys, because needs to be auto-numbered, List and Array, does not have validation over child attributes, its are used for a gruped of scalar values.
+
+> Iterable mantains the availability for retro compatibility, but maybe it will be removed in the future, relegatting this responsability to Collection and Entity
+
 #### Generic methods
-| Validation | Strings | Numbers | Iterables | Primitives | Hashes |
-| ---------- | ------- | ------- | --------- | ---------- | ------ |
-| is                            | x | x | x | x | x |
-| isEmpty                       | x | x | x | x | x |
-| isNotEmpty                    | x | x | x | x | x |
-| isValueStartingWith           | x | x |  |  |  |
-| isValueStartingWithAny        | x | x |  |  |  |
-| isValueEndingWith             | x | x |  |  |  |
-| isValueEndingWithAny          | x | x |  |  |  |
-| isValueContaining             | x | x | x |  |  |
-| isValueContainingAny          | x | x | x |  |  |
-| isValueValidating             | x | x | x |  |  |
-| isValueValidatingAny          | x | x | x |  |  |
-| isValueEquals                 | x | x |  |  |  |
-| isValueEqualsAny              | x | x |  |  |  |
-| isLengthEqualsThan            | x | x | x |  |  |
-| isLengthGreatherThan          | x | x | x |  |  |
-| isLengthGreatherOrEqualsThan  | x | x | x |  |  |
-| isLengthLessThan              | x | x | x |  |  |
-| isLengthLessOrEqualsThan      | x | x | x |  |  |
-| isRegex                       | x | x |  |  |  |
+
+| Validation                   | Strings | Numbers | Iterables | Primitives | Hashes |
+| ---------------------------- | ------- | ------- | --------- | ---------- | ------ |
+| is                           | x       | x       | x         | x          | x      |
+| isEmpty                      | x       | x       | x         | x          | x      |
+| isNotEmpty                   | x       | x       | x         | x          | x      |
+| isValueStartingWith          | x       | x       |           |            |        |
+| isValueStartingWithAny       | x       | x       |           |            |        |
+| isValueEndingWith            | x       | x       |           |            |        |
+| isValueEndingWithAny         | x       | x       |           |            |        |
+| isValueContaining            | x       | x       | x         |            |        |
+| isValueContainingAny         | x       | x       | x         |            |        |
+| isValueValidating            | x       | x       | x         |            |        |
+| isValueValidatingAny         | x       | x       | x         |            |        |
+| isValueEquals                | x       | x       |           |            |        |
+| isValueEqualsAny             | x       | x       |           |            |        |
+| isLengthEqualsThan           | x       | x       | x         |            |        |
+| isLengthGreatherThan         | x       | x       | x         |            |        |
+| isLengthGreatherOrEqualsThan | x       | x       | x         |            |        |
+| isLengthLessThan             | x       | x       | x         |            |        |
+| isLengthLessOrEqualsThan     | x       | x       | x         |            |        |
+| isRegex                      | x       | x       |           |            |        |
 
 #### Exclusive methods
-| Strings | Primitives | Numerics | Hashes | Iterables |
-| - | - | - | - | - |
-| isNumber | isBoolEquivalent | isValueEqualsThan | isValidatingHash | isValueAttributeValidating |
-| isInteger | isNull | isValueEqualsThanAny | isValidatingHashHmac | isValueAttributeValidatingAny |
-| isFloat | isTrue | isValueIntoRange | isHash | isAnyValueAttributeValidating |
-| isBinary | isFalse | isValueGreatherThan | | isAnyValueAttributeValidatingAny |
-| isHexadecimal | | isValueGreatherThanOrEquals |
-| isMultibyte | | isValueLessThan |
-| isEncodedAs | | isValueLessThanOrEquals |
-| isEmail |||
-| isUrl |||
-| isIpV4 |||
-| isIpv6 |||
-| isMac |||
-| isDomain |||
-| isDate |||
-| isSerialized |||
+
+| Strings       | Primitives       | Numerics                    | Hashes               | Iterables                        |
+| ------------- | ---------------- | --------------------------- | -------------------- | -------------------------------- |
+| isNumber      | isBoolEquivalent | isValueEqualsThan           | isValidatingHash     | isValueAttributeValidating       |
+| isInteger     | isNull           | isValueEqualsThanAny        | isValidatingHashHmac | isValueAttributeValidatingAny    |
+| isFloat       | isTrue           | isValueIntoRange            | isHash               | isAnyValueAttributeValidating    |
+| isBinary      | isFalse          | isValueGreatherThan         |                      | isAnyValueAttributeValidatingAny |
+| isHexadecimal |                  | isValueGreatherThanOrEquals |                      | isAnyValueValidating             |
+| isMultibyte   |                  | isValueLessThan             |                      | isAnyValueValidatingAny          |
+| isEncodedAs   |                  | isValueLessThanOrEquals     |                      | isKeyContaining                  |
+| isEmail       |                  |                             |                      | isKeyContainingAny               |
+| isUrl         |                  |                             |
+| isIpV4        |                  |                             |
+| isIpv6        |                  |                             |
+| isMac         |                  |                             |
+| isDomain      |                  |                             |
+| isDate        |                  |                             |
+| isSerialized  |                  |                             |
 
 ### Single validation
 
@@ -90,7 +120,7 @@ $validator
     ->isLengthGreatherThan(15)
     ->isEmail();
 
-$validator->getResult('juanchosl@hotmail.com'); //true
+$validator('juanchosl@hotmail.com'); //true
 
 print_r($validator->getResults('juanchosl@hotmail.com'));
 Array
@@ -115,7 +145,7 @@ $validator
     ->isEmail();
 
     foreach(['juanchosl@hotmail.com', 'email@corporation.com'] as $text){
-        $validator->getResult($text); //true
+        $validator($text); //true
 
         print_r($validator->getResults($text));
         Array
@@ -137,8 +167,9 @@ $validator = new StringValidations();
 $validator
     ->is()
     ->isNotEmpty()
-    ->isValueEqualsAny('juan','pepe','antonio')
-    ->getResult('juan'); //true
+    ->isValueEqualsAny('juan','pepe','antonio');
+
+$validator('juan'); //true
 ```
 
 ### Validations over associative arrays or entities
@@ -150,13 +181,25 @@ $datas = [
     ["nombre" => "pepe", "apellidos" => "salmuera", "email" => "aaaa@bbb.com", "telephone" => 123456789],
     ["nombre" => "juan", "apellidos" => "benito", "email" => "bbb@ccc.es", "telephone" => 123456789],
 ];
+
+// Option 1
 $validator = new EntityValidations();
 $validator->isValueAttributeValidating('email', (new StringValidations())->isEmail());
 $validator->isValueAttributeValidating('telephone', (new IntegerValidations())->isLengthGreatherOrEqualsThan(9)->isLengthLessOrEqualsThan(12));
 
 foreach($datas as $data){
-    $validator->getResult($data);
+    $result = $validator($data);// We have the unitary result or each element
+    if($result === true){
+        ...//our code execution
+    }
 }
+
+//Option 2
+$validator = new CollectionValidations();
+$validator->isValueAttributeValidating('email', (new StringValidations())->isEmail());
+$validator->isValueAttributeValidating('telephone', (new IntegerValidations())->isLengthGreatherOrEqualsThan(9)->isLengthLessOrEqualsThan(12));
+
+$validator($datas);//We have the global result, for all elements
 ```
 
 ### Validations over iterables
@@ -169,9 +212,10 @@ $validator
     ->is()
     ->isNotEmpty()
     ->isKeyContainingAny(...['nombre', 'apellidos']);
-    ->getResult(['nombre' => 'Cadena numeros', 'apellidos' => 'Cadena letras']);//true
 
-***********
+$validator(['nombre' => 'Cadena numeros', 'apellidos' => 'Cadena letras']);//true
+
+******
 
 $datas = [
     ["nombre" => "pepe", "apellidos" => "salmuera", "email" => "aaaa@bbb.com", "telephone" => 123456789],
@@ -180,11 +224,19 @@ $datas = [
 $validator->isValueAttributeValidating('email', (new StringValidations())->isEmail());
 $validator->isValueAttributeValidating('telephone', (new IntegerValidations())->isLengthGreatherOrEqualsThan(9)->isLengthLessOrEqualsThan(12));
 
-$validator->getResult($datas);
-************
+$validator($datas);//false
+/*
+Array
+(
+    [isValueAttributeValidating: email,StringValidations->isEmail] => 1
+    [isValueAttributeValidating: telephone,IntegerValidations->isLengthGreatherOrEqualsThan(9)->isLengthLessOrEqualsThan(12)] => 1
+)
+*/
+```
 
+```php
 $datas = ["aaaa@bbb.com", "bbb@ccc.es"];
 $validator = new IterableValidations();
 $validator->isValueValidating((new StringValidations())->isEmail());
-$validator->getResult($datas);
+$validator($datas);
 ```
