@@ -1,5 +1,31 @@
 # Change Log - Validators
 
+## [1.0.10] - 2026-
+
+### Added
+
+- IterableValidation::isAnyValueValidating in order to verify if one value from iterable, validate as true a complex validation
+- IterableValidation::isAnyValueValidatingAny in order to verify if some value from iterable validate as true any provided complex validation
+- IterableValidation::isAnyValueAttributeValidating in order to verify if one value into selected key from collection, validate as true any provided complex validation
+- IterableValidation::isAnyValueAttributeValidatingAny in order to verify if some value into selected key from collection, validate as true any provided complex validation
+- Added CollectionValidator, same as Iterable but checking that his constents are more iterable elements.
+- Added ArrayValidator, same as Iterable but checking that it is a real array and child elements are primitive values
+- Added ListValidator, same as Array but it is a indexed array with numeric keys from 0 to count($contents)-1
+
+### Changed
+
+- Use array_column for ValueAttributeValidating functions in order to extract only the required values to validate for performance and reduce memory consumption
+- Extracted the result calculators to external class, in order to separate logics and save results for any value
+- Moved all functions to traits in order to reuse between entities
+- Apply fixes and failback functions, in order to return back and ensure, the compatibility with php v8.0, creating a transparent internal alternatives
+
+### Fixed
+
+- Use array_all function when is available for the installed php version, for better performance
+- Array to string conversion warning when kreating a multiparameter key for getResults
+- HashValidator check if is in binary in order to convert to hex value before validate
+- Iterable validations check that is a rigth type when check for empty, throwing an Exception if it is not an iterable element
+
 ## [1.0.9] - 2026-07-22
 
 ### Added
