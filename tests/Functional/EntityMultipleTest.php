@@ -20,6 +20,31 @@ class EntityMultipleTest extends TestCase
         $this->validator = new EntityValidations();
     }
 
+    public function testKeyEntitiesValidatingOk()
+    {
+        $datas = [
+            ["nombre" => "pepe", "apellidos" => "salmuera", "email" => "aaaa@bbb.com", "telephone" => 123456789],
+            ["nombre" => "juan", "apellidos" => "benito", "email" => "bbb@ccc.es", "telephone" => 123456789],
+        ];
+
+        $this->validator->isKeyContaining('email');
+        foreach ($datas as $data) {
+            $this->assertTrue($this->validator->getResult($data), "complex validations");
+            $this->assertTrue($this->validator->__invoke($data), "complex validations");
+        }
+    }
+    public function testKeyEntitiesValidatingKo()
+    {
+        $datas = [
+            ["nombre" => "pepe", "apellidos" => "salmuera", "email" => "aaaa@bbb.com", "telephone" => 123456789],
+            ["nombre" => "juan", "apellidos" => "benito", "email" => "bbb@ccc.es", "telephone" => 123456789],
+        ];
+        $this->validator->isKeyContaining('name');
+        foreach ($datas as $data) {
+            $this->assertFalse($this->validator->getResult($data), "complex validations");
+            $this->assertFalse($this->validator->__invoke($data), "complex validations");
+        }
+    }
     public function testEntitiesValidatingOk()
     {
         $datas = [
