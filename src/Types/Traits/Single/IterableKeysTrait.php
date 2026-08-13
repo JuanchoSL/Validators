@@ -12,8 +12,6 @@ trait IterableKeysTrait
         if (!static::is($var) || static::isEmpty($var)) {
             return false;
         }
-        return (static::isAnyValueValidating(array_keys((array) $var), (new StringValidations())->isValueEqualsAny(...$needles)));
-        /*
         $var = (array) $var;
         foreach ($var as $key => $entity) {
             if (StringValidation::isValueEqualsAny((string) $key, ...$needles)) {
@@ -21,6 +19,8 @@ trait IterableKeysTrait
             }
         }
         return false;
+        /*
+        return (static::isAnyValueValidating(array_keys((array) $var), (new StringValidations())->isValueEqualsAny(...$needles)));
         */
     }
 
