@@ -11,7 +11,12 @@ use JuanchoSL\Validators\Contracts\Single\RegexValidatorsInterface;
 use JuanchoSL\Validators\Contracts\Single\StringContentsTypeValidatorsInterface;
 use JuanchoSL\Validators\Types\AbstractValidation;
 
-class StringValidation extends AbstractValidation implements BasicValidatorsInterface, LengthValidatorsInterface, RegexValidatorsInterface, StringContentsTypeValidatorsInterface, ContentValidatorsInterface
+class StringValidation extends AbstractValidation implements
+    BasicValidatorsInterface,
+    LengthValidatorsInterface,
+    RegexValidatorsInterface,
+    StringContentsTypeValidatorsInterface,
+    ContentValidatorsInterface
 {
 
     public static function is(mixed $var): bool
@@ -111,6 +116,7 @@ class StringValidation extends AbstractValidation implements BasicValidatorsInte
     {
         return is_numeric($var);
     }
+
     public static function isDate(mixed $var): bool
     {
         $date = @date_parse($var);
@@ -159,7 +165,7 @@ class StringValidation extends AbstractValidation implements BasicValidatorsInte
 
     public static function isSerialized(string $value): bool
     {
-        if (static::isValueEndingWith($value, ';') || static::isValueEndingWith($value, '}')) {
+        if (static::isValueEndingWithAny($value, ';', '}')) {
             return ($value == 'b:0;') ? true : @unserialize($value) !== false;
         }
         return false;
