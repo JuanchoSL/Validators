@@ -1,5 +1,17 @@
 # Change Log - Validators
 
+## [1.0.11] - 2026-08-22
+
+### Added
+
+- More tests for Entities validations
+
+### Changed
+
+### Fixed
+
+- Missing function finding for an existing key name into Entity
+
 ## [1.0.10] - 2026-08-11
 
 ### Added
@@ -38,8 +50,8 @@
 - HashValidations, in order to verify if a string is valid as hash for a knowed algo and check if is the valid signature for a provided string
 - Added clear method on Multi test queue in order to remove all tests and reuse the Validations instance
 - Added LoggerAwaire implementation, in order to save checkings into log for debug
-- Added Debug implementation, if TRUE, log a result for each check, with time and memory used, otherwise, log only one INFO from full checking results. 
-- Added __invoke method, in order to validate a sequence values without call getResult
+- Added Debug implementation, if TRUE, log a result for each check, with time and memory used, otherwise, log only one INFO from full checking results.
+- Added \_\_invoke method, in order to validate a sequence values without call getResult
 - The Iterable validators that check for extra validations, can use too callable parameters, as array with class and method or strings names of native or your own functions
 
 ### Changed
