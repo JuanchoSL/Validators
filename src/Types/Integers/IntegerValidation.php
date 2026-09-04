@@ -9,6 +9,6 @@ class IntegerValidation extends NumberValidation
 
     public static function is(mixed $var): bool
     {
-        return is_integer($var);
+        return is_int($var);
     }
 }
