@@ -40,6 +40,10 @@ class NumberValidations extends AbstractValidations implements
     {
         return $this->addTest($this->validator, __FUNCTION__, func_get_args());
     }
+    public function isValueIntoMargin(int|float $reference, int|float $margin): static
+    {
+        return $this->addTest($this->validator, __FUNCTION__, func_get_args());
+    }
     public function isValueGreatherThanOrEquals(int|float $comparator): static
     {
         return $this->addTest($this->validator, __FUNCTION__, func_get_args());
