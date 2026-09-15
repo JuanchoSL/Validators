@@ -48,6 +48,11 @@ class NumberValidation extends AbstractValidation implements
         return static::isValueGreatherThanOrEquals($var, $min) && static::isValueLessThanOrEquals($var, $max);
     }
 
+    public static function isValueIntoMargin(int|float $var, int|float $reference, int|float $margin): bool
+    {
+        return static::isValueIntoRange($var, $reference - $margin, $reference + $margin);
+    }
+
     public static function isValueGreatherThan(int|float $var, int|float $comparator): bool
     {
         return $var > $comparator;

@@ -123,6 +123,16 @@ class NumberMultipleTest extends TestCase
     {
         $this->assertFalse($this->validator->isValueIntoRange(5, 10)->getResult(14), "range false");
     }
+    public function testIsMarginTrue()
+    {
+        $this->assertTrue($this->validator->isValueIntoMargin(5, 5)->getResult(7), "range true");
+        $this->assertTrue($this->validator->isValueIntoMargin(5, 10)->getResult(5), "range true");
+        $this->assertTrue($this->validator->clear()->isValueIntoMargin(5, 10)->getResult(-2), "range true");
+    }
+    public function testIsMarginFalse()
+    {
+        $this->assertFalse($this->validator->isValueIntoMargin(5, 5)->getResult(14), "range false");
+    }
     public function testIsContaining()
     {
         $this->assertTrue($this->validator->isValueContaining(1)->getResult(14), "containing true");

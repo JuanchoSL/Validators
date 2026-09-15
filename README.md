@@ -91,7 +91,7 @@ As Scalar validations, not all iterables have the same validators, a list does n
 | isHexadecimal |                  | isValueGreatherThanOrEquals |                      | isAnyValueValidating             |
 | isMultibyte   |                  | isValueLessThan             |                      | isAnyValueValidatingAny          |
 | isEncodedAs   |                  | isValueLessThanOrEquals     |                      | isKeyContaining                  |
-| isEmail       |                  |                             |                      | isKeyContainingAny               |
+| isEmail       |                  | isValueIntoMargin           |                      | isKeyContainingAny               |
 | isUrl         |                  |                             |
 | isIpV4        |                  |                             |
 | isIpv6        |                  |                             |

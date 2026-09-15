@@ -200,4 +200,17 @@ class NumberTest extends TestCase
     {
         $this->assertFalse(NumberValidation::isValueIntoRange(125, 150, 200), "range false");
     }
+
+    public function testIsMarginTrue()
+    {
+        $this->assertTrue(NumberValidation::isValueIntoMargin(123, 100, 25), "margin true");
+        $this->assertTrue(NumberValidation::isValueIntoMargin(124, 100, 25), "margin true");
+        $this->assertTrue(NumberValidation::isValueIntoMargin(100, 100, 25), "margin true");
+        $this->assertTrue(NumberValidation::isValueIntoMargin(-5, 5, 10), "margin true");
+    }
+    public function testIsMarginFalse()
+    {
+        $this->assertFalse(NumberValidation::isValueIntoMargin(125, 150, 20), "range false");
+        $this->assertFalse(NumberValidation::isValueIntoMargin(125, 100, 20), "range false");
+    }
 }

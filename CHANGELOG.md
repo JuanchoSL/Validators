@@ -1,5 +1,16 @@
 # Change Log - Validators
 
+## [1.0.12] - 2026-09-15
+
+### Added
+- NumberValidations::isValueIntoMargin in order to check if a given number is into a range of +-x of z (checking (2, 10, 5) is the same that (10-5) < 2 > (10+5) )
+
+### Changed
+
+- Use is_int instead is_integer for **IntegerValidation::is** because it is deprecated since php v8.6
+
+### Fixed
+
 ## [1.0.11] - 2026-08-22
 
 ### Added
