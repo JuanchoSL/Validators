@@ -17,45 +17,54 @@ class StringMultipleTest extends TestCase
 
     public function testIsNumberTrue()
     {
-        $this->assertTrue($this->validator->isNumber()->getResult("12345.6789"), "Is a number");
-        $this->assertTrue($this->validator->isNumber()->getResult("0.123456789"), "Is a number");
-        $this->assertTrue($this->validator->isNumber()->getResult(12345.6789), "Is a number");
-        $this->assertTrue($this->validator->isNumber()->getResult(0.123456789), "Is a number");
-        $this->assertTrue($this->validator->isNumber()->getResult("12345"), "Is a number");
-        $this->assertTrue($this->validator->isNumber()->getResult("123456789"), "Is a number");
-        $this->assertTrue($this->validator->isNumber()->getResult(12345), "Is a number");
-        $this->assertTrue($this->validator->isNumber()->getResult(123456789), "Is a number");
+        $this->assertTrue($this->validator->clear()->isNumber()->getResult("12345.6789"), "Is a number");
+        $this->assertTrue($this->validator->clear()->isNumber()->getResult("0.123456789"), "Is a number");
+        $this->assertTrue($this->validator->clear()->isNumber()->getResult(12345.6789), "Is a number");
+        $this->assertTrue($this->validator->clear()->isNumber()->getResult(0.123456789), "Is a number");
+        $this->assertTrue($this->validator->clear()->isNumber()->getResult("12345"), "Is a number");
+        $this->assertTrue($this->validator->clear()->isNumber()->getResult("123456789"), "Is a number");
+        $this->assertTrue($this->validator->clear()->isNumber()->getResult(12345), "Is a number");
+        $this->assertTrue($this->validator->clear()->isNumber()->getResult(123456789), "Is a number");
     }
     public function testIsNumberFalse()
     {
-        $this->assertFalse($this->validator->isNumber()->getResult("12345.6789€"), "Is not a number");
-        $this->assertFalse($this->validator->isNumber()->getResult("0.123456789€"), "Is not a number");
-        $this->assertFalse($this->validator->isNumber()->getResult("6789€"), "Is not a number");
-        $this->assertFalse($this->validator->isNumber()->getResult("123456789€"), "Is not a number");
+        $this->assertFalse($this->validator->clear()->isNumber()->getResult("12345.6789€"), "Is not a number");
+        $this->assertFalse($this->validator->clear()->isNumber()->getResult("0.123456789€"), "Is not a number");
+        $this->assertFalse($this->validator->clear()->isNumber()->getResult("6789€"), "Is not a number");
+        $this->assertFalse($this->validator->clear()->isNumber()->getResult("123456789€"), "Is not a number");
     }
     public function testIsIntegerTrue()
     {
-        $this->assertTrue($this->validator->isInteger()->getResult("12345"), "Is an integer");
-        $this->assertTrue($this->validator->isInteger()->getResult("123456789"), "Is an integer");
-        $this->assertTrue($this->validator->isInteger()->getResult(12345), "Is an integer");
-        $this->assertTrue($this->validator->isInteger()->getResult(123456789), "Is an integer");
+        $this->assertTrue($this->validator->clear()->isInteger()->getResult("12345"), "Is an integer");
+        $this->assertTrue($this->validator->clear()->isInteger()->getResult("123456789"), "Is an integer");
+        $this->assertTrue($this->validator->clear()->isInteger()->getResult(12345), "Is an integer");
+        $this->assertTrue($this->validator->clear()->isInteger()->getResult(123456789), "Is an integer");
     }
     public function testIsIntegerFalse()
     {
-        $this->assertFalse($this->validator->isInteger()->getResult("12345.6789€"), "Is not an integer");
-        $this->assertFalse($this->validator->isInteger()->getResult("0.123456789€"), "Is not an integer");
+        $this->assertFalse($this->validator->clear()->isInteger()->getResult("12345.6789€"), "Is not an integer");
+        $this->assertFalse($this->validator->clear()->isInteger()->getResult("0.123456789€"), "Is not an integer");
     }
+
+    public function testIsNotInteger()
+    {
+        $this->assertTrue($this->validator->clear()->ifNot()->isInteger()->getResult("12345.6789€"), "Is not an integer");
+        $this->assertTrue($this->validator->clear()->ifNot()->isInteger()->getResult("0.123456789€"), "Is not an integer");
+        $this->assertTrue($this->validator->clear()->isInteger()->ifNot()->getResult("12345.6789€"), "Is not an integer");
+        $this->assertTrue($this->validator->clear()->isInteger()->ifNot()->getResult("0.123456789€"), "Is not an integer");
+    }
+
     public function testIsFloatTrue()
     {
-        $this->assertTrue($this->validator->isFloat()->getResult(12345.6789), "Is a float");
-        $this->assertTrue($this->validator->isFloat()->getResult(0.123456789), "Is a float");
-        $this->assertTrue($this->validator->isFloat()->getResult("12345.6789"), "Is a float");
-        $this->assertTrue($this->validator->isFloat()->getResult("0.123456789"), "Is a float");
+        $this->assertTrue($this->validator->clear()->isFloat()->getResult(12345.6789), "Is a float");
+        $this->assertTrue($this->validator->clear()->isFloat()->getResult(0.123456789), "Is a float");
+        $this->assertTrue($this->validator->clear()->isFloat()->getResult("12345.6789"), "Is a float");
+        $this->assertTrue($this->validator->clear()->isFloat()->getResult("0.123456789"), "Is a float");
     }
     public function testIsFloatFalse()
     {
-        $this->assertFalse($this->validator->isFloat()->getResult("12345.6789€"), "Is not a float");
-        $this->assertFalse($this->validator->isFloat()->getResult("0.123456789€"), "Is not a float");
+        $this->assertFalse($this->validator->clear()->isFloat()->getResult("12345.6789€"), "Is not a float");
+        $this->assertFalse($this->validator->clear()->isFloat()->getResult("0.123456789€"), "Is not a float");
     }
 
     public function testLongString()
@@ -169,6 +178,18 @@ class StringMultipleTest extends TestCase
         $this->assertFalse($validator('starting string false'));
     }
 
+    public function testNotStart()
+    {
+        $validator = $this->validator
+            ->is()
+            ->isNotEmpty()
+            ->ifNot()
+            ->isValueStartingWith('starts');
+        $this->assertTrue($this->validator->getResult('starting string false'));
+        $this->assertTrue($this->validator->__invoke('starting string false'));
+        $this->assertTrue($validator('starting string false'));
+    }
+
     public function testEndTrue()
     {
         $validator = $this->validator
@@ -202,22 +223,41 @@ class StringMultipleTest extends TestCase
         $this->assertFalse($validator('starting string false'));
     }
 
+    public function testEndNot()
+    {
+        $validator = $this->validator
+            ->is()
+            ->isNotEmpty()
+            ->ifNot()
+            ->isValueEndingWith('end');
+        $this->assertTrue($this->validator->getResult('starting string false'));
+        $this->assertTrue($this->validator->__invoke('starting string false'));
+        $this->assertTrue($validator('starting string false'));
+    }
+
 
     public function testIsDateStringTrue()
     {
-        $this->assertTrue($this->validator->isDate()->getResult("2025-11-30"));
-        $this->assertTrue($this->validator->isDate()->getResult("2025/11/30"));
-        $this->assertTrue($this->validator->isDate()->getResult("30-11-2025"));
-        $this->assertTrue($this->validator->isDate()->getResult("30.11.2025"));
-        $this->assertTrue($this->validator->isDate()->getResult("11/30/2025"));
+        $this->assertTrue($this->validator->clear()->isDate()->getResult("2025-11-30"));
+        $this->assertTrue($this->validator->clear()->isDate()->getResult("2025/11/30"));
+        $this->assertTrue($this->validator->clear()->isDate()->getResult("30-11-2025"));
+        $this->assertTrue($this->validator->clear()->isDate()->getResult("30.11.2025"));
+        $this->assertTrue($this->validator->clear()->isDate()->getResult("11/30/2025"));
     }
 
     public function testIsDateStringFalse()
     {
-        $this->assertFalse($this->validator->isDate()->getResult("2025.11.30"));
-        $this->assertFalse($this->validator->isDate()->getResult("30/11/2025"));
-        $this->assertFalse($this->validator->isDate()->getResult("11-30-2025"));
-        $this->assertFalse($this->validator->isDate()->getResult("11.30.2025"));
+        $this->assertFalse($this->validator->clear()->isDate()->getResult("2025.11.30"));
+        $this->assertFalse($this->validator->clear()->isDate()->getResult("30/11/2025"));
+        $this->assertFalse($this->validator->clear()->isDate()->getResult("11-30-2025"));
+        $this->assertFalse($this->validator->clear()->isDate()->getResult("11.30.2025"));
+    }
+    public function testIsNotDateString()
+    {
+        $this->assertTrue($this->validator->clear()->ifNot()->isDate()->getResult("2025.11.30"));
+        $this->assertTrue($this->validator->clear()->ifNot()->isDate()->getResult("30/11/2025"));
+        $this->assertTrue($this->validator->clear()->ifNot()->isDate()->getResult("11-30-2025"));
+        $this->assertTrue($this->validator->clear()->ifNot()->isDate()->getResult("11.30.2025"));
     }
 
     public function testIsFullDateStringTrue()
@@ -230,7 +270,7 @@ class StringMultipleTest extends TestCase
             "+2026-01-01T00:00:00+00:00",
         ];
         foreach ($dates as $date) {
-            $this->assertTrue($this->validator->isDate()->getResult($date));
+            $this->assertTrue($this->validator->clear()->isDate()->getResult($date));
         }
     }
 
@@ -246,7 +286,7 @@ class StringMultipleTest extends TestCase
             "aëiou",
         ];
         foreach ($strings as $string) {
-            $this->assertTrue($this->validator->isMultibyte()->getResult($string));
+            $this->assertTrue($this->validator->clear()->isMultibyte()->getResult($string));
         }
     }
     public function testIsMultibyteStringFalse()
@@ -256,7 +296,7 @@ class StringMultipleTest extends TestCase
             "bcdef",
         ];
         foreach ($strings as $string) {
-            $this->assertFalse($this->validator->isMultibyte()->getResult($string));
+            $this->assertFalse($this->validator->clear()->isMultibyte()->getResult($string));
         }
     }
 }

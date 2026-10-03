@@ -27,10 +27,12 @@ abstract class AbstractValidations implements LoggerAwareInterface, DebuggableIn
 
     protected bool $debug = false;
 
+    protected bool $desired_result = true;
+
     public function __invoke(mixed $var): bool
     {
         foreach ($this->getResults($var) as $result) {
-            if ($result !== true) {
+            if ($result !== $this->desired_result) {
                 return false;
             }
         }
@@ -96,7 +98,7 @@ abstract class AbstractValidations implements LoggerAwareInterface, DebuggableIn
         foreach ($this->tests as $tests) {
             $lap = new NumbersManipulators(microtime(true));
             $key = $this->createKey($tests['method'], (array) $tests['params']);
-            $this->results[$key] = call_user_func_array([$tests['class'], $tests['method']], array_merge([$var], $tests['params'])) !== false;
+            $this->results[$key] = call_user_func_array([$tests['class'], $tests['method']], array_merge([$var], $tests['params'])) === $tests['desired'];
             if ($this->debug) {
                 $context = [
                     'key' => $key,
@@ -122,8 +124,10 @@ abstract class AbstractValidations implements LoggerAwareInterface, DebuggableIn
         $this->tests[] = [
             "class" => $validator,
             "method" => $function,
-            "params" => $arguments
+            "params" => $arguments,
+            "desired" => $this->desired_result
         ];
+        $this->desired_result = true;
         return $this;
     }
 
@@ -153,6 +157,7 @@ abstract class AbstractValidations implements LoggerAwareInterface, DebuggableIn
     public function clear(): static
     {
         $this->tests = $this->results = [];
+        $this->desired_result = true;
         return $this;
     }
 

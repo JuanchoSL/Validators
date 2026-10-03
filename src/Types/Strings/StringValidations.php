@@ -28,6 +28,12 @@ class StringValidations extends AbstractValidations implements
      */
     protected string $validator = StringValidation::class;
 
+    public function ifNot(): static
+    {
+        $this->desired_result = false;
+        return $this;
+    }
+
     public function isBinary(): static
     {
         return $this->addTest($this->validator, __FUNCTION__, func_get_args());
